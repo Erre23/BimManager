@@ -60,6 +60,13 @@ namespace CapaPresentacion
 			form.Show();
 		}
 
+		private void mnuPrespuestoCategoria_Click(object sender, EventArgs e)
+		{
+			var form = new FrmPrespuestoCategoria((ToolStripMenuItem)sender);
+			form.MdiParent = this;
+			form.Show();
+		}
+
 		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();

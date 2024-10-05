@@ -50,6 +50,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FormAccion.cs" />
+    <Compile Include="FrmPrespuestoCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPrespuestoCategoria.Designer.cs">
+      <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmProyecto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmPrespuestoCategoria.resx">
+      <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmProyecto.resx">
       <DependentUpon>FrmProyecto.cs</DependentUpon>
     </EmbeddedResource>

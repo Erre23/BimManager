@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Apis\ApisPeru.cs" />
     <Compile Include="Apis\Response.cs" />
+    <Compile Include="LogPresupuestoCategoria.cs" />
     <Compile Include="LogProyecto.cs" />
     <Compile Include="LogDepartamento.cs" />
     <Compile Include="LogTipoDocumentoSunat.cs" />

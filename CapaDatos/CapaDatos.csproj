@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Conexion.cs" />
     <Compile Include="CreateParams.cs" />
+    <Compile Include="DaoPresupuestoCategoria.cs" />
     <Compile Include="DaoProyecto.cs" />
     <Compile Include="DaoDepartamento.cs" />
     <Compile Include="DaoProvincia.cs" />

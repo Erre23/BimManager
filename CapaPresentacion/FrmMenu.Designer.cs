@@ -34,6 +34,7 @@
 			this.mnuTipoDocumentoSunat = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuTipoDocumentoIdentidad = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnuCliente = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuProyecto = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.editMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +42,7 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.mnuProyecto = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnuPrespuestoCategoria = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -67,6 +68,7 @@
             this.mnuTipoDocumentoIdentidad,
             this.mnuCliente,
             this.mnuProyecto,
+            this.mnuPrespuestoCategoria,
             this.toolStripSeparator5,
             this.mnuExit});
 			this.mnuMantenedor.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
@@ -94,6 +96,13 @@
 			this.mnuCliente.Size = new System.Drawing.Size(314, 26);
 			this.mnuCliente.Text = "Cliente";
 			this.mnuCliente.Click += new System.EventHandler(this.mnuCliente_Click);
+			// 
+			// mnuProyecto
+			// 
+			this.mnuProyecto.Name = "mnuProyecto";
+			this.mnuProyecto.Size = new System.Drawing.Size(314, 26);
+			this.mnuProyecto.Text = "Proyecto";
+			this.mnuProyecto.Click += new System.EventHandler(this.mnuProyecto_Click);
 			// 
 			// toolStripSeparator5
 			// 
@@ -137,12 +146,12 @@
 			this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
 			this.toolStripStatusLabel.Text = "Status";
 			// 
-			// mnuProyecto
+			// mnuPrespuestoCategoria
 			// 
-			this.mnuProyecto.Name = "mnuProyecto";
-			this.mnuProyecto.Size = new System.Drawing.Size(314, 26);
-			this.mnuProyecto.Text = "Proyecto";
-			this.mnuProyecto.Click += new System.EventHandler(this.mnuProyecto_Click);
+			this.mnuPrespuestoCategoria.Name = "mnuPrespuestoCategoria";
+			this.mnuPrespuestoCategoria.Size = new System.Drawing.Size(314, 26);
+			this.mnuPrespuestoCategoria.Text = "Presupuesto Categoría";
+			this.mnuPrespuestoCategoria.Click += new System.EventHandler(this.mnuPrespuestoCategoria_Click);
 			// 
 			// FrmMenu
 			// 
@@ -153,7 +162,7 @@
 			this.Controls.Add(this.menuStrip);
 			this.IsMdiContainer = true;
 			this.MainMenuStrip = this.menuStrip;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "FrmMenu";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Solución DIESA";
@@ -183,6 +192,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuTipoDocumentoIdentidad;
 		private System.Windows.Forms.ToolStripMenuItem mnuTipoDocumentoSunat;
 		private System.Windows.Forms.ToolStripMenuItem mnuProyecto;
+		private System.Windows.Forms.ToolStripMenuItem mnuPrespuestoCategoria;
 	}
 }
 
