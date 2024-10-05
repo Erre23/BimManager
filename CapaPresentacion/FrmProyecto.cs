@@ -193,6 +193,7 @@ namespace CapaPresentacion
                     LbOpcion.Text = "";
                     Botones_Enabled(true, true, true, true);
                     Botones_Visible(false, false, false);
+                    GbDatos_Cliente.Enabled = false;
                     GbDatos_Proyecto.Enabled = false;
                     GbLista.Enabled = true;
                     break;
@@ -301,7 +302,7 @@ namespace CapaPresentacion
             {
                 BnDeshabilitar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
-                await LogCliente.Instancia.ClienteDeshabilitar(proyecto.ClienteID);
+                await LogCliente.Instancia.ClienteDeshabilitar(proyecto.ProyectoID);
                 proyecto.Activo = false;
                 DgvProyecto_Actualizar(proyecto);
 
@@ -373,6 +374,7 @@ namespace CapaPresentacion
                 if (this.Accion == FormAccion.nuevo)
                 {
                     this.CurrentProyecto.ProyectoID = await LogProyecto.Instancia.ProyectoInsertar(this.CurrentProyecto);
+                    this.CurrentProyecto.Activo = true;
                     DgvProyecto_Agregar(this.CurrentProyecto);
                 }
                 else
@@ -490,7 +492,8 @@ namespace CapaPresentacion
                     TbDocumentoIdentidadNumero.Focus();
 				}
                 else
-                { 
+                {
+                    this.CurrentCliente.TipoDocumentoIdentidad = tipoDocumentoIdentidad;
 					TbCliente.Text = this.CurrentCliente.RazonSocialOrApellidosYNombres;
 				}
 			}

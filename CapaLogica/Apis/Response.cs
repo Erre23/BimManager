@@ -25,10 +25,8 @@ namespace CapaLogica.Apis
 
 			if (data != null)
 			{
-				// Obtener todas las propiedades públicas del objeto
 				var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-				// Comprobar si todas las propiedades son nulas
 				if (!properties.All(prop => prop.GetValue(data) == null))
 				{
 					Data = data;

@@ -97,10 +97,7 @@ namespace CapaLogica.Apis
 			using (var _httpClient = new HttpClient())
 			{
 				var response = await _httpClient.GetAsync(GetApiURL(tipo, documentoNumero));
-
-				// Lee el contenido de la respuesta
 				var jsonResponse = await response.Content.ReadAsStringAsync();
-
 				if (response.IsSuccessStatusCode)
 				{
 					var successReponse = JsonConvert.DeserializeObject<T>(jsonResponse);

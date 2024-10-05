@@ -13,6 +13,7 @@ using CapaPresentacion.Controls;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting;
+using System.Net.Mail;
 
 namespace CapaPresentacion
 {
@@ -101,6 +102,19 @@ namespace CapaPresentacion
             BnGuardar.Visible = guardar;
             BnCancelar.Visible = cancelar;
             BnFiltrar.Visible = filtrar;
+        }
+
+        public static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var mailAddress = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
 
         public void GBDatos_Limpiar()
@@ -335,6 +349,15 @@ namespace CapaPresentacion
                     MessageBox.Show(this, mensaje, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                var email = TbEmail.Text.Trim();
+                if (!string.IsNullOrEmpty(email) && !IsValidEmail(email))
+                {
+                    string mensaje = $"El email ingresado no tiene un formato válido";
+                    MessageBox.Show(this, mensaje, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
 
 
                 if (this.Accion == FormAccion.nuevo) this.CurrentCliente = new Cliente();
