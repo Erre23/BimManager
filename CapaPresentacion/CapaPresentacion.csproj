@@ -50,6 +50,18 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FormAccion.cs" />
+    <Compile Include="FrmPrespuestoCategoriaBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPrespuestoCategoriaBuscar.Designer.cs">
+      <DependentUpon>FrmPrespuestoCategoriaBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPrespuestoCategoriaModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPrespuestoCategoriaModal.Designer.cs">
+      <DependentUpon>FrmPrespuestoCategoriaModal.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrespuestoCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +112,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmPrespuestoCategoriaBuscar.resx">
+      <DependentUpon>FrmPrespuestoCategoriaBuscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPrespuestoCategoriaModal.resx">
+      <DependentUpon>FrmPrespuestoCategoriaModal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrespuestoCategoria.resx">
       <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
     </EmbeddedResource>

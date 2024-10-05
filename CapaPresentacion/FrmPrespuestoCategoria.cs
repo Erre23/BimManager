@@ -48,7 +48,8 @@ namespace CapaPresentacion
 
         private TreeNode CrearNode(PresupuestoCategoria presupuestoCategoria, TreeNode nodeOwner)
         {
-			TreeNode node = new TreeNode(presupuestoCategoria.Nombre + (!string.IsNullOrEmpty(presupuestoCategoria.Observaciones) ? $" ({presupuestoCategoria.Observaciones})" : ""));
+			TreeNode node = new TreeNode(presupuestoCategoria.TextoResumen);
+            node.Tag = presupuestoCategoria;
             if (nodeOwner != null) nodeOwner.Nodes.Add(node);
 
             foreach (var subItem in presupuestoCategoria.SubPresupuestoCategorias)
@@ -106,75 +107,77 @@ namespace CapaPresentacion
 
         private void BnNuevo_Click(object sender, EventArgs e)
         {
-            SetAccion(FormAccion.nuevo);
+            FrmPrespuestoCategoriaModal frm = new FrmPrespuestoCategoriaModal(FormAccion.nuevo, null);
+            frm.WindowState = FormWindowState.Normal;
+            frm.StartPosition = FormStartPosition.CenterScreen;
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                TreeNode node = CrearNode(frm.GetPresupuestoCategoria, null);
+                tvPresupuestoCategoria.Nodes.Add(node);
+            }
+        }
+
+        private void BnNuevoSubcategoria_Click(object sender, EventArgs e)
+        {
+            if (tvPresupuestoCategoria.SelectedNode == null)
+            {
+                MessageBox.Show(this, "Olvidó seleccionar una categoría", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            PresupuestoCategoria presupuestoCategoria = tvPresupuestoCategoria.SelectedNode.Tag as PresupuestoCategoria;
+            if (presupuestoCategoria.PadrePresupuestoCategoriaID != null)
+            {
+                MessageBox.Show(this, "No se puede agregar una subcategoria de 2do nivel", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            FrmPrespuestoCategoriaModal frm = new FrmPrespuestoCategoriaModal(FormAccion.nuevo, presupuestoCategoria);
+            frm.WindowState = FormWindowState.Normal;
+            frm.StartPosition = FormStartPosition.CenterScreen;
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                var nuevoPresupuestoCategoria = frm.GetPresupuestoCategoria;
+                nuevoPresupuestoCategoria.PadrePresupuestoCategoria = presupuestoCategoria;
+                presupuestoCategoria.SubPresupuestoCategorias.Add(nuevoPresupuestoCategoria);
+                CrearNode(frm.GetPresupuestoCategoria, tvPresupuestoCategoria.SelectedNode);
+            }
         }
 
         private void BnEditar_Click(object sender, EventArgs e)
         {
-            //var cliente = (Cliente)DgvCliente.CurrentRow?.Tag;
-            //if (cliente == null)
-            //{
-            //    MessageBox.Show(this, "Olvidó seleccionar un cliente", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //    return;
-            //}
-            //SetAccion(FormAccion.editar);
-            //GbDatos_MostrarDatos(cliente);
+            if (tvPresupuestoCategoria.SelectedNode == null)
+            {
+                MessageBox.Show(this, "Olvidó seleccionar una categoría", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            PresupuestoCategoria presupuestoCategoria = tvPresupuestoCategoria.SelectedNode.Tag as PresupuestoCategoria;
+
+            FrmPrespuestoCategoriaModal frm = new FrmPrespuestoCategoriaModal(FormAccion.editar, presupuestoCategoria);
+            frm.WindowState = FormWindowState.Normal;
+            frm.StartPosition = FormStartPosition.CenterScreen;
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                presupuestoCategoria = frm.GetPresupuestoCategoria;
+                presupuestoCategoria.PadrePresupuestoCategoria = presupuestoCategoria;
+
+                tvPresupuestoCategoria.SelectedNode.Tag = presupuestoCategoria;
+                tvPresupuestoCategoria.SelectedNode.Text = presupuestoCategoria.TextoResumen;
+            }
         }
 
         private async void BnDeshabilitar_Click(object sender, EventArgs e)
         {
-            //var cliente = (Cliente)DgvCliente.CurrentRow?.Tag;
-            //if (cliente == null)
-            //{
-            //    MessageBox.Show(this, "Olvidó seleccionar un cliente", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //    return;
-            //}
-
-            //string datosCliente = "\n";
-            //datosCliente += "\n\r - Tipo de Doc.:" + cliente.TipoDocumentoIdentidad.Nombre;
-            //datosCliente += "\n\r - Nº de Documento: " + cliente.DocumentoIdentidadNumero;
-            //if (cliente.TipoDocumentoIdentidad.PersonaJuridica)
-            //{
-            //    datosCliente += "\n\r - Razón Social: " + cliente.RazonSocial;
-            //}
-            //else
-            //{
-            //    datosCliente += "\n\r - Nombres: " + cliente.Nombres;
-            //    datosCliente += "\n\r - Apellido1: " + cliente.Apellido1;
-            //    datosCliente += "\n\r - Apellido2: " + cliente.Apellido2;
-            //}
-
-            //if (MessageBox.Show(this, "¿Está seguro de deshabilitar al cliente?" + datosCliente, "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            //{
-            //    return;
-            //}
-
-            //try
-            //{
-            //    BnDeshabilitar.Enabled = false;
-            //    this.Cursor = Cursors.WaitCursor;
-            //    await LogCliente.Instancia.ClienteDeshabilitar(cliente.ClienteID);
-            //    cliente.Activo = false;
-            //    DgvCliente_Actualizar(cliente);
-
-
-            //    this.Cursor = Cursors.Default;
-            //    MessageBox.Show(this, "El cliente fue deshabilitado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    BnDeshabilitar.Enabled = true;
-
-            //    SetAccion(FormAccion.ninguno);
-            //}
-            //catch (Exception ex)
-            //{
-            //    this.Cursor = Cursors.Default;
-            //    MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    BnDeshabilitar.Enabled = true;
-            //}
         }
 
         private void BnBuscar_Click(object sender, EventArgs e)
         {
-            SetAccion(FormAccion.buscar);
+            FrmPrespuestoCategoriaBuscar frm = new FrmPrespuestoCategoriaBuscar();
+            frm.TopMost = true;
+            frm.Owner = this;
+            frm.WindowState = FormWindowState.Normal;
+            frm.StartPosition = FormStartPosition.CenterScreen;
+            frm.Show();
+            this.BnBuscar.Enabled = false;
         }
 
         private void BnSalir_Click(object sender, EventArgs e)
@@ -186,5 +189,23 @@ namespace CapaPresentacion
         {
             this._menu.Enabled = true;
         }
-	}
+
+        private void ChkExpandirTodo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ChkExpandirTodo.Checked)
+            {
+                tvPresupuestoCategoria.ExpandAll();
+                ChkContraerTodo.Checked = false;
+            }
+        }
+
+        private void ChkContraerTodo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ChkContraerTodo.Checked)
+            {
+                tvPresupuestoCategoria.CollapseAll();
+                ChkExpandirTodo.Checked = false;
+            }
+        }
+    }
 }

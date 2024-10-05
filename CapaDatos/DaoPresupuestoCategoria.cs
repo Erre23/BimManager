@@ -16,6 +16,75 @@ namespace CapaDatos
 
         #region métodos
 
+        public async Task<short> Insertar(PresupuestoCategoria presupuestoCategoria)
+        {
+            var cmd = (SqlCommand)null;
+            SqlConnection cnn = Conexion.Instancia.Conectar();
+            await cnn.OpenAsync();
+            using (var tran = cnn.BeginTransaction())
+            {
+                try
+                {
+                    cmd = new SqlCommand("spPresupuestoCategoriaInsertar", cnn, tran);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", presupuestoCategoria.Nombre, 250));
+                    cmd.Parameters.Add(CreateParams.NVarchar("Observaciones", presupuestoCategoria.Observaciones, -1));
+                    cmd.Parameters.Add(CreateParams.Decimal("Porcentaje", presupuestoCategoria.Porcentaje, 3, 0));
+                    cmd.Parameters.Add(CreateParams.SmallInt("PadrePresupuestoCategoriaID", presupuestoCategoria.PadrePresupuestoCategoriaID));
+
+                    presupuestoCategoria.PresupuestoCategoriaID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
+
+                    tran.Commit();
+                    cmd.Connection.Close();
+                    cmd.Dispose();
+                }
+                catch (Exception e)
+                {
+                    tran.Rollback();
+                    cmd.Connection.Close();
+                    cmd.Dispose();
+                    throw e;
+                }
+            }
+
+            return presupuestoCategoria.PresupuestoCategoriaID;
+        }
+
+
+        public async Task Actualizar(PresupuestoCategoria presupuestoCategoria)
+        {
+            var cmd = (SqlCommand)null;
+            SqlConnection cnn = Conexion.Instancia.Conectar();
+            await cnn.OpenAsync();
+            using (var tran = cnn.BeginTransaction())
+            {
+                try
+                {
+                    cmd = new SqlCommand("spPresupuestoCategoriaActualizar", cnn, tran);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(CreateParams.SmallInt("PresupuestoCategoriaID", presupuestoCategoria.PresupuestoCategoriaID));
+                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", presupuestoCategoria.Nombre, 250));
+                    cmd.Parameters.Add(CreateParams.NVarchar("Observaciones", presupuestoCategoria.Observaciones, -1));
+                    cmd.Parameters.Add(CreateParams.Decimal("Porcentaje", presupuestoCategoria.Porcentaje, 3, 0));
+                    cmd.Parameters.Add(CreateParams.SmallInt("PadrePresupuestoCategoriaID", presupuestoCategoria.PadrePresupuestoCategoriaID));
+
+                    cmd.ExecuteNonQuery();
+                    tran.Commit();
+                    cmd.Connection.Close();
+                    cmd.Dispose();
+                }
+                catch (Exception e)
+                {
+                    tran.Rollback();
+                    cmd.Connection.Close();
+                    cmd.Dispose();
+                    throw e;
+                }
+            }
+        }
+
         public async Task<PresupuestoCategoria> BuscarPorPresupuestoCategoriaID(short PresupuestoCategoriaID)
         {
             var cmd = (SqlCommand)null;
@@ -26,7 +95,7 @@ namespace CapaDatos
                 cmd = new SqlCommand("spPresupuestoCategoriaBuscarPorPresupuestoCategoriaID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(CreateParams.Int("PresupuestoCategoriaID", PresupuestoCategoriaID));
+                cmd.Parameters.Add(CreateParams.SmallInt("PresupuestoCategoriaID", PresupuestoCategoriaID));
                 await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
@@ -59,7 +128,7 @@ namespace CapaDatos
                 cmd = new SqlCommand("spPresupuestoCategoriaBuscarPorpadrePresupuestoCaterogiaID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(CreateParams.Int("padrePresupuestoCaterogiaID", padrePresupuestoCaterogiaID));
+                cmd.Parameters.Add(CreateParams.SmallInt("padrePresupuestoCaterogiaID", padrePresupuestoCaterogiaID));
                 await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
@@ -123,9 +192,11 @@ namespace CapaDatos
                 obj.PresupuestoCategoriaID = Convert.ToInt16(dr["PresupuestoCategoriaID"]);
                 obj.Nombre = Convert.ToString(dr["Nombre"]);
 				if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Observaciones")))) obj.Observaciones = dr["Observaciones"].ToString();
-				if (!(await dr.IsDBNullAsync(dr.GetOrdinal("PadrePresupuestoCategoriaID")))) obj.PadrePresupuestoCategoriaID = Convert.ToInt16(dr["PadrePresupuestoCategoriaID"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Porcentaje")))) obj.Porcentaje = Convert.ToDecimal(dr["Porcentaje"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("PadrePresupuestoCategoriaID")))) obj.PadrePresupuestoCategoriaID = Convert.ToInt16(dr["PadrePresupuestoCategoriaID"]);
+                
 
-				return obj;
+                return obj;
             }
             catch(Exception ex)
             {

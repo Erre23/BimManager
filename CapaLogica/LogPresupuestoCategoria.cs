@@ -16,6 +16,16 @@ namespace CapaLogica
 
         #region metodos
 
+        public async Task<short> PresupuestoCategoriaInsertar(PresupuestoCategoria presupuestoCategoria)
+        {
+            return await DaoPresupuestoCategoria.Instancia.Insertar(presupuestoCategoria);
+        }
+
+        public async Task PresupuestoCategoriaActualizar(PresupuestoCategoria presupuestoCategoria)
+        {
+            await DaoPresupuestoCategoria.Instancia.Actualizar(presupuestoCategoria);
+        }
+
         public async Task<PresupuestoCategoria> PresupuestoCategoriaBuscarPorPresupuestoCategoriaID(short PresupuestoCategoriaID)
         {
             return await DaoPresupuestoCategoria.Instancia.BuscarPorPresupuestoCategoriaID(PresupuestoCategoriaID);
@@ -59,6 +69,7 @@ namespace CapaLogica
                     {
                         presupuestoCategoria.Nombre = iteracion.Nombre;
                         presupuestoCategoria.Observaciones = iteracion.Observaciones;
+                        presupuestoCategoria.Porcentaje = iteracion.Porcentaje;
                     }
                     else
                     {
