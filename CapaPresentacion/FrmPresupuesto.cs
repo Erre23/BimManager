@@ -3,6 +3,8 @@ using CapaLogica;
 using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
@@ -20,8 +22,9 @@ namespace CapaPresentacion
             SetAccion(FormAccion.ninguno);
         }
 
-        private FormAccion Accion;
-        private Presupuesto CurrentPresupuesto;
+        private FormAccion _accion;
+        private Presupuesto _currentPresupuesto;
+        private List<PresupuestoCategoria> _presupuestoCategorias;
 
         public void Botones_Enabled(bool nuevo, bool buscar, bool anular, bool guardar, bool cancelar)
         {
@@ -41,6 +44,10 @@ namespace CapaPresentacion
             BnBuscarCliente.Enabled = enabled;
             CbProyectoNombre.Enabled = enabled;
             BnAgregarProyecto.Enabled = enabled;
+            TbProyectoAreaTotal.Enabled = enabled;
+            TbProyectoPisos.Enabled = enabled;
+            CbPlan.Enabled = enabled;
+            DgvPresupuestoCategoria.Enabled = enabled;
         }
 
         public void Controles_Clear()
@@ -53,13 +60,17 @@ namespace CapaPresentacion
             TbNumeroDocumento.Clear();
             CbProyectoNombre.SelectedIndex = -1;
             CbProyectoNombre.Items.Clear();
+            TbProyectoAreaTotal.Clear();
+            TbProyectoAreaTechada.Clear();
+            TbProyectoPisos.Clear();
+            DgvPresupuestoCategoria.Rows.Clear();
         }
 
         public void SetAccion(FormAccion accion)
         {
-            this.Accion = accion;
-            this.CurrentPresupuesto = null;
-            switch (this.Accion)
+            this._accion = accion;
+            this._currentPresupuesto = null;
+            switch (this._accion)
             {
                 case FormAccion.ninguno:
                     Botones_Enabled(true, true, false, false, false);
@@ -70,6 +81,7 @@ namespace CapaPresentacion
                     Botones_Enabled(false, false, false, true, true);
                     Controles_Input_Enabled(true);
                     Controles_Clear();
+                    PresupuestoCategoria_Cargar_For_New();
                     break;
                 case FormAccion.visualizar:
                     Botones_Enabled(true, true, true, false, false);
@@ -87,10 +99,16 @@ namespace CapaPresentacion
         public void Proyecto_Clear()
         {
             TbProyectoDireccion.Clear();
-            TbProyectoArea.Clear();
-        }
+            TbProyectoAreaTotal.Clear();
+		}
 
-        public void Proyecto_Cargar(List<Proyecto> proyectos)
+		public void Plan_Clear()
+		{
+			TbPlanPrecio.Clear();
+			TbPlanPlazo.Clear();
+		}
+
+		public void Proyecto_Cargar(List<Proyecto> proyectos)
         {
             CbProyectoNombre.Items.Clear();
             CbProyectoNombre.DisplayMember = "Nombre";
@@ -100,16 +118,115 @@ namespace CapaPresentacion
             }
 
             if (CbProyectoNombre.Items.Count > 0) CbProyectoNombre.SelectedIndex = 0;
+		}
+
+        public void PresupuestoCategoria_Cargar_For_New()
+        {
+            DgvPresupuestoCategoria.Rows.Clear();
+            PresupuestoCategoria_Cargar_For_New(_presupuestoCategorias);
+		}
+
+		public void PresupuestoCategoria_Cargar_For_New(List<PresupuestoCategoria> presupuestoCategorias)
+		{
+			foreach (var cat in presupuestoCategorias)
+			{
+				var presupuestoDetalle = new PresupuestoDetalle
+				{
+					PresupuestoCategoriaID = cat.PresupuestoCategoriaID,
+					PresupuestoCategoria = cat,
+                    Porcentaje = cat.Porcentaje
+				};
+
+				DgvPresupuestoCategoria_AddRow(presupuestoDetalle);
+
+                if (cat.SubPresupuestoCategorias.Count() > 0) PresupuestoCategoria_Cargar_For_New(cat.SubPresupuestoCategorias);
+			}
+		}
+
+		public void DgvPresupuestoCategoria_AddRow(PresupuestoDetalle presupuestoDetalle)
+        {
+            var index = DgvPresupuestoCategoria.Rows.Add(
+				presupuestoDetalle.Seleccionar, 
+                presupuestoDetalle.PresupuestoCategoria.Nombre,
+				presupuestoDetalle.PresupuestoCategoria.Observaciones,
+                presupuestoDetalle.PresupuestoCategoria.Porcentaje,
+                presupuestoDetalle.Importe
+				);
+
+            DgvPresupuestoCategoria.Rows[index].Tag = presupuestoDetalle;
+            if (presupuestoDetalle.PresupuestoCategoria.PadrePresupuestoCategoriaID == null)
+            {
+                DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = false;
+                DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Khaki;
+            }
+            else
+            {
+				DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = true;
+				DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Gainsboro;
+			}
         }
 
-        private void FrmPresupuesto_FormClosed(object sender, FormClosedEventArgs e)
+		private void CalcularAreaTechada()
+		{
+			var areaString = TbProyectoAreaTotal.Text.Trim();
+
+			if (!string.IsNullOrEmpty(areaString))
+			{
+				var area = Convert.ToDecimal(areaString);
+				if (area > 0)
+				{
+
+					var areaTechada = area * 0.7m;
+					TbProyectoAreaTechada.Text = areaTechada.ToString("#0");
+				}
+				else
+				{
+					TbProyectoAreaTechada.Clear();
+				}
+			}
+			else
+			{
+				TbProyectoAreaTechada.Clear();
+			}
+		}
+
+        private void CalcularMontoTotal()
+        {
+            TbMontoTotal.Clear();
+            var areaTechada = Convert.ToDecimal( string.IsNullOrEmpty(TbProyectoAreaTechada.Text.Trim()) ? "0" : TbProyectoAreaTechada.Text.Trim());
+            var pisos = Convert.ToDecimal(string.IsNullOrEmpty(TbProyectoPisos.Text.Trim()) ? "0" : TbProyectoPisos.Text.Trim()); ;
+            var plan = CbPlan.SelectedItem as Plan;
+            if (areaTechada > 0 && pisos > 0 && plan != null)
+            {
+                var montoTotalPosibleACobrar = areaTechada * pisos * plan.CostoPorM2;
+                var montoTotalACobrar = 0m;
+
+                for (int index = 0; index < DgvPresupuestoCategoria.Rows.Count; index++)
+                {
+                    if (!DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly)
+                    {
+                        var presupuestoDetalle = DgvPresupuestoCategoria.Rows[index].Tag as PresupuestoDetalle;
+                        var montoDetalle = montoTotalPosibleACobrar * (presupuestoDetalle.Seleccionar ? (presupuestoDetalle.Porcentaje.Value / 100m) : 0m);
+                        presupuestoDetalle.Importe = montoDetalle;
+                        montoTotalACobrar += montoDetalle;
+
+                        DgvPresupuestoCategoria.Rows[index].Tag = presupuestoDetalle;
+                        DgvPresupuestoCategoria.Rows[index].Cells["colImporte"].Value = presupuestoDetalle.Importe.ToString("#0.00");
+					}
+                }
+
+                TbMontoTotal.Text = montoTotalACobrar.ToString("#0.00");
+            }
+        }
+
+		private void FrmPresupuesto_FormClosed(object sender, FormClosedEventArgs e)
         {
             this._menu.Enabled = true;
         }
 
         private void FrmPresupuesto_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((this.Accion == FormAccion.nuevo || this.Accion == FormAccion.editar) &&
+            if ((this._accion == FormAccion.nuevo || this._accion == FormAccion.editar) &&
                 MessageBox.Show(this, "¿Está seguro de cerrar esta ventana? los datos que no han sido guardados se perderán", "Un momento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;
@@ -129,6 +246,18 @@ namespace CapaPresentacion
                 }
 
                 if (CbTipoDocumentoIdentidad.Items.Count > 0) CbTipoDocumentoIdentidad.SelectedIndex = 0;
+
+				CbPlan.Items.Clear();
+				CbPlan.DisplayMember = "Nombre";
+				var planes = await LogPlan.Instancia.PlanListarActivos();
+				foreach (var item in planes)
+				{
+					CbPlan.Items.Add(item);
+				}
+
+				if (CbPlan.Items.Count > 0) CbPlan.SelectedIndex = 0;
+
+				_presupuestoCategorias = await LogPresupuestoCategoria.Instancia.PresupuestoCategoriaBuscarTodos();
             }
             catch (Exception ex)
             {
@@ -242,7 +371,7 @@ namespace CapaPresentacion
                 else
                 {
                     TbCliente.Text = cliente.RazonSocialOrApellidosYNombres;
-                    Proyecto_Cargar(cliente.Proyectos);
+                    Proyecto_Cargar(cliente.Proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
                 }
                 BnBuscarCliente.Enabled = true;
             }
@@ -264,5 +393,50 @@ namespace CapaPresentacion
                 
             }
         }
-    }
+
+		private void TbProyectoAreaTotal_TextChanged(object sender, EventArgs e)
+		{
+            CalcularAreaTechada();
+            CalcularMontoTotal();
+		}
+
+		private void TbProyectoPisos_TextChanged(object sender, EventArgs e)
+		{
+			CalcularMontoTotal();
+		}
+
+		private void CbPlan_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Plan_Clear();
+			var plan = CbPlan.SelectedItem as Plan;
+			if (plan != null)
+			{
+                TbPlanPrecio.Text = plan.CostoPorM2.ToString("#0");
+                TbPlanPlazo.Text = plan.PlazoRango;
+			}
+
+			CalcularMontoTotal();
+		}
+
+		private void DgvPresupuestoCategoria_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+            //MessageBox.Show("cambio el valor");
+		}
+
+		private void DgvPresupuestoCategoria_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			//MessageBox.Show("terminó la edición");
+		}
+
+		private void DgvPresupuestoCategoria_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0 && e.RowIndex >= 0 && !DgvPresupuestoCategoria.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly)
+			{
+                var presupuestoDetalle = DgvPresupuestoCategoria.Rows[e.RowIndex].Tag as PresupuestoDetalle;
+                presupuestoDetalle.Seleccionar = !presupuestoDetalle.Seleccionar;
+                DgvPresupuestoCategoria.Rows[e.RowIndex].Tag = presupuestoDetalle;
+                CalcularMontoTotal();
+			}
+		}
+	}
 }
