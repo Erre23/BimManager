@@ -68,6 +68,12 @@
     <Compile Include="FrmPrespuestoCategoria.Designer.cs">
       <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPresupuestoBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPresupuestoBuscar.Designer.cs">
+      <DependentUpon>FrmPresupuestoBuscar.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPresupuesto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPrespuestoCategoria.resx">
       <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPresupuestoBuscar.resx">
+      <DependentUpon>FrmPresupuestoBuscar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPresupuesto.resx">
       <DependentUpon>FrmPresupuesto.cs</DependentUpon>

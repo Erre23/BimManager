@@ -17,9 +17,9 @@ namespace CapaEntidad
 		public int ProyectoID { get; set; }
 		public Proyecto Proyecto { get; set; }
 		public DateTime FechaExpiracion { get; set; }
-		public int AnulacionUsuarioID { get; set; }
+		public int? AnulacionUsuarioID { get; set; }
 		public Usuario AnulacionUsuario { get; set; }
-		public DateTime AnulacionFecha { get; set; }
+		public DateTime? AnulacionFecha { get; set; }
 		public string AnulacionMotivo { get; set; }
 		public bool Activo { get; set; }
 		public decimal AreaTotal { get; set; }

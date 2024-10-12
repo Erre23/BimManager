@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LbTitulo = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TbCreadoPor = new System.Windows.Forms.TextBox();
@@ -64,6 +64,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.GbCategorias = new System.Windows.Forms.GroupBox();
             this.DgvPresupuestoCategoria = new System.Windows.Forms.DataGridView();
+            this.colSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colObservaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAntecedentes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colImporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BnNuevo = new System.Windows.Forms.Button();
             this.BnBuscar = new System.Windows.Forms.Button();
             this.BnAnular = new System.Windows.Forms.Button();
@@ -79,11 +84,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.TbMontoTotal = new CapaPresentacion.Controls.CustomTextBox();
-            this.colSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colObservaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAntecedentes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colImporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -189,11 +189,13 @@
             // TbEstado
             // 
             this.TbEstado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TbEstado.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TbEstado.Location = new System.Drawing.Point(480, 25);
             this.TbEstado.Name = "TbEstado";
             this.TbEstado.ReadOnly = true;
             this.TbEstado.Size = new System.Drawing.Size(215, 26);
             this.TbEstado.TabIndex = 3;
+            this.TbEstado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
@@ -213,6 +215,7 @@
             this.TbNumeroPresupuesto.ReadOnly = true;
             this.TbNumeroPresupuesto.Size = new System.Drawing.Size(215, 26);
             this.TbNumeroPresupuesto.TabIndex = 1;
+            this.TbNumeroPresupuesto.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1
             // 
@@ -359,7 +362,7 @@
             // TbProyectoAreaTechada
             // 
             this.TbProyectoAreaTechada.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TbProyectoAreaTechada.Location = new System.Drawing.Point(369, 93);
+            this.TbProyectoAreaTechada.Location = new System.Drawing.Point(402, 93);
             this.TbProyectoAreaTechada.Name = "TbProyectoAreaTechada";
             this.TbProyectoAreaTechada.ReadOnly = true;
             this.TbProyectoAreaTechada.Size = new System.Drawing.Size(100, 26);
@@ -372,9 +375,9 @@
             this.label12.Location = new System.Drawing.Point(256, 98);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(110, 18);
+            this.label12.Size = new System.Drawing.Size(143, 18);
             this.label12.TabIndex = 7;
-            this.label12.Text = "Área Techada :";
+            this.label12.Text = "Área Techada (m2):";
             // 
             // TbProyectoAreaTotal
             // 
@@ -399,12 +402,12 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(50, 98);
+            this.label11.Location = new System.Drawing.Point(17, 98);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(86, 18);
+            this.label11.Size = new System.Drawing.Size(119, 18);
             this.label11.TabIndex = 5;
-            this.label11.Text = "Área Total :";
+            this.label11.Text = "Área Total (m2):";
             // 
             // BnAgregarProyecto
             // 
@@ -481,8 +484,53 @@
             this.DgvPresupuestoCategoria.Size = new System.Drawing.Size(900, 226);
             this.DgvPresupuestoCategoria.TabIndex = 0;
             this.DgvPresupuestoCategoria.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPresupuestoCategoria_CellContentClick);
-            this.DgvPresupuestoCategoria.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPresupuestoCategoria_CellEndEdit);
-            this.DgvPresupuestoCategoria.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPresupuestoCategoria_CellValueChanged);
+            this.DgvPresupuestoCategoria.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvPresupuestoCategoria_KeyDown);
+            // 
+            // colSeleccionar
+            // 
+            this.colSeleccionar.HeaderText = "Seleccionar";
+            this.colSeleccionar.MinimumWidth = 6;
+            this.colSeleccionar.Name = "colSeleccionar";
+            this.colSeleccionar.Width = 125;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.HeaderText = "Descripción";
+            this.colDescripcion.MinimumWidth = 6;
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDescripcion.Width = 300;
+            // 
+            // colObservaciones
+            // 
+            this.colObservaciones.HeaderText = "Observacion";
+            this.colObservaciones.MinimumWidth = 6;
+            this.colObservaciones.Name = "colObservaciones";
+            this.colObservaciones.ReadOnly = true;
+            this.colObservaciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colObservaciones.Width = 300;
+            // 
+            // colAntecedentes
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colAntecedentes.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colAntecedentes.HeaderText = "Antecedentes";
+            this.colAntecedentes.MinimumWidth = 6;
+            this.colAntecedentes.Name = "colAntecedentes";
+            this.colAntecedentes.ReadOnly = true;
+            this.colAntecedentes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colImporte
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colImporte.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colImporte.HeaderText = "Importe S/";
+            this.colImporte.MinimumWidth = 6;
+            this.colImporte.Name = "colImporte";
+            this.colImporte.ReadOnly = true;
+            this.colImporte.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colImporte.Width = 125;
             // 
             // BnNuevo
             // 
@@ -657,52 +705,6 @@
             this.TbMontoTotal.TabIndex = 12;
             this.TbMontoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TbMontoTotal.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
-            // 
-            // colSeleccionar
-            // 
-            this.colSeleccionar.HeaderText = "Seleccionar";
-            this.colSeleccionar.MinimumWidth = 6;
-            this.colSeleccionar.Name = "colSeleccionar";
-            this.colSeleccionar.Width = 125;
-            // 
-            // colDescripcion
-            // 
-            this.colDescripcion.HeaderText = "Descripción";
-            this.colDescripcion.MinimumWidth = 6;
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.ReadOnly = true;
-            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colDescripcion.Width = 300;
-            // 
-            // colObservaciones
-            // 
-            this.colObservaciones.HeaderText = "Observacion";
-            this.colObservaciones.MinimumWidth = 6;
-            this.colObservaciones.Name = "colObservaciones";
-            this.colObservaciones.ReadOnly = true;
-            this.colObservaciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colObservaciones.Width = 300;
-            // 
-            // colAntecedentes
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colAntecedentes.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colAntecedentes.HeaderText = "Antecedentes";
-            this.colAntecedentes.MinimumWidth = 6;
-            this.colAntecedentes.Name = "colAntecedentes";
-            this.colAntecedentes.ReadOnly = true;
-            this.colAntecedentes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colImporte
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colImporte.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colImporte.HeaderText = "Importe S/";
-            this.colImporte.MinimumWidth = 6;
-            this.colImporte.Name = "colImporte";
-            this.colImporte.ReadOnly = true;
-            this.colImporte.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colImporte.Width = 125;
             // 
             // FrmPresupuesto
             // 

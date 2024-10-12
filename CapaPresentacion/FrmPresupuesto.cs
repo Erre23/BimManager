@@ -56,19 +56,23 @@ namespace CapaPresentacion
             DtpFechaDesde.Text = string.Empty;
             DtpFechaHasta.Text = string.Empty;
             TbCreadoPor.Clear();
+            CbTipoDocumentoIdentidad.SelectedIndex = -1;
             TbNumeroDocumento.Clear();
             CbProyectoNombre.SelectedIndex = -1;
             CbProyectoNombre.Items.Clear();
+            TbProyectoDireccion.Clear();
             TbProyectoAreaTotal.Clear();
             TbProyectoAreaTechada.Clear();
             TbProyectoPisos.Clear();
+            CbPlan.SelectedIndex = -1;
+            TbPlanPrecio.Clear();
+            TbPlanPlazo.Clear();
             DgvPresupuestoCategoria.Rows.Clear();
         }
 
         public void SetAccion(FormAccion accion)
         {
             this._accion = accion;
-            this._currentPresupuesto = null;
             switch (this._accion)
             {
                 case FormAccion.ninguno:
@@ -78,6 +82,7 @@ namespace CapaPresentacion
                     DtpFechaDesde.Value = DateTime.Now;
                     break;
                 case FormAccion.nuevo:
+                    this._currentPresupuesto = null;
                     Botones_Enabled(false, false, false, true, true);
                     Controles_Input_Enabled(true);
                     Controles_Clear();
@@ -145,26 +150,34 @@ namespace CapaPresentacion
 
 		public void DgvPresupuestoCategoria_AddRow(PresupuestoDetalle presupuestoDetalle)
         {
-            var index = DgvPresupuestoCategoria.Rows.Add(
-				presupuestoDetalle.Seleccionar, 
-                presupuestoDetalle.PresupuestoCategoria.Nombre,
-				presupuestoDetalle.PresupuestoCategoria.Observaciones,
-                $"{presupuestoDetalle.PresupuestoCategoria.Porcentaje}%",
-                presupuestoDetalle.Importe
-				);
-
-            DgvPresupuestoCategoria.Rows[index].Tag = presupuestoDetalle;
+            var index = -1;
             if (presupuestoDetalle.PresupuestoCategoria.PadrePresupuestoCategoriaID == null)
             {
+                index = DgvPresupuestoCategoria.Rows.Add(
+                    presupuestoDetalle.Seleccionar,
+                    presupuestoDetalle.PresupuestoCategoria.Nombre,
+                    presupuestoDetalle.PresupuestoCategoria.Observaciones,
+                    $"{presupuestoDetalle.PresupuestoCategoria.Porcentaje}%",
+                    presupuestoDetalle.Importe
+                );                
+
                 DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = false;
                 DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Khaki;
             }
             else
             {
-				DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = true;
+                index = DgvPresupuestoCategoria.Rows.Add(
+                    presupuestoDetalle.Seleccionar,
+                    presupuestoDetalle.PresupuestoCategoria.Nombre,
+                    presupuestoDetalle.PresupuestoCategoria.Observaciones
+                );
+
+                DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = true;
 				DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Gainsboro;
                 DgvPresupuestoCategoria.Rows[index].Cells[0].Style.BackColor = Color.Black;
             }
+
+            DgvPresupuestoCategoria.Rows[index].Tag = presupuestoDetalle;
         }
 
 		private void CalcularAreaTechada()
@@ -176,9 +189,8 @@ namespace CapaPresentacion
 				var area = Convert.ToDecimal(areaString);
 				if (area > 0)
 				{
-
 					var areaTechada = area * 0.7m;
-					TbProyectoAreaTechada.Text = areaTechada.ToString("#0");
+					TbProyectoAreaTechada.Text = areaTechada.ToString("#,#0");
 				}
 				else
 				{
@@ -212,15 +224,28 @@ namespace CapaPresentacion
                         montoTotalACobrar += montoDetalle;
 
                         DgvPresupuestoCategoria.Rows[index].Tag = presupuestoDetalle;
-                        DgvPresupuestoCategoria.Rows[index].Cells["colImporte"].Value = presupuestoDetalle.Importe.ToString("#0.00");
+                        DgvPresupuestoCategoria.Rows[index].Cells["colImporte"].Value = presupuestoDetalle.Importe.ToString("#,#0.00");
 					}
                 }
 
-                TbMontoTotal.Text = montoTotalACobrar.ToString("#0.00");
+                TbMontoTotal.Text = montoTotalACobrar.ToString("#,#0.00");
             }
         }
 
-		private void FrmPresupuesto_FormClosed(object sender, FormClosedEventArgs e)
+        private void CheckedCategoria(int rowIndex)
+        {
+            var presupuestoDetalle = DgvPresupuestoCategoria.Rows[rowIndex].Tag as PresupuestoDetalle;
+            presupuestoDetalle.Seleccionar = !presupuestoDetalle.Seleccionar;
+            DgvPresupuestoCategoria.Rows[rowIndex].Tag = presupuestoDetalle;
+            CalcularMontoTotal();
+        }
+
+        private void Presupuesto_Mostrar(Presupuesto presupuesto)
+        {
+
+        }
+
+        private void FrmPresupuesto_FormClosed(object sender, FormClosedEventArgs e)
         {
             this._menu.Enabled = true;
         }
@@ -245,8 +270,7 @@ namespace CapaPresentacion
                 {
                     CbTipoDocumentoIdentidad.Items.Add(item);
                 }
-
-                if (CbTipoDocumentoIdentidad.Items.Count > 0) CbTipoDocumentoIdentidad.SelectedIndex = 0;
+                CbTipoDocumentoIdentidad.SelectedIndex = -1;
 
 				CbPlan.Items.Clear();
 				CbPlan.DisplayMember = "Nombre";
@@ -255,14 +279,13 @@ namespace CapaPresentacion
 				{
 					CbPlan.Items.Add(item);
 				}
-
-				if (CbPlan.Items.Count > 0) CbPlan.SelectedIndex = 0;
+                CbPlan.SelectedIndex = -1;
 
 				_presupuestoCategorias = await LogPresupuestoCategoria.Instancia.PresupuestoCategoriaBuscarTodos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -276,15 +299,24 @@ namespace CapaPresentacion
 
         private void BnBuscar_Click(object sender, EventArgs e)
         {
-
+            var form = new FrmPresupuestoBuscar();
+            form.WindowState = FormWindowState.Normal;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                Presupuesto_Mostrar(form.GetPresupuestoSeleccionado);
+                SetAccion(FormAccion.visualizar);
+            }
+            form.Dispose();
         }
 
-        private void BnAnular_Click(object sender, EventArgs e)
+        private async void BnAnular_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void BnGuardar_Click(object sender, EventArgs e)
+
+        private async void BnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -324,7 +356,7 @@ namespace CapaPresentacion
                     return;
                 }
 
-                if (DtpFechaDesde.Value.Date < DtpFechaHasta.Value.Date)
+                if (DtpFechaDesde.Value.Date > DtpFechaHasta.Value.Date)
                 {
                     MessageBox.Show(this, "La fecha de vigencia de inicial no puede ser mayor a la fecha de termino", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -332,7 +364,18 @@ namespace CapaPresentacion
 
                 var importeTotal = Convert.ToDecimal(!string.IsNullOrEmpty(TbMontoTotal.Text.Trim()) ? TbMontoTotal.Text.Trim() : "0.00");
 
+
+
+                if (importeTotal <= 0)
+                {
+                    MessageBox.Show(this, "No existen categorías seleccionadas", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (this._accion == FormAccion.nuevo) this._currentPresupuesto = new Presupuesto();
+
+                var areaLibre = areaTotal - areaTechada;
+                var areaLibrePorcentaje = Convert.ToByte((areaLibre / areaTotal) * 100);
 
                 this._currentPresupuesto.CreacionUsuarioID = this._usuario.UsuarioID;
                 this._currentPresupuesto.CreacionUsuario = this._usuario;
@@ -344,7 +387,8 @@ namespace CapaPresentacion
                 this._currentPresupuesto.FechaExpiracion = DtpFechaHasta.Value;
                 this._currentPresupuesto.AreaTotal = areaTotal;
                 this._currentPresupuesto.AreaTechada = areaTechada;
-                this._currentPresupuesto.AreaLibre = areaTotal - areaTechada;
+                this._currentPresupuesto.AreaLibre = areaLibre;
+                this._currentPresupuesto.AreaLibrePorcentaje = areaLibrePorcentaje;
                 this._currentPresupuesto.NumeroPisos = pisos;
                 this._currentPresupuesto.PlanID = plan.PlanID;
                 this._currentPresupuesto.Plan = plan;
@@ -360,6 +404,12 @@ namespace CapaPresentacion
                     }
                 }
 
+                if (this._currentPresupuesto.PresupuestoDetalles.Count() == 0)
+                {
+                    MessageBox.Show(this, "No existen categorías seleccionadas", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (MessageBox.Show(this, "¿Está seguro guardar los datos?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     return;
@@ -371,7 +421,7 @@ namespace CapaPresentacion
 
                 if (this._accion == FormAccion.nuevo)
                 {
-                    //this._currentPresupuesto.PresupuestoID = await LogProyecto.Instancia.ProyectoInsertar(this.CurrentProyecto);
+                    this._currentPresupuesto = await LogPresupuesto.Instancia.PresupuestoInsertar(this._currentPresupuesto);
                     this._currentPresupuesto.Activo = true;
                 }
 
@@ -381,7 +431,7 @@ namespace CapaPresentacion
 
                 SetAccion(FormAccion.visualizar);
                 TbNumeroPresupuesto.Text = this._currentPresupuesto.PresupuestoID.ToString();
-                TbEstado.Text = this._currentPresupuesto.Activo ? "VIGENTE" : "";
+                TbEstado.Text = this._currentPresupuesto.Activo ? "ACTIVO" : "";
             }
             catch (Exception ex)
             {
@@ -515,32 +565,28 @@ namespace CapaPresentacion
 			var plan = CbPlan.SelectedItem as Plan;
 			if (plan != null)
 			{
-                TbPlanPrecio.Text = plan.CostoPorM2.ToString("#0");
+                TbPlanPrecio.Text = plan.CostoPorM2.ToString("#,#0");
                 TbPlanPlazo.Text = plan.PlazoRango;
 			}
 
 			CalcularMontoTotal();
 		}
 
-		private void DgvPresupuestoCategoria_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-		{
-            //MessageBox.Show("cambio el valor");
-		}
-
-		private void DgvPresupuestoCategoria_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-		{
-			//MessageBox.Show("terminó la edición");
-		}
-
 		private void DgvPresupuestoCategoria_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			if (e.ColumnIndex == 0 && e.RowIndex >= 0 && !DgvPresupuestoCategoria.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly)
 			{
-                var presupuestoDetalle = DgvPresupuestoCategoria.Rows[e.RowIndex].Tag as PresupuestoDetalle;
-                presupuestoDetalle.Seleccionar = !presupuestoDetalle.Seleccionar;
-                DgvPresupuestoCategoria.Rows[e.RowIndex].Tag = presupuestoDetalle;
-                CalcularMontoTotal();
-			}
+                CheckedCategoria(e.RowIndex);
+            }
 		}
-	}
+
+        private void DgvPresupuestoCategoria_KeyDown(object sender, KeyEventArgs e)
+        {
+            var row = DgvPresupuestoCategoria.CurrentRow;
+            if (e.KeyCode == Keys.Space && row != null)
+            {
+                CheckedCategoria(row.Index);
+            }
+        }
+    }
 }

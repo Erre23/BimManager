@@ -56,6 +56,7 @@
     <Compile Include="Apis\Response.cs" />
     <Compile Include="LogPlan.cs" />
     <Compile Include="LogPresupuestoCategoria.cs" />
+    <Compile Include="LogPresupuesto.cs" />
     <Compile Include="LogProyecto.cs" />
     <Compile Include="LogDepartamento.cs" />
     <Compile Include="LogTipoDocumentoSunat.cs" />

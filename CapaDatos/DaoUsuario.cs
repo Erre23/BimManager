@@ -171,6 +171,38 @@ namespace CapaDatos
 
             return usuario;
         }
+        public async Task<Usuario> BuscarPorUsuarioID(int usuerioID)
+        {
+            var cmd = (SqlCommand)null;
+            var usuario = (Usuario)null;
+            try
+            {
+                SqlConnection cnn = Conexion.Instancia.Conectar();
+                cmd = new SqlCommand("spUsuarioBuscarPorUsuarioID", cnn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(CreateParams.Int("UsuarioID", usuerioID));
+                await cnn.OpenAsync();
+
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                while (await dr.ReadAsync())
+                {
+                    usuario = ReadEntidad(dr);
+                }
+                dr.Close();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                cmd.Connection.Close();
+                cmd.Dispose();
+            }
+
+            return usuario;
+        }
 
         private Usuario ReadEntidad(SqlDataReader dr, bool traerPassword = false)
         {
