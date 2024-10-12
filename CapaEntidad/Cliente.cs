@@ -19,6 +19,7 @@ namespace CapaEntidad
         public string Celular { get; set; }
         public string Email { get; set; }
         public bool Activo { get; set; } = true;
+        public List<Proyecto> Proyectos { get; set; }
 
         public string TipoDocumentoIdentidad_RazonSocialOrApellidosYNombres
         {

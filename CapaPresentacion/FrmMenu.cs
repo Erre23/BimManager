@@ -69,7 +69,7 @@ namespace CapaPresentacion
 
         private void mnuPresupuesto_Click(object sender, EventArgs e)
         {
-            var form = new FrmPresupuesto((ToolStripMenuItem)sender);
+            var form = new FrmPresupuesto((ToolStripMenuItem)sender, this._currentUsuario);
             form.MdiParent = this;
             form.Show();
         }

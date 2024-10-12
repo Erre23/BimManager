@@ -34,9 +34,20 @@ namespace CapaLogica
             return await DaoCliente.Instancia.BuscarPorClienteID(idCliente);
         }
 
-        public async Task<Cliente> ClienteBuscarPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad)
+        public async Task<Cliente> ClienteBuscarPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad, bool buscarProyectos = false)
         {
-            return await DaoCliente.Instancia.BuscarPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
+            var cliente = await DaoCliente.Instancia.BuscarPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
+            if (cliente != null && buscarProyectos) 
+            {
+                cliente.Proyectos = await DaoProyecto.Instancia.BuscarPorClienteID(cliente.ClienteID);
+                foreach (var proyecto in cliente.Proyectos)
+                {
+                    proyecto.DireccionDepartamento = await DaoDepartamento.Instancia.BuscarPorDepartamentoID(proyecto.DireccionDepartamentoID);
+                    proyecto.DireccionProvincia = await DaoProvincia.Instancia.BuscarPorProvinciaID(proyecto.DireccionProvinciaID);
+                    proyecto.DireccionDistrito = await DaoDistrito.Instancia.BuscarPorDistritoID(proyecto.DireccionDistritoID);
+                }
+            }
+            return cliente;
 		}
 
 		public async Task<Cliente> ClienteConsultaApiPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad)

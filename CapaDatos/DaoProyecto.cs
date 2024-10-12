@@ -154,10 +154,10 @@ namespace CapaDatos
             return Proyecto;
         }
 
-        public async Task<Proyecto> BuscarPorClienteID(int clienteID)
+        public async Task<List<Proyecto>> BuscarPorClienteID(int clienteID)
         {
             var cmd = (SqlCommand)null;
-            var Proyecto = (Proyecto)null;
+            var listaProyectos = new List<Proyecto>();
             try
             {
                 SqlConnection cnn = Conexion.Instancia.Conectar();
@@ -170,7 +170,8 @@ namespace CapaDatos
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
                 {
-                    Proyecto = await ReadEntidad(dr);
+                    var proyecto = await ReadEntidad(dr);
+                    listaProyectos.Add(proyecto);
                 }
                 dr.Close();
             }
@@ -184,7 +185,7 @@ namespace CapaDatos
                 cmd.Dispose();
             }
 
-            return Proyecto;
+            return listaProyectos;
         }
 
         public async Task<List<Proyecto>> BusquedaGeneral(int? clienteID, string nombre, short? distritoID, short? provinciaID, short? departamentoID)

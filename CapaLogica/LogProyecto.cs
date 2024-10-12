@@ -34,7 +34,7 @@ namespace CapaLogica
             return await DaoProyecto.Instancia.BuscarPorProyectoID(proyectoID);
         }
 
-        public async Task<Proyecto> ProyectoBuscarPorClienteID(int clienteID)
+        public async Task<List<Proyecto>> ProyectoBuscarPorClienteID(int clienteID)
         {
             return await DaoProyecto.Instancia.BuscarPorClienteID(clienteID);
         }

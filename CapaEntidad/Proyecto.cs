@@ -21,5 +21,19 @@ namespace CapaEntidad
 		public short DireccionDepartamentoID { get; set; }
 		public Departamento DireccionDepartamento { get; set; }
 		public bool Activo { get; set; }
+
+		public string DireccionCompleta
+		{
+			get
+			{
+				var direccionCompleta = this.Direccion ?? "";
+				direccionCompleta += (string.IsNullOrEmpty(this.DireccionReferencia) ? "" : $", Ref: {this.DireccionReferencia}");
+				direccionCompleta += $" - {this.DireccionDistrito?.Nombre ?? ""}";
+                direccionCompleta += $" - {this.DireccionProvincia?.Nombre ?? ""}";
+                direccionCompleta += $" - {this.DireccionDepartamento?.Nombre ?? ""}";
+
+                return direccionCompleta;
+			}
+		}
 	}
 }

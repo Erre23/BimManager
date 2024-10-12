@@ -11,6 +11,7 @@ namespace CapaPresentacion
         ninguno,
         nuevo,
         editar,
-        buscar
+        buscar,
+        visualizar
     }
 }
