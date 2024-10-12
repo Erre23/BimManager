@@ -37,7 +37,6 @@ namespace CapaPresentacion
 
         public void Controles_Input_Enabled(bool enabled)
         {
-            DtpFechaDesde.Enabled = enabled;
             DtpFechaHasta.Enabled = enabled;
             CbTipoDocumentoIdentidad.Enabled = enabled;
             TbNumeroDocumento.Enabled = enabled;
@@ -76,6 +75,7 @@ namespace CapaPresentacion
                     Botones_Enabled(true, true, false, false, false);
                     Controles_Input_Enabled(false);
                     Controles_Clear();
+                    DtpFechaDesde.Value = DateTime.Now;
                     break;
                 case FormAccion.nuevo:
                     Botones_Enabled(false, false, false, true, true);
@@ -92,7 +92,7 @@ namespace CapaPresentacion
 
         public void Cliente_Clear()
         {
-            TbNumeroDocumento.Tag = null;
+            TbCliente.Tag = null;
             TbCliente.Clear();
         }
 
@@ -149,7 +149,7 @@ namespace CapaPresentacion
 				presupuestoDetalle.Seleccionar, 
                 presupuestoDetalle.PresupuestoCategoria.Nombre,
 				presupuestoDetalle.PresupuestoCategoria.Observaciones,
-                presupuestoDetalle.PresupuestoCategoria.Porcentaje,
+                $"{presupuestoDetalle.PresupuestoCategoria.Porcentaje}%",
                 presupuestoDetalle.Importe
 				);
 
@@ -163,7 +163,8 @@ namespace CapaPresentacion
             {
 				DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = true;
 				DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Gainsboro;
-			}
+                DgvPresupuestoCategoria.Rows[index].Cells[0].Style.BackColor = Color.Black;
+            }
         }
 
 		private void CalcularAreaTechada()
@@ -285,7 +286,109 @@ namespace CapaPresentacion
 
         private void BnGuardar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var datosFaltantes = "";
 
+                var cliente = TbCliente.Tag as Cliente;
+                if (cliente == null) datosFaltantes += "\n\r - Cliente";
+
+                var proyecto = CbProyectoNombre.SelectedItem as Proyecto;
+                if (proyecto == null) datosFaltantes += "\n\r - Proyecto";
+
+                var areaTotal = Convert.ToDecimal(!string.IsNullOrEmpty(TbProyectoAreaTotal.Text.Trim()) ? TbProyectoAreaTotal.Text.Trim() : "0.00");
+                var areaTechada = Convert.ToDecimal(!string.IsNullOrEmpty(TbProyectoAreaTechada.Text.Trim()) ? TbProyectoAreaTechada.Text.Trim() : "0.00");
+                var pisos = Convert.ToByte(!string.IsNullOrEmpty(TbProyectoPisos.Text.Trim()) ? TbProyectoPisos.Text.Trim() : "0");
+
+                if (areaTotal <= 0) datosFaltantes += "\n\r - Área Total";
+                if (pisos <= 0) datosFaltantes += "\n\r - N° Pisos";
+
+                var plan = CbPlan.SelectedItem as Plan;
+                if (plan == null) datosFaltantes += "\n\r - Plan";
+
+                if (!string.IsNullOrEmpty(datosFaltantes))
+                {
+                    MessageBox.Show(this, "Olvidó ingresar los siguientes datos: " + datosFaltantes, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (DateTime.Now.Date > DtpFechaDesde.Value.Date)
+                {
+                    MessageBox.Show(this, "La fecha de vigencia de inicio no puede ser menor a la fecha actual", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (DateTime.Now.Date > DtpFechaDesde.Value.Date)
+                {
+                    MessageBox.Show(this, "La fecha de vigencia de termino no puede ser menor a la fecha actual", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (DtpFechaDesde.Value.Date < DtpFechaHasta.Value.Date)
+                {
+                    MessageBox.Show(this, "La fecha de vigencia de inicial no puede ser mayor a la fecha de termino", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var importeTotal = Convert.ToDecimal(!string.IsNullOrEmpty(TbMontoTotal.Text.Trim()) ? TbMontoTotal.Text.Trim() : "0.00");
+
+                if (this._accion == FormAccion.nuevo) this._currentPresupuesto = new Presupuesto();
+
+                this._currentPresupuesto.CreacionUsuarioID = this._usuario.UsuarioID;
+                this._currentPresupuesto.CreacionUsuario = this._usuario;
+                this._currentPresupuesto.CreacionFecha = DateTime.Now;
+                this._currentPresupuesto.ClienteID = cliente.ClienteID;
+                this._currentPresupuesto.Cliente = cliente;
+                this._currentPresupuesto.ProyectoID = proyecto.ProyectoID;
+                this._currentPresupuesto.Proyecto = proyecto;
+                this._currentPresupuesto.FechaExpiracion = DtpFechaHasta.Value;
+                this._currentPresupuesto.AreaTotal = areaTotal;
+                this._currentPresupuesto.AreaTechada = areaTechada;
+                this._currentPresupuesto.AreaLibre = areaTotal - areaTechada;
+                this._currentPresupuesto.NumeroPisos = pisos;
+                this._currentPresupuesto.PlanID = plan.PlanID;
+                this._currentPresupuesto.Plan = plan;
+                this._currentPresupuesto.ImporteTotal = importeTotal;
+                this._currentPresupuesto.PresupuestoDetalles = new List<PresupuestoDetalle>();
+
+                for (int index = 0; index < DgvPresupuestoCategoria.Rows.Count; index++)
+                {
+                    var presupuestoDetalle = DgvPresupuestoCategoria.Rows[index].Tag as PresupuestoDetalle;
+                    if (presupuestoDetalle.Seleccionar)
+                    {
+                        this._currentPresupuesto.PresupuestoDetalles.Add(presupuestoDetalle);
+                    }
+                }
+
+                if (MessageBox.Show(this, "¿Está seguro guardar los datos?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    return;
+                }
+
+
+                BnGuardar.Enabled = false;
+                this.Cursor = Cursors.WaitCursor;
+
+                if (this._accion == FormAccion.nuevo)
+                {
+                    //this._currentPresupuesto.PresupuestoID = await LogProyecto.Instancia.ProyectoInsertar(this.CurrentProyecto);
+                    this._currentPresupuesto.Activo = true;
+                }
+
+                this.Cursor = Cursors.Default;
+                MessageBox.Show(this, "Los datos fueron guardados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BnGuardar.Enabled = true;
+
+                SetAccion(FormAccion.visualizar);
+                TbNumeroPresupuesto.Text = this._currentPresupuesto.PresupuestoID.ToString();
+                TbEstado.Text = this._currentPresupuesto.Activo ? "VIGENTE" : "";
+            }
+            catch (Exception ex)
+            {
+                this.Cursor = Cursors.Default;
+                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                BnGuardar.Enabled = true;
+            }
         }
 
         private void BnCancelar_Click(object sender, EventArgs e)
@@ -371,6 +474,7 @@ namespace CapaPresentacion
                 else
                 {
                     TbCliente.Text = cliente.RazonSocialOrApellidosYNombres;
+                    TbCliente.Tag = cliente;
                     Proyecto_Cargar(cliente.Proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
                 }
                 BnBuscarCliente.Enabled = true;

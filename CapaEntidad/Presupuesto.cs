@@ -30,6 +30,6 @@ namespace CapaEntidad
 		public byte PlanID { get; set; }
 		public Plan Plan { get; set; }
 		public decimal ImporteTotal { get; set; }
-		List<PresupuestoDetalle> PresupuestoDetalles { get; set; }
+		public List<PresupuestoDetalle> PresupuestoDetalles { get; set; }
     }
 }
