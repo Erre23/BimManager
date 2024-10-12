@@ -154,14 +154,14 @@ namespace CapaDatos
             return Proyecto;
         }
 
-        public async Task<Proyecto> BuscarPorCliente(int clienteID)
+        public async Task<Proyecto> BuscarPorClienteID(int clienteID)
         {
             var cmd = (SqlCommand)null;
             var Proyecto = (Proyecto)null;
             try
             {
                 SqlConnection cnn = Conexion.Instancia.Conectar();
-                cmd = new SqlCommand("spProyectoBuscarPorCliente", cnn);
+                cmd = new SqlCommand("spProyectoBuscarPorClienteID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));

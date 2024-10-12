@@ -130,7 +130,7 @@ namespace CapaDatos
             try
             {
                 SqlConnection cnn = Conexion.Instancia.Conectar();
-                cmd = new SqlCommand("spClienteBuscarPorIdCliente", cnn);
+                cmd = new SqlCommand("spClienteBuscarPorClienteID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
