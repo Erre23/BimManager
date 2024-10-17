@@ -93,7 +93,7 @@ namespace CapaDatos
         }
 
 
-        public async Task Deshabilitar(int idTipoDocumentoIdentidad)
+        public async Task Deshabilitar(int tipoDocumentoIdentidadID)
         {
             var cmd = (SqlCommand)null;
             SqlConnection cnn = Conexion.Instancia.Conectar();
@@ -105,7 +105,7 @@ namespace CapaDatos
                     cmd = new SqlCommand("spTipoDocumentoIdentidadDeshabilitar", cnn, tran);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", idTipoDocumentoIdentidad));
+                    cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
 
                     cmd.ExecuteNonQuery();
 
@@ -121,6 +121,40 @@ namespace CapaDatos
                     throw e;
                 }
             }
+        }
+
+        public async Task<TipoDocumentoIdentidad> BuscarPorTipoDocumentoIdentidadID(short tipoDocumentoIdentidadID)
+        {
+            var cmd = (SqlCommand)null;
+            var entidad = (TipoDocumentoIdentidad)null;
+            try
+            {
+                SqlConnection cnn = Conexion.Instancia.Conectar();
+                cmd = new SqlCommand("spTipoDocumentoIdentidadBuscarPorTipoDocumentoIdentidadID", cnn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
+
+                await cnn.OpenAsync();
+
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                while (await dr.ReadAsync())
+                {
+                    entidad = ReadEntidad(dr);
+                }
+                dr.Close();
+
+                cmd.Connection.Close();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Connection.Close();
+                cmd.Dispose();
+                throw e;
+            }
+
+            return entidad;
         }
 
         public async Task<List<TipoDocumentoIdentidad>> ListarActivos()

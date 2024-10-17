@@ -71,7 +71,7 @@ namespace CapaDatos
             }
         }
 
-        public async Task<Presupuesto> BuscarPorPresupuestoID(short PresupuestoID)
+        public async Task<Presupuesto> BuscarPorPresupuestoID(int PresupuestoID)
         {
             var cmd = (SqlCommand)null;
             var Presupuesto = (Presupuesto)null;
@@ -81,7 +81,7 @@ namespace CapaDatos
                 cmd = new SqlCommand("spPresupuestoBuscarPorPresupuestoID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(CreateParams.SmallInt("PresupuestoID", PresupuestoID));
+                cmd.Parameters.Add(CreateParams.Int("PresupuestoID", PresupuestoID));
                 await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();

@@ -12,8 +12,8 @@ namespace CapaDatos
         public SqlConnection Conectar()
         {
             SqlConnection cn = new SqlConnection();
-			cn.ConnectionString = "Data Source=UTSILAB736;Initial Catalog=BDBimManager;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;";
-			//cn.ConnectionString = "Data Source=localhost;Initial Catalog=BDBimManager;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;";
+			//cn.ConnectionString = "Data Source=UTSILAB736;Initial Catalog=BDBimManager;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;";
+			cn.ConnectionString = "Data Source=localhost;Initial Catalog=BDBimManager;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;";
 
 			return cn;
         }

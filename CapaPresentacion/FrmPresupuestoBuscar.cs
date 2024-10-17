@@ -66,6 +66,7 @@ namespace CapaPresentacion
         {
             try
             {
+                ControlesBusqueda_MostrarOcultar();
                 CbTipoDocumentoIdentidad.Items.Clear();
                 CbTipoDocumentoIdentidad.DisplayMember = "Nombre";
                 var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
@@ -74,6 +75,12 @@ namespace CapaPresentacion
                     CbTipoDocumentoIdentidad.Items.Add(item);
                 }
                 CbTipoDocumentoIdentidad.SelectedIndex = -1;
+
+                CbEstado.Items.Clear();
+                CbEstado.Items.Add("TODOS");
+                CbEstado.Items.Add("ACTIVOS");
+                CbEstado.Items.Add("ANULADOS");
+                CbEstado.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -135,6 +142,12 @@ namespace CapaPresentacion
             {
                 var tipoDocumentoIdentidad = (TipoDocumentoIdentidad)CbTipoDocumentoIdentidad.SelectedItem;
 
+                if (tipoDocumentoIdentidad == null)
+                {
+                    MessageBox.Show(this, $"Olvidó seleccionar el tipo de documento de identidad", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (TbNumeroDocumento.Text.Trim() == "")
                 {
                     MessageBox.Show(this, $"Olvidó ingresar el número {tipoDocumentoIdentidad.Nombre}", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -187,32 +200,45 @@ namespace CapaPresentacion
         {
             try
             {
-                var datosFaltantes = "";
+                var presupuestoID = Convert.ToInt32(string.IsNullOrEmpty(TbNumeroPresupuesto.Text.Trim()) ? "0" : TbNumeroPresupuesto.Text.Trim());
                 var fechaDesde = DtpFechaDesde.Value.Date;
                 var fechaHasta = DtpFechaHasta.Value.Date;
                 var cliente = TbCliente.Tag as Cliente;
                 var proyecto = CbProyectoNombre.SelectedItem as Proyecto;
 
-                if (!string.IsNullOrEmpty(datosFaltantes))
+                if (RbNumeroPresupuesto.Checked)
                 {
-                    MessageBox.Show(this, "Olvidó ingresar los siguientes datos: " + datosFaltantes, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    if (presupuestoID <= 0)
+                    {
+                        MessageBox.Show(this, "Olvidó ingresar el número de presupuesto", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
-
-                if (fechaDesde.Date > fechaHasta.Date)
+                else
                 {
-                    MessageBox.Show(this, "La fecha de busqueda inicial no puede ser mayor a la fecha de búsqueda final", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    if (fechaDesde.Date > fechaHasta.Date)
+                    {
+                        MessageBox.Show(this, "La fecha de busqueda inicial no puede ser mayor a la fecha de búsqueda final", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
 
                 DgvPresupuesto.Rows.Clear();
                 BnBuscar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                var listaPresupuestos = await LogPresupuesto.Instancia.PresupuestoBusquedaGeneral(fechaDesde, fechaHasta, cliente?.ClienteID, proyecto?.ClienteID, 0);
-                foreach (var presupuesto in listaPresupuestos)
+                if (RbNumeroPresupuesto.Checked)
                 {
-                    DgvPresupuesto_AddRow(presupuesto);
+                    var presupuesto = await LogPresupuesto.Instancia.PresupuestoBuscarPorPresupuestoID(presupuestoID);
+                    if (presupuesto != null) DgvPresupuesto_AddRow(presupuesto);
+                }
+                else
+                {
+                    var listaPresupuestos = await LogPresupuesto.Instancia.PresupuestoBusquedaGeneral(fechaDesde, fechaHasta, cliente?.ClienteID, proyecto?.ClienteID, Convert.ToByte(CbEstado.SelectedIndex));
+                    foreach (var presupuesto in listaPresupuestos)
+                    {
+                        DgvPresupuesto_AddRow(presupuesto);
+                    }
                 }
 
                 this.Cursor = Cursors.Default;
@@ -225,6 +251,58 @@ namespace CapaPresentacion
                 MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 BnBuscar.Enabled = true;
             }
+        }
+
+        private void RbNumeroPresupuesto_CheckedChanged(object sender, EventArgs e)
+        {
+            ControlesBusqueda_MostrarOcultar();
+        }
+
+        private void RbBusquedaDetallada_CheckedChanged(object sender, EventArgs e)
+        {
+            ControlesBusqueda_MostrarOcultar();
+        }
+
+        private void ControlesBusqueda_MostrarOcultar()
+        {
+            var visibleGrupo1 = RbNumeroPresupuesto.Checked;
+            var visibleGrupo2 = RbBusquedaDetallada.Checked;
+
+            LbPresupuesto.Visible = visibleGrupo1;
+            TbNumeroDocumento.Visible = visibleGrupo1;
+
+            LbDesde.Visible = visibleGrupo2;
+            DtpFechaDesde.Visible = visibleGrupo2;
+            LbAl.Visible = visibleGrupo2;
+            DtpFechaHasta.Visible = visibleGrupo2;
+            LbEstado.Visible = visibleGrupo2;
+            CbEstado.Visible = visibleGrupo2;
+            LbTipoDocumentoIdentidad.Visible = visibleGrupo2;
+            CbTipoDocumentoIdentidad.Visible = visibleGrupo2;
+            LbDocumentoIdentidadNumero.Visible = visibleGrupo2;
+            TbNumeroDocumento.Visible = visibleGrupo2;
+            BnBuscarCliente.Visible = visibleGrupo2;
+            LbCliente.Visible = visibleGrupo2;
+            TbCliente.Visible = visibleGrupo2;
+            LbProyecto.Visible = visibleGrupo2;
+            CbProyectoNombre.Visible = visibleGrupo2;
+
+            if (visibleGrupo1)
+            {
+                GbDatosBusqueda.Size = new Size(847, 66);
+                BnBuscar.Location = new Point(863, 126);
+            }
+            else if (visibleGrupo2)
+            {
+                GbDatosBusqueda.Size = new Size(847, 199);
+                BnBuscar.Location = new Point(863, 261);
+            }
+
+            int locationY = GbDatosBusqueda.Location.Y + GbDatosBusqueda.Size.Height + 5;
+            int height = BnAceptar.Location.Y - locationY - 5;
+
+            GbResultados.Location = new Point(GbResultados.Location.X, locationY);
+            GbResultados.Size = new Size(GbResultados.Size.Width, height);
         }
     }
 }

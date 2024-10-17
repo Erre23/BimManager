@@ -10,18 +10,20 @@ namespace CapaPresentacion
 {
     public partial class FrmClienteModal : Form
     {
-        private short _IdTipoDocumentoIdentidad;
-        private string _NumeroDocumentoIdentidad;
-        public FrmClienteModal(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad)
+        private readonly TipoDocumentoIdentidad _tipoDocumentoIdentidad;
+        private readonly string _documentoIdentidadNumero;
+
+        private FormAccion Accion;
+        private Cliente _currentCliente;
+        public Cliente GetCliente { get { return this._currentCliente; } }
+        public FrmClienteModal(TipoDocumentoIdentidad tipoDocumentoIdentidad, string documentoIdentidadNumero)
         {
             InitializeComponent();
             SetAccion(FormAccion.ninguno);
 
-            _IdTipoDocumentoIdentidad = idTipoDocumentoIdentidad;
-            _NumeroDocumentoIdentidad = numeroDocumentoIdentidad;
+            _tipoDocumentoIdentidad = tipoDocumentoIdentidad;
+            _documentoIdentidadNumero = documentoIdentidadNumero;
         }
-
-
 
         private async void FrmCliente_Load(object sender, EventArgs e)
         {
@@ -30,25 +32,22 @@ namespace CapaPresentacion
                 CmbTipoDocumentoIdentidad.Items.Clear();
                 CmbTipoDocumentoIdentidad.DisplayMember = "Nombre";
                 var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
+                var selectedIndex = -1;
                 foreach (var item in tiposDocumentoIdentidad)
                 {
                     CmbTipoDocumentoIdentidad.Items.Add(item);
+                    if (this._tipoDocumentoIdentidad?.TipoDocumentoIdentidadID == item.TipoDocumentoIdentidadID) selectedIndex = CmbTipoDocumentoIdentidad.Items.IndexOf(item);
                 }
 
                 SetAccion(FormAccion.nuevo);
 
-                this.CurrentCliente = new Cliente
-                {
-                    TipoDocumentoIdentidadID = _IdTipoDocumentoIdentidad,
-                    DocumentoIdentidadNumero = _NumeroDocumentoIdentidad,
-                    TipoDocumentoIdentidad = tiposDocumentoIdentidad.Find(x => x.TipoDocumentoIdentidadID == _IdTipoDocumentoIdentidad)
-                };
-                
-                GbDatos_MostrarDatos(this.CurrentCliente);
+                CmbTipoDocumentoIdentidad.SelectedIndex = selectedIndex;
+                TbDocumentoIdentidadNumero.Text = this._documentoIdentidadNumero;
+
                 CmbTipoDocumentoIdentidad.Enabled = false;
                 TbDocumentoIdentidadNumero.Enabled = false;
 
-                if (this.CurrentCliente.TipoDocumentoIdentidad.PersonaJuridica) TbRazonSocial.Focus();
+                if (this._tipoDocumentoIdentidad.PersonaJuridica) TbRazonSocial.Focus();
                 else TbNombres.Focus();
             }
             catch (Exception ex)
@@ -60,18 +59,14 @@ namespace CapaPresentacion
 
         private void FrmCliente_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((this.Accion == FormAccion.nuevo || this.Accion == FormAccion.editar) && 
-                MessageBox.Show(this, "¿Está seguro de cerrar esta ventana? los datos que no han sido guardados se perderán", "Un momento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if ((this.DialogResult != DialogResult.OK) && 
+                MessageBox.Show(this, "¿Está seguro de cancelar? los datos que no han sido guardados se perderán", "Un momento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;
             }
         }
 
         #region Métodos
-
-        private FormAccion Accion;
-        private Cliente CurrentCliente;
-        public Cliente GetCurrentCliente { get { return this.CurrentCliente; } }
 
         public void GBDatos_Limpiar()
         {
@@ -87,15 +82,8 @@ namespace CapaPresentacion
 
         private void GbDatos_MostrarDatos(Cliente cliente)
         {
-            this.CurrentCliente = cliente;
-            for (int indice = 0; indice < CmbTipoDocumentoIdentidad.Items.Count; indice++)
-            {
-                if((CmbTipoDocumentoIdentidad.Items[indice] as TipoDocumentoIdentidad).TipoDocumentoIdentidadID == cliente.TipoDocumentoIdentidadID)
-                {
-                    CmbTipoDocumentoIdentidad.SelectedIndex = indice;
-                    break;
-                }
-            }
+            this._currentCliente = cliente;
+            CmbTipoDocumentoIdentidad.SelectedIndex = CmbTipoDocumentoIdentidad.Items.IndexOf(cliente.TipoDocumentoIdentidad);            
             TbDocumentoIdentidadNumero.Text = cliente.DocumentoIdentidadNumero;
             if (cliente.TipoDocumentoIdentidad.PersonaJuridica)
             {
@@ -115,7 +103,7 @@ namespace CapaPresentacion
         {
             GBDatos_Limpiar();
             this.Accion = accion;
-            this.CurrentCliente = null;
+            this._currentCliente = null;
             switch(this.Accion)
             {
                 case FormAccion.ninguno:
@@ -129,10 +117,6 @@ namespace CapaPresentacion
                     break;
                 case FormAccion.editar:
                     LbOpcion.Text = "OPCIÓN : EDITAR";
-                    GbDatos.Enabled = true;
-                    break;
-                case FormAccion.buscar:
-                    LbOpcion.Text = "OPCIÓN : BUSCAR";
                     GbDatos.Enabled = true;
                     break;
             }
@@ -216,16 +200,16 @@ namespace CapaPresentacion
                 }
 
                 
-                if (this.Accion == FormAccion.nuevo) this.CurrentCliente = new Cliente();
-                this.CurrentCliente.TipoDocumentoIdentidad = tipoDocumentoIdentidad;
-                this.CurrentCliente.TipoDocumentoIdentidadID = tipoDocumentoIdentidad.TipoDocumentoIdentidadID;
-                this.CurrentCliente.DocumentoIdentidadNumero = TbDocumentoIdentidadNumero.Text.Trim();
-                this.CurrentCliente.RazonSocial = tipoDocumentoIdentidad.PersonaJuridica ? TbRazonSocial.Text.Trim() : null;
-                this.CurrentCliente.Nombres = tipoDocumentoIdentidad.PersonaJuridica ? null : TbNombres.Text.Trim();
-                this.CurrentCliente.Apellido1 = tipoDocumentoIdentidad.PersonaJuridica ? null : TbApellido1.Text.Trim();
-                this.CurrentCliente.Apellido2 = tipoDocumentoIdentidad.PersonaJuridica ? null : TbApellido2.Text.Trim();
-                this.CurrentCliente.Celular = TbCelular.Text.Trim();
-                this.CurrentCliente.Email = TbEmail.Text.Trim();
+                if (this.Accion == FormAccion.nuevo) this._currentCliente = new Cliente();
+                this._currentCliente.TipoDocumentoIdentidad = tipoDocumentoIdentidad;
+                this._currentCliente.TipoDocumentoIdentidadID = tipoDocumentoIdentidad.TipoDocumentoIdentidadID;
+                this._currentCliente.DocumentoIdentidadNumero = TbDocumentoIdentidadNumero.Text.Trim();
+                this._currentCliente.RazonSocial = tipoDocumentoIdentidad.PersonaJuridica ? TbRazonSocial.Text.Trim() : null;
+                this._currentCliente.Nombres = tipoDocumentoIdentidad.PersonaJuridica ? null : TbNombres.Text.Trim();
+                this._currentCliente.Apellido1 = tipoDocumentoIdentidad.PersonaJuridica ? null : TbApellido1.Text.Trim();
+                this._currentCliente.Apellido2 = tipoDocumentoIdentidad.PersonaJuridica ? null : TbApellido2.Text.Trim();
+                this._currentCliente.Celular = TbCelular.Text.Trim();
+                this._currentCliente.Email = TbEmail.Text.Trim();
 
                 if (MessageBox.Show(this, "¿Está seguro guardar los datos?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
@@ -238,11 +222,11 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this.CurrentCliente.ClienteID = await LogCliente.Instancia.ClienteInsertar(this.CurrentCliente);
+                    this._currentCliente.ClienteID = await LogCliente.Instancia.ClienteInsertar(this._currentCliente);
                 }
                 else
                 {
-                    await LogCliente.Instancia.ClienteActualizar(this.CurrentCliente);
+                    await LogCliente.Instancia.ClienteActualizar(this._currentCliente);
                 }
 
                 

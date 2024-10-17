@@ -112,12 +112,13 @@ namespace CapaDatos
             try
             {
                 var obj = new PresupuestoDetalle();
-    //            obj.PresupuestoDetalleID = Convert.ToInt32(dr["PresupuestoDetalleID"]);
-    //            obj.Nombre = Convert.ToString(dr["Nombre"]);
-				//if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Observaciones")))) obj.Observaciones = dr["Observaciones"].ToString();
-    //            if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Porcentaje")))) obj.Porcentaje = Convert.ToDecimal(dr["Porcentaje"]);
-    //            if (!(await dr.IsDBNullAsync(dr.GetOrdinal("PadrePresupuestoDetalleID")))) obj.PadrePresupuestoDetalleID = Convert.ToInt16(dr["PadrePresupuestoDetalleID"]);
-                
+                obj.PresupuestoDetalleID = Convert.ToInt32(dr["PresupuestoDetalleID"]);
+                obj.PresupuestoID = Convert.ToInt32(dr["PresupuestoID"]);
+                obj.PresupuestoCategoriaID = Convert.ToInt16(dr["PresupuestoCategoriaID"]);
+                obj.Orden = Convert.ToByte(dr["Orden"]);
+                obj.Porcentaje = Convert.ToDecimal(dr["Porcentaje"]);
+                obj.Importe = Convert.ToDecimal(dr["Importe"]);
+
 
                 return await Task.FromResult(obj);
             }

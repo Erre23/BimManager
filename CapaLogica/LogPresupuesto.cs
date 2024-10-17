@@ -53,7 +53,9 @@ namespace CapaLogica
             {
                 try
                 {
+                    presupuesto.AnulacionFecha = DateTime.Now;
                     await DaoPresupuesto.Instancia.Anular(presupuesto, cnn, tran);
+                    tran.Commit();
                 }
                 catch (Exception e)
                 {
@@ -63,10 +65,25 @@ namespace CapaLogica
             }
         }
 
-        //public async Task<List<Presupuesto>> PresupuestoBuscarPorClienteID(int clienteID)
-        //{
-        //    return await DaoPresupuesto.Instancia.BuscarPorClienteID(clienteID);
-        //}
+        public async Task<Presupuesto> PresupuestoBuscarPorPresupuestoID(int presupuestoID)
+        {
+            var presupuesto = await DaoPresupuesto.Instancia.BuscarPorPresupuestoID(presupuestoID);
+            if (presupuesto != null)
+            {
+                presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                presupuesto.Cliente = await DaoCliente.Instancia.BuscarPorClienteID(presupuesto.ClienteID);
+                presupuesto.Cliente.TipoDocumentoIdentidad = await DaoTipoDocumentoIdentidad.Instancia.BuscarPorTipoDocumentoIdentidadID(presupuesto.Cliente.TipoDocumentoIdentidadID);
+                presupuesto.Proyecto = await DaoProyecto.Instancia.BuscarPorProyectoID(presupuesto.ProyectoID);
+                presupuesto.Proyecto.DireccionDepartamento = await DaoDepartamento.Instancia.BuscarPorDepartamentoID(presupuesto.Proyecto.DireccionDepartamentoID);
+                presupuesto.Proyecto.DireccionProvincia = await DaoProvincia.Instancia.BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
+                presupuesto.Proyecto.DireccionDistrito = await DaoDistrito.Instancia.BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
+                presupuesto.Plan = await DaoPlan.Instancia.BuscarPorPlanID(presupuesto.PlanID);
+
+                if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+            }
+
+            return presupuesto;
+        }
 
         public async Task<List<Presupuesto>> PresupuestoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte estado)
         {
@@ -78,12 +95,16 @@ namespace CapaLogica
             if (listaPresupuestos.Count > 0)
             {
                 var tiposDocumentoIdentidad = await DaoTipoDocumentoIdentidad.Instancia.ListarTodos();
+                var ubigeos = await LogDepartamento.Instancia.DepartamentoBuscarTodos();
                 foreach (var presupuesto in listaPresupuestos)
                 {
                     presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
                     presupuesto.Cliente = await DaoCliente.Instancia.BuscarPorClienteID(presupuesto.ClienteID);
                     presupuesto.Cliente.TipoDocumentoIdentidad = tiposDocumentoIdentidad.Find(x => x.TipoDocumentoIdentidadID == presupuesto.Cliente.TipoDocumentoIdentidadID);
                     presupuesto.Proyecto = await DaoProyecto.Instancia.BuscarPorProyectoID(presupuesto.ProyectoID);
+                    presupuesto.Proyecto.DireccionDepartamento = await DaoDepartamento.Instancia.BuscarPorDepartamentoID(presupuesto.Proyecto.DireccionDepartamentoID);
+                    presupuesto.Proyecto.DireccionProvincia = await DaoProvincia.Instancia.BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
+                    presupuesto.Proyecto.DireccionDistrito = await DaoDistrito.Instancia.BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
                     presupuesto.Plan = await DaoPlan.Instancia.BuscarPorPlanID(presupuesto.PlanID);
 
                     if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);

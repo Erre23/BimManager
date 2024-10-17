@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
@@ -91,6 +92,7 @@ namespace CapaPresentacion
                 case FormAccion.visualizar:
                     Botones_Enabled(true, true, true, false, false);
                     Controles_Input_Enabled(false);
+                    DgvPresupuestoCategoria.Enabled = true;
                     break;
             }
         }
@@ -113,16 +115,19 @@ namespace CapaPresentacion
 			TbPlanPlazo.Clear();
 		}
 
-		public void Proyecto_Cargar(List<Proyecto> proyectos)
+		public void Proyecto_Cargar(List<Proyecto> proyectos, int? seleccionarProyectoID = null)
         {
             CbProyectoNombre.Items.Clear();
             CbProyectoNombre.DisplayMember = "Nombre";
+            var selectedIndex = -1;
             foreach (var proyecto in proyectos)
             {
                 CbProyectoNombre.Items.Add(proyecto);
+                if (seleccionarProyectoID != null && seleccionarProyectoID == proyecto.ProyectoID) selectedIndex = CbProyectoNombre.Items.IndexOf(proyecto);
             }
 
-            if (CbProyectoNombre.Items.Count > 0) CbProyectoNombre.SelectedIndex = 0;
+            if (seleccionarProyectoID == null && CbProyectoNombre.Items.Count > 0) selectedIndex = 0;
+            CbProyectoNombre.SelectedIndex = selectedIndex;
 		}
 
         public void PresupuestoCategoria_Cargar_For_New()
@@ -148,7 +153,42 @@ namespace CapaPresentacion
 			}
 		}
 
-		public void DgvPresupuestoCategoria_AddRow(PresupuestoDetalle presupuestoDetalle)
+
+
+        public void PresupuestoCategoria_Cargar_For_Visualizer(List<PresupuestoDetalle> presupuestoDetalles)
+        {
+            DgvPresupuestoCategoria.Rows.Clear();
+            PresupuestoCategoria_Cargar_For_Visualizer(_presupuestoCategorias, presupuestoDetalles);
+        }
+
+        public void PresupuestoCategoria_Cargar_For_Visualizer(List<PresupuestoCategoria> presupuestoCategorias, List<PresupuestoDetalle> presupuestoDetalles)
+        {
+            foreach (var cat in presupuestoCategorias)
+            {
+                var presupuestoDetalle = presupuestoDetalles.Find(x => x.PresupuestoCategoriaID == cat.PresupuestoCategoriaID);
+                if (presupuestoDetalle != null)
+                {
+                    presupuestoDetalle.Seleccionar = true;                    
+                }
+                else
+                {
+                    presupuestoDetalle = new PresupuestoDetalle
+                    {
+                        PresupuestoCategoriaID = cat.PresupuestoCategoriaID,
+                        PresupuestoCategoria = cat,
+                        Porcentaje = cat.Porcentaje
+                    };
+                }
+
+                presupuestoDetalle.PresupuestoCategoria = cat;
+
+                DgvPresupuestoCategoria_AddRow(presupuestoDetalle);
+
+                if (cat.SubPresupuestoCategorias.Count() > 0) PresupuestoCategoria_Cargar_For_Visualizer(cat.SubPresupuestoCategorias, presupuestoDetalles);
+            }
+        }
+
+        public void DgvPresupuestoCategoria_AddRow(PresupuestoDetalle presupuestoDetalle)
         {
             var index = -1;
             if (presupuestoDetalle.PresupuestoCategoria.PadrePresupuestoCategoriaID == null)
@@ -158,10 +198,9 @@ namespace CapaPresentacion
                     presupuestoDetalle.PresupuestoCategoria.Nombre,
                     presupuestoDetalle.PresupuestoCategoria.Observaciones,
                     $"{presupuestoDetalle.PresupuestoCategoria.Porcentaje}%",
-                    presupuestoDetalle.Importe
+                    presupuestoDetalle.Importe.ToString("#,#0.00")
                 );                
 
-                DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = false;
                 DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Khaki;
             }
             else
@@ -172,7 +211,6 @@ namespace CapaPresentacion
                     presupuestoDetalle.PresupuestoCategoria.Observaciones
                 );
 
-                DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly = true;
 				DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Gainsboro;
                 DgvPresupuestoCategoria.Rows[index].Cells[0].Style.BackColor = Color.Black;
             }
@@ -237,12 +275,47 @@ namespace CapaPresentacion
             var presupuestoDetalle = DgvPresupuestoCategoria.Rows[rowIndex].Tag as PresupuestoDetalle;
             presupuestoDetalle.Seleccionar = !presupuestoDetalle.Seleccionar;
             DgvPresupuestoCategoria.Rows[rowIndex].Tag = presupuestoDetalle;
+            DgvPresupuestoCategoria.Rows[rowIndex].Cells[0].Value = presupuestoDetalle.Seleccionar;
             CalcularMontoTotal();
+        }
+
+        private void SetEstado(bool activo)
+        {
+            TbEstado.Text = activo ? "ACTIVO" : "ANULADO";
         }
 
         private void Presupuesto_Mostrar(Presupuesto presupuesto)
         {
-
+            this._currentPresupuesto = presupuesto;
+            TbNumeroPresupuesto.Text = presupuesto.PresupuestoID.ToString();
+            SetEstado(presupuesto.Activo);
+            DtpFechaDesde.Value = presupuesto.CreacionFecha.Date;
+            DtpFechaHasta.Value = presupuesto.FechaExpiracion.Date;
+            TbCreadoPor.Text = presupuesto.CreacionUsuario.ApellidosNombres;            
+            for (int index = 0; index < CbTipoDocumentoIdentidad.Items.Count - 1; index++)
+            {
+                if ((CbTipoDocumentoIdentidad.Items[index] as TipoDocumentoIdentidad).TipoDocumentoIdentidadID == presupuesto.Cliente.TipoDocumentoIdentidadID)
+                {
+                    CbTipoDocumentoIdentidad.SelectedIndex = index;
+                    break;
+                }
+            }            
+            TbNumeroDocumento.Text = presupuesto.Cliente.DocumentoIdentidadNumero;
+            TbCliente.Text = presupuesto.Cliente.RazonSocialOrApellidosYNombres;
+            Proyecto_Cargar(new List<Proyecto> { presupuesto.Proyecto }, presupuesto.ProyectoID);
+            TbProyectoAreaTotal.Text = presupuesto.AreaTotal.ToString("#,#0");
+            TbProyectoAreaTechada.Text = presupuesto.AreaTechada.ToString("#,#0");
+            TbProyectoPisos.Text = presupuesto.NumeroPisos.ToString();
+            for (int index = 0; index < CbPlan.Items.Count - 1; index++)
+            {
+                if ((CbPlan.Items[index] as Plan).PlanID == presupuesto.Plan.PlanID)
+                {
+                    CbPlan.SelectedIndex = index;
+                    break;
+                }
+            }
+            PresupuestoCategoria_Cargar_For_Visualizer(presupuesto.PresupuestoDetalles);
+            TbMontoTotal.Text = presupuesto.ImporteTotal.ToString("#,#0.00");
         }
 
         private void FrmPresupuesto_FormClosed(object sender, FormClosedEventArgs e)
@@ -310,9 +383,36 @@ namespace CapaPresentacion
             form.Dispose();
         }
 
-        private async void BnAnular_Click(object sender, EventArgs e)
+        private void BnAnular_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (this._currentPresupuesto == null)
+                {
+                    MessageBox.Show(this, "Olvidó seleccionar un presupuesto", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
 
+                if (this._currentPresupuesto.Activo == false)
+                {
+                    MessageBox.Show(this, "No se puede continuar ya que el presupuesto seleccionado, ya se encuentra anulado", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                var form = new FrmPresupuestoAnular(this._currentPresupuesto, this._usuario);
+                form.WindowState = FormWindowState.Normal;
+                form.StartPosition = FormStartPosition.CenterScreen;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    this._currentPresupuesto.Activo = false;
+                }
+                form.Dispose();
+                SetEstado(this._currentPresupuesto.Activo);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
@@ -431,7 +531,7 @@ namespace CapaPresentacion
 
                 SetAccion(FormAccion.visualizar);
                 TbNumeroPresupuesto.Text = this._currentPresupuesto.PresupuestoID.ToString();
-                TbEstado.Text = this._currentPresupuesto.Activo ? "ACTIVO" : "";
+                SetEstado(this._currentPresupuesto.Activo);
             }
             catch (Exception ex)
             {
@@ -513,15 +613,27 @@ namespace CapaPresentacion
                 BnBuscarCliente.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                var cliente = await LogCliente.Instancia.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbNumeroDocumento.Text.Trim(), true);
+                var cliente = await LogCliente.Instancia.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbNumeroDocumento.Text.Trim(), true, tipoDocumentoIdentidad.ConsultaApi);
 
                 this.Cursor = Cursors.Default;
-                if (cliente == null)
+                if (cliente == null && MessageBox.Show(this, "No se encontraron datos ¿Desea agregar al cliente?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
-                    MessageBox.Show(this, "No se encontraron datos", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    TbNumeroDocumento.Focus();
+                    var form = new FrmClienteModal(tipoDocumentoIdentidad, TbNumeroDocumento.Text.Trim());
+                    form.WindowState = FormWindowState.Normal;
+                    form.StartPosition = FormStartPosition.CenterScreen;
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        cliente = form.GetCliente;
+                    }
+                    form.Dispose();                    
                 }
                 else
+                {
+                    TbNumeroDocumento.Focus();
+                }
+
+
+                if (cliente != null)
                 {
                     TbCliente.Text = cliente.RazonSocialOrApellidosYNombres;
                     TbCliente.Tag = cliente;
@@ -574,7 +686,7 @@ namespace CapaPresentacion
 
 		private void DgvPresupuestoCategoria_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.ColumnIndex == 0 && e.RowIndex >= 0 && !DgvPresupuestoCategoria.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly)
+			if (this._accion == FormAccion.nuevo && e.ColumnIndex == 0 && e.RowIndex >= 0 && !DgvPresupuestoCategoria.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly)
 			{
                 CheckedCategoria(e.RowIndex);
             }
@@ -583,10 +695,31 @@ namespace CapaPresentacion
         private void DgvPresupuestoCategoria_KeyDown(object sender, KeyEventArgs e)
         {
             var row = DgvPresupuestoCategoria.CurrentRow;
-            if (e.KeyCode == Keys.Space && row != null)
+            if (this._accion == FormAccion.nuevo && e.KeyCode == Keys.Space && row != null)
             {
                 CheckedCategoria(row.Index);
             }
+        }
+
+        private void BnAgregarProyecto_Click(object sender, EventArgs e)
+        {
+            var cliente = TbCliente.Tag as Cliente;
+            if (cliente == null)
+            {
+                MessageBox.Show(this, "Primero debe buscar un cliente", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var form = new FrmProyectoModal(cliente);
+            form.WindowState = FormWindowState.Normal;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var proyecto = form.GetProyecto;
+                cliente.Proyectos.Add(proyecto);
+                Proyecto_Cargar(cliente.Proyectos.OrderBy(x => x.Nombre).ToList(), proyecto.ProyectoID);
+            }
+            form.Dispose();
         }
     }
 }
