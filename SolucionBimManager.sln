@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDatos", "CapaDatos\Capa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaLogica", "CapaLogica\CapaLogica.csproj", "{692B37F3-0E91-433D-8EF2-44CD2E0C3AAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Datos", "01 - Datos", "{8A43B334-82AB-45FF-AAE1-E31C1B1D9133}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Gestion", "02 - Gestion", "{6B725DD1-CA32-4BCF-9801-987B6B2445A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Presentacion", "03 - Presentacion", "{3EF0C76D-D955-4600-8B16-046B84807849}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +42,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{31D64C76-6873-4315-B101-B00900C1BB38} = {3EF0C76D-D955-4600-8B16-046B84807849}
+		{902511BF-7C47-46A8-9492-0961B1A2A537} = {8A43B334-82AB-45FF-AAE1-E31C1B1D9133}
+		{291B29B1-A050-4F43-B12A-EEE6F37CB8E1} = {8A43B334-82AB-45FF-AAE1-E31C1B1D9133}
+		{692B37F3-0E91-433D-8EF2-44CD2E0C3AAE} = {6B725DD1-CA32-4BCF-9801-987B6B2445A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5067A7B6-7BF2-4074-8C27-759F19A42E91}
