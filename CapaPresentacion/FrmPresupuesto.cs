@@ -117,7 +117,6 @@ namespace CapaPresentacion
         {
             CbProyectoNombre.Items.Clear();
             CbProyectoNombre.DisplayMember = "Nombre";
-            CbProyectoNombre.DataSource = proyectos;
             var selectedIndex = -1;
             foreach (var proyecto in proyectos)
             {
@@ -253,9 +252,9 @@ namespace CapaPresentacion
 
                 for (int index = 0; index < DgvPresupuestoCategoria.Rows.Count; index++)
                 {
-                    if (!DgvPresupuestoCategoria.Rows[index].Cells[0].ReadOnly)
-                    {
-                        var presupuestoDetalle = DgvPresupuestoCategoria.Rows[index].Tag as PresupuestoDetalle;
+                    var presupuestoDetalle = DgvPresupuestoCategoria.Rows[index].Tag as PresupuestoDetalle;
+                    if (presupuestoDetalle.PresupuestoCategoria.PadrePresupuestoCategoriaID == null)
+                    {                        
                         var montoDetalle = montoTotalPosibleACobrar * (presupuestoDetalle.Seleccionar ? (presupuestoDetalle.Porcentaje.Value / 100m) : 0m);
                         presupuestoDetalle.Importe = montoDetalle;
                         montoTotalACobrar += montoDetalle;
@@ -272,10 +271,13 @@ namespace CapaPresentacion
         private void CheckedCategoria(int rowIndex)
         {
             var presupuestoDetalle = DgvPresupuestoCategoria.Rows[rowIndex].Tag as PresupuestoDetalle;
-            presupuestoDetalle.Seleccionar = !presupuestoDetalle.Seleccionar;
-            DgvPresupuestoCategoria.Rows[rowIndex].Tag = presupuestoDetalle;
-            DgvPresupuestoCategoria.Rows[rowIndex].Cells[0].Value = presupuestoDetalle.Seleccionar;
-            CalcularMontoTotal();
+            if (presupuestoDetalle.PresupuestoCategoria.PadrePresupuestoCategoriaID == null)
+            {
+                presupuestoDetalle.Seleccionar = !presupuestoDetalle.Seleccionar;
+                DgvPresupuestoCategoria.Rows[rowIndex].Tag = presupuestoDetalle;
+                DgvPresupuestoCategoria.Rows[rowIndex].Cells[0].Value = presupuestoDetalle.Seleccionar;
+                CalcularMontoTotal();
+            }
         }
 
         private void SetEstado(bool activo)
@@ -634,10 +636,10 @@ namespace CapaPresentacion
 
                 if (cliente != null)
                 {
+                    if (cliente.Proyectos == null) cliente.Proyectos = new List<Proyecto>();
                     TbCliente.Text = cliente.RazonSocialOrApellidosYNombres;
                     TbCliente.Tag = cliente;
-                    var proyectos = await this.ObjRemoteObject.LogProyecto.ProyectoBuscarPorClienteID(cliente.ClienteID);
-                    Proyecto_Cargar(proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
+                    Proyecto_Cargar(cliente.Proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
                 }
                 BnBuscarCliente.Enabled = true;
             }
@@ -655,8 +657,7 @@ namespace CapaPresentacion
             var proyecto = CbProyectoNombre.SelectedItem as Proyecto;
             if ( proyecto != null)
             {
-                TbProyectoDireccion.Text = proyecto.DireccionCompleta;
-                
+                TbProyectoDireccion.Text = proyecto.DireccionCompleta;                
             }
         }
 
@@ -686,7 +687,7 @@ namespace CapaPresentacion
 
 		private void DgvPresupuestoCategoria_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (this._accion == FormAccion.nuevo && e.ColumnIndex == 0 && e.RowIndex >= 0 && !DgvPresupuestoCategoria.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly)
+			if (this._accion == FormAccion.nuevo && e.ColumnIndex == 0 && e.RowIndex >= 0)
 			{
                 CheckedCategoria(e.RowIndex);
             }
@@ -716,10 +717,10 @@ namespace CapaPresentacion
             if (form.ShowDialog() == DialogResult.OK)
             {
                 var proyecto = form.GetProyecto;
-                var proyectos = CbProyectoNombre.DataSource as List<Proyecto>;
-                if (proyecto == null) proyectos = new List<Proyecto>();
-                proyectos.Add(proyecto);
-                Proyecto_Cargar(proyectos.OrderBy(x => x.Nombre).ToList(), proyecto.ProyectoID);
+                
+                if (cliente.Proyectos == null) cliente.Proyectos = new List<Proyecto>();
+                cliente.Proyectos.Add(proyecto);
+                Proyecto_Cargar(cliente.Proyectos.OrderBy(x => x.Nombre).ToList(), proyecto.ProyectoID);
             }
             form.Dispose();
         }

@@ -1,16 +1,13 @@
-﻿using CapaDatos;
-using CapaEntidad;
+﻿using CapaEntidad;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CapaLogica.Apis
 {
-	public class ApisPeru
+    public class ApisPeru
 	{
 		#region Response
 
@@ -61,7 +58,8 @@ namespace CapaLogica.Apis
 
 		public async Task<Cliente> GetCliente_PersonaNaturalAsync(string dni)
 		{
-			var response = await GetResponseAsync<ApisPeruPersonaNatural>("dni", dni);
+			var url = GetApiURL("dni", dni);
+			var response = await GetResponseAsync<ApisPeruPersonaNatural>(url);
 			if (response.Success && response.Data != null)
 			{
 				return new Cliente
@@ -78,7 +76,8 @@ namespace CapaLogica.Apis
 
 		public async Task<Cliente> GetCliente_PersonaJuridicaAsync(string ruc)
 		{
-			var response = await GetResponseAsync<ApisPeruPersonaJuridica>("ruc", ruc);
+            var url = GetApiURL("ruc", ruc);
+            var response = await GetResponseAsync<ApisPeruPersonaJuridica>(url);
 			if (response.Success && response.Data != null)
 			{
 				return new Cliente
@@ -92,11 +91,11 @@ namespace CapaLogica.Apis
 			return null;
 		}
 
-		private async Task<Response<T>> GetResponseAsync<T>(string tipo, string documentoNumero)
+		private async Task<Response<T>> GetResponseAsync<T>(string url)
 		{
 			using (var _httpClient = new HttpClient())
 			{
-				var response = await _httpClient.GetAsync(GetApiURL(tipo, documentoNumero));
+				var response = await _httpClient.GetAsync(url);
 				var jsonResponse = await response.Content.ReadAsStringAsync();
 				if (response.IsSuccessStatusCode)
 				{

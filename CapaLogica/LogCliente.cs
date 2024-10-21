@@ -130,7 +130,7 @@ namespace CapaLogica
                 await cnn.OpenAsync();
                 var daoCliente = new DaoCliente(cnn);
                 var cliente = await daoCliente.BuscarPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
-                /*if (cliente != null && buscarProyectos)
+                if (cliente != null && buscarProyectos)
                 {
                     cliente.Proyectos = await new DaoProyecto(cnn).BuscarPorClienteID(cliente.ClienteID);
                     foreach (var proyecto in cliente.Proyectos)
@@ -140,7 +140,7 @@ namespace CapaLogica
                         proyecto.DireccionDistrito = await new DaoDistrito(cnn).BuscarPorDistritoID(proyecto.DireccionDistritoID);
                     }
                 }
-                else */if (cliente == null && buscarEnAPI)
+                else if (cliente == null && buscarEnAPI)
                 {
                     cliente = await ClienteConsultaApiPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
                     if (cliente != null)
@@ -174,8 +174,18 @@ namespace CapaLogica
 
         public async Task<Cliente> ClienteConsultaApiPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad)
         {
-            if (idTipoDocumentoIdentidad == 1) return await Apis.ApisPeru.Instancia.GetCliente_PersonaNaturalAsync(numeroDocumentoIdentidad);
-            else return await Apis.ApisPeru.Instancia.GetCliente_PersonaJuridicaAsync(numeroDocumentoIdentidad);
+            var cliente = (Cliente)null;
+            if (idTipoDocumentoIdentidad == 1)
+            {
+                cliente = await Apis.ConsultaDatosReniec.Instancia.GetCliente_PersonaNaturalAsync(numeroDocumentoIdentidad);
+                if (cliente == null) cliente = await Apis.ApisPeru.Instancia.GetCliente_PersonaNaturalAsync(numeroDocumentoIdentidad);
+            }
+            else
+            {
+                cliente = await Apis.ConsultaDatosReniec.Instancia.GetCliente_PersonaJuridicaAsync(numeroDocumentoIdentidad);
+                if (cliente == null) await Apis.ApisPeru.Instancia.GetCliente_PersonaJuridicaAsync(numeroDocumentoIdentidad);
+            }
+            return cliente;
         }
 
         public async Task<List<Cliente>> ClienteBusquedaGeneral(short? idTipoDocumentoIdentidad, string numeroDocumentoIdentidad, string razonSocial, string nombres, string apellido1, string apellido2)

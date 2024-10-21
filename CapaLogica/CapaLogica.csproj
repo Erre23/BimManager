@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\ConsultaDatosReniec.cs" />
     <Compile Include="Apis\ApisPeru.cs" />
     <Compile Include="Apis\Response.cs" />
     <Compile Include="Conexion.cs" />

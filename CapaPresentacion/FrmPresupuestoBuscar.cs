@@ -30,11 +30,10 @@ namespace CapaPresentacion
         {
             CbProyectoNombre.Items.Clear();
             CbProyectoNombre.DisplayMember = "Nombre";
-            CbProyectoNombre.DataSource = proyectos;
-            //foreach (var proyecto in proyectos)
-            //{
-            //    CbProyectoNombre.Items.Add(proyecto);
-            //}
+            foreach (var proyecto in proyectos)
+            {
+                CbProyectoNombre.Items.Add(proyecto);
+            }
 
             if (CbProyectoNombre.Items.Count > 0) CbProyectoNombre.SelectedIndex = 0;
 		}
@@ -126,14 +125,12 @@ namespace CapaPresentacion
             }
             TbNumeroDocumento.Clear();
             Cliente_Clear();
-            CbProyectoNombre.Tag = null;
             CbProyectoNombre.Items.Clear();
         }
 
         private void TbNumeroDocumento_TextChanged(object sender, EventArgs e)
         {
             Cliente_Clear();
-            CbProyectoNombre.Tag = null;
             CbProyectoNombre.Items.Clear();
         }
 

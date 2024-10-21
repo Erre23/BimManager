@@ -11,7 +11,7 @@ namespace CapaEntidad
         [DataMember]
         public int ClienteID { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Cliente Cliente { get; set; }
 
         [DataMember]
@@ -26,19 +26,19 @@ namespace CapaEntidad
         [DataMember]
         public short DireccionDistritoID { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Distrito DireccionDistrito { get; set; }
 
         [DataMember]
         public short DireccionProvinciaID { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Provincia DireccionProvincia { get; set; }
 
         [DataMember]
         public short DireccionDepartamentoID { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Departamento DireccionDepartamento { get; set; }
 
         [DataMember]
