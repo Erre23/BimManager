@@ -9,10 +9,19 @@ namespace CapaDatos
 {
 	public class DaoUsuario
     {
-        #region sigleton
-        private static readonly DaoUsuario _instancia = new DaoUsuario();
-        public static DaoUsuario Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoUsuario(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoUsuario(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
         private const int SaltSize = 16; // Tamaño de la sal en bytes
@@ -65,38 +74,25 @@ namespace CapaDatos
             usuario.HashPassword = Encriptar(usuario.HashPassword);
             var cmd = (SqlCommand)null;
 
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spUsuarioInsertar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spUsuarioInsertar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.NVarchar("NumeroDocumentoIdentidad", usuario.Username, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombres", usuario.Nombres, 100));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", usuario.Apellido1, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", usuario.Apellido2, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("HashPassword", usuario.HashPassword, -1));
-                    cmd.Parameters.Add(CreateParams.Bit("Activo", usuario.Activo));                    
+                cmd.Parameters.Add(CreateParams.NVarchar("NumeroDocumentoIdentidad", usuario.Username, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombres", usuario.Nombres, 100));
+                cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", usuario.Apellido1, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", usuario.Apellido2, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("HashPassword", usuario.HashPassword, -1));
+                cmd.Parameters.Add(CreateParams.Bit("Activo", usuario.Activo));                    
 
-                    usuario.UsuarioID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-                    tran.Commit();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
-                finally
-                {                    
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-
+                usuario.UsuarioID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
 
             return usuario.UsuarioID;
@@ -108,12 +104,9 @@ namespace CapaDatos
             var usuario = (Usuario)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spUsuarioBuscarPorUsername", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.NVarchar("Username", username, 50));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -122,18 +115,15 @@ namespace CapaDatos
                 }
 
                 dr.Close();
+                cmd.Dispose();
 
                 /* Si las contraseñas no coinciden retornamos el usuario null */
                 if (!VerificarPassword(usuario.HashPassword, password)) usuario = null;
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return usuario;
@@ -145,12 +135,9 @@ namespace CapaDatos
             var usuario = (Usuario)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spUsuarioBuscarUsername", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.NVarchar("username", username, 50));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -158,15 +145,12 @@ namespace CapaDatos
                     usuario = ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return usuario;
@@ -177,12 +161,9 @@ namespace CapaDatos
             var usuario = (Usuario)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spUsuarioBuscarPorUsuarioID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("UsuarioID", usuerioID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -190,15 +171,12 @@ namespace CapaDatos
                     usuario = ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return usuario;
@@ -208,7 +186,6 @@ namespace CapaDatos
         {
             try
             {
-
                 var obj = new Usuario();
                 obj.UsuarioID = Convert.ToInt32(dr["UsuarioID"]);
                 obj.Username = dr["username"].ToString();

@@ -1,22 +1,10 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaPresentacion.Controls;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPrespuestoCategoria : Form
+    public partial class FrmPrespuestoCategoria : FrmBase
     {
         ToolStripMenuItem _menu;
         public FrmPrespuestoCategoria(ToolStripMenuItem menu)
@@ -32,7 +20,7 @@ namespace CapaPresentacion
             try
             {
                 tvPresupuestoCategoria.Nodes.Clear();
-                var presupuestoCategorias = await LogPresupuestoCategoria.Instancia.PresupuestoCategoriaBuscarTodos();
+                var presupuestoCategorias = await this.ObjRemoteObject.LogPresupuestoCategoria.PresupuestoCategoriaBuscarTodos();
                 foreach (var item in presupuestoCategorias)
                 {
                     TreeNode node = CrearNode(item, null);
@@ -72,7 +60,6 @@ namespace CapaPresentacion
         #region Métodos
 
         private FormAccion Accion;
-        private Cliente CurrentCliente;
 
         public void Botones_Enabled(bool nuevo, bool editar, bool deshabilitar, bool buscar)
         {
@@ -85,7 +72,6 @@ namespace CapaPresentacion
         public void SetAccion(FormAccion accion)
         {
             this.Accion = accion;
-            this.CurrentCliente = null;
             switch(this.Accion)
             {
                 case FormAccion.ninguno:
@@ -165,7 +151,7 @@ namespace CapaPresentacion
             }
         }
 
-        private async void BnDeshabilitar_Click(object sender, EventArgs e)
+        private void BnDeshabilitar_Click(object sender, EventArgs e)
         {
         }
 

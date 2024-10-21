@@ -9,10 +9,19 @@ namespace CapaDatos
 {
     public class DaoPlan
     {
-        #region sigleton
-        private static readonly DaoPlan _instancia = new DaoPlan();
-        public static DaoPlan Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoPlan(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoPlan(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
 
@@ -22,12 +31,9 @@ namespace CapaDatos
             var Plan = (Plan)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPlanBuscarPorPlanID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("PlanID", PlanID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -35,15 +41,12 @@ namespace CapaDatos
                     Plan = ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return Plan;
@@ -55,10 +58,8 @@ namespace CapaDatos
             var listaPlans = new List<Plan>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPlanListarActivos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -67,15 +68,12 @@ namespace CapaDatos
                     listaPlans.Add(Plan);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaPlans;

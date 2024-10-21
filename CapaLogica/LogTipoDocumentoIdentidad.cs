@@ -1,14 +1,16 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace CapaLogica
 {
-    public class LogTipoDocumentoIdentidad
+    [Serializable]
+    public class LogTipoDocumentoIdentidad : Conexion, ILogTipoDocumentoIdentidad
     {
         #region sigleton
         private static readonly LogTipoDocumentoIdentidad _instancia = new LogTipoDocumentoIdentidad();
@@ -18,28 +20,122 @@ namespace CapaLogica
         #region metodos
         public async Task<short> TipoDocumentoIdentidadInsertar(TipoDocumentoIdentidad tipoDocumentoIdentidad)
         {
-            return await DaoTipoDocumentoIdentidad.Instancia.Insertar(tipoDocumentoIdentidad);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        var tipoDocumentoIdentidadID = await new DaoTipoDocumentoIdentidad(tran).Insertar(tipoDocumentoIdentidad);
+                        tran.Commit();
+                        Close(cnn);
+                        return tipoDocumentoIdentidadID;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task TipoDocumentoIdentidadActualizar(TipoDocumentoIdentidad tipoDocumentoIdentidad)
         {
-            await DaoTipoDocumentoIdentidad.Instancia.Actualizar(tipoDocumentoIdentidad);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoTipoDocumentoIdentidad(tran).Actualizar(tipoDocumentoIdentidad);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task TipoDocumentoIdentidadDeshabilitar(short idTipoDocumentoIdentidad)
         {
-            await DaoTipoDocumentoIdentidad.Instancia.Deshabilitar(idTipoDocumentoIdentidad);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoTipoDocumentoIdentidad(tran).Deshabilitar(idTipoDocumentoIdentidad);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         ///listado
         public async Task<List<TipoDocumentoIdentidad>> TipoDocumentoIdentidadListarActivos()
         {
-            return await DaoTipoDocumentoIdentidad.Instancia.ListarActivos();
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var lista = await new DaoTipoDocumentoIdentidad(cnn).ListarActivos();
+                Close(cnn);
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<List<TipoDocumentoIdentidad>> TipoDocumentoIdentidadListarTodos()
         {
-            return await DaoTipoDocumentoIdentidad.Instancia.ListarTodos();
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var lista = await new DaoTipoDocumentoIdentidad(cnn).ListarTodos();
+                Close(cnn);
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         #endregion metodos

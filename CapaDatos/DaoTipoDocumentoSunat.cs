@@ -9,41 +9,39 @@ namespace CapaDatos
 {
     public class DaoTipoDocumentoSunat
     {
-        #region sigleton
-        private static readonly DaoTipoDocumentoSunat _instancia = new DaoTipoDocumentoSunat();        
-        public static DaoTipoDocumentoSunat Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoTipoDocumentoSunat(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoTipoDocumentoSunat(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
 
         #region metodos    
         public async Task<short> Insertar(TipoDocumentoSunat tipoDocumentoSunat)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spTipoDocumentoSunatInsertar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spTipoDocumentoSunatInsertar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoSunat.Nombre, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("CodigoSunat", tipoDocumentoSunat.CodigoSunat, 3));
 
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoSunat.Nombre, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("CodigoSunat", tipoDocumentoSunat.CodigoSunat, 3));
-
-                    tipoDocumentoSunat.TipoDocumentoSunatID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                tipoDocumentoSunat.TipoDocumentoSunatID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
 
             return tipoDocumentoSunat.TipoDocumentoSunatID;
@@ -53,32 +51,21 @@ namespace CapaDatos
         public async Task Actualizar(TipoDocumentoSunat tipoDocumentoSunat)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spTipoDocumentoSunatActualizar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spTipoDocumentoSunatActualizar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoSunatID", tipoDocumentoSunat.TipoDocumentoSunatID));
+				cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoSunat.Nombre, 50));
+				cmd.Parameters.Add(CreateParams.NVarchar("CodigoSunat", tipoDocumentoSunat.CodigoSunat, 3));
 
-                    cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoSunatID", tipoDocumentoSunat.TipoDocumentoSunatID));
-					cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoSunat.Nombre, 50));
-					cmd.Parameters.Add(CreateParams.NVarchar("CodigoSunat", tipoDocumentoSunat.CodigoSunat, 3));
-
-					cmd.ExecuteNonQuery();
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+				await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -86,30 +73,19 @@ namespace CapaDatos
         public async Task Deshabilitar(int idTipoDocumentoSunat)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spTipoDocumentoSunatDeshabilitar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spTipoDocumentoSunatDeshabilitar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("TipoDocumentoSunatID", idTipoDocumentoSunat));
 
-                    cmd.Parameters.Add(CreateParams.Int("TipoDocumentoSunatID", idTipoDocumentoSunat));
-
-                    cmd.ExecuteNonQuery();
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -119,10 +95,8 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoSunat>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spTipoDocumentoSunatListarActivos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -131,13 +105,10 @@ namespace CapaDatos
                     objLista.Add(obj);
                 }
                 dr.Close();
-
-                cmd.Connection.Close();
                 cmd.Dispose();
             }
             catch (Exception e)
             {
-                cmd.Connection.Close();
                 cmd.Dispose();
                 throw e;
             }
@@ -151,25 +122,20 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoSunat>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spTipoDocumentoSunatListarTodos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
                 {
                     var obj = ReadEntidad(dr);
                     objLista.Add(obj);
                 }
                 dr.Close();
-
-                cmd.Connection.Close();
                 cmd.Dispose();
             }
             catch (Exception e)
             {
-                cmd.Connection.Close();
                 cmd.Dispose();
                 throw e;
             }
@@ -181,7 +147,6 @@ namespace CapaDatos
         {
             try
             {
-
                 var obj = new TipoDocumentoSunat();
                 obj.TipoDocumentoSunatID = Convert.ToInt16(dr["TipoDocumentoSunatID"]);
                 obj.Nombre = dr["Nombre"].ToString();

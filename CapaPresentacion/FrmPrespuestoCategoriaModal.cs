@@ -1,14 +1,10 @@
 ﻿using CapaEntidad;
-using CapaLogica;
-using CapaPresentacion.Controls;
 using System;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPrespuestoCategoriaModal : Form
+    public partial class FrmPrespuestoCategoriaModal : FrmBase
     {
         private PresupuestoCategoria _presupuestoCategoriaOwner;
         private PresupuestoCategoria _presupuestoCategoria;
@@ -128,11 +124,11 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this._presupuestoCategoria.PresupuestoCategoriaID = await LogPresupuestoCategoria.Instancia.PresupuestoCategoriaInsertar(this._presupuestoCategoria);
+                    this._presupuestoCategoria.PresupuestoCategoriaID = await this.ObjRemoteObject.LogPresupuestoCategoria.PresupuestoCategoriaInsertar(this._presupuestoCategoria);
                 }
                 else
                 {
-                    await LogPresupuestoCategoria.Instancia.PresupuestoCategoriaActualizar(this._presupuestoCategoria);
+                    await this.ObjRemoteObject.LogPresupuestoCategoria.PresupuestoCategoriaActualizar(this._presupuestoCategoria);
                 }
 
                 

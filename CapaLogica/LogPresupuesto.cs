@@ -1,14 +1,15 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace CapaLogica
 {
-    public class LogPresupuesto
+    [Serializable]
+    public class LogPresupuesto : Conexion, ILogPresupuesto
     {
         #region sigleton
         private static readonly LogPresupuesto _instancia = new LogPresupuesto();
@@ -16,73 +17,100 @@ namespace CapaLogica
         #endregion singleton
 
         #region metodos
-        
+
         public async Task<Presupuesto> PresupuestoInsertar(Presupuesto presupuesto)
         {
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            SqlConnection cnn = this.Conectar();
+            try
             {
-                try
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
                 {
-                    presupuesto.PresupuestoID = await DaoPresupuesto.Instancia.Insertar(presupuesto, cnn, tran);
-                    foreach (var presupuestoDetalle in presupuesto.PresupuestoDetalles)
+                    try
                     {
-                        presupuestoDetalle.PresupuestoID = presupuesto.PresupuestoID;
-                        presupuestoDetalle.PresupuestoDetalleID = await DaoPresupuestoDetalle.Instancia.Insertar(presupuestoDetalle, cnn, tran);
-                    }
+                        presupuesto.PresupuestoID = await new DaoPresupuesto(tran).Insertar(presupuesto);
+                        var daoPresupuestoDetalle = new DaoPresupuestoDetalle(tran);
+                        foreach (var presupuestoDetalle in presupuesto.PresupuestoDetalles)
+                        {
+                            presupuestoDetalle.PresupuestoID = presupuesto.PresupuestoID;
+                            presupuestoDetalle.PresupuestoDetalleID = await daoPresupuestoDetalle.Insertar(presupuestoDetalle);
+                        }
 
-                    tran.Commit();
-                    cnn.Close();
-                    return presupuesto;
+                        tran.Commit();
+                        Close(cnn);
+                        return presupuesto;
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        throw e;
+                    }
                 }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cnn.Close();
-                    throw e;
-                }
+            }
+            catch(Exception ex)
+            {
+                Close(cnn);
+                throw ex;
             }
         }
 
         public async Task PresupuestoAnular(Presupuesto presupuesto)
         {
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            SqlConnection cnn = this.Conectar();
+            try
             {
-                try
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
                 {
-                    presupuesto.AnulacionFecha = DateTime.Now;
-                    await DaoPresupuesto.Instancia.Anular(presupuesto, cnn, tran);
-                    tran.Commit();
+                    try
+                    {
+                        presupuesto.AnulacionFecha = DateTime.Now;
+                        await new DaoPresupuesto(tran).Anular(presupuesto);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        throw e;
+                    }
                 }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    throw e;
-                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
             }
         }
 
         public async Task<Presupuesto> PresupuestoBuscarPorPresupuestoID(int presupuestoID)
         {
-            var presupuesto = await DaoPresupuesto.Instancia.BuscarPorPresupuestoID(presupuestoID);
-            if (presupuesto != null)
+            SqlConnection cnn = this.Conectar();
+            try
             {
-                presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
-                presupuesto.Cliente = await DaoCliente.Instancia.BuscarPorClienteID(presupuesto.ClienteID);
-                presupuesto.Cliente.TipoDocumentoIdentidad = await DaoTipoDocumentoIdentidad.Instancia.BuscarPorTipoDocumentoIdentidadID(presupuesto.Cliente.TipoDocumentoIdentidadID);
-                presupuesto.Proyecto = await DaoProyecto.Instancia.BuscarPorProyectoID(presupuesto.ProyectoID);
-                presupuesto.Proyecto.DireccionDepartamento = await DaoDepartamento.Instancia.BuscarPorDepartamentoID(presupuesto.Proyecto.DireccionDepartamentoID);
-                presupuesto.Proyecto.DireccionProvincia = await DaoProvincia.Instancia.BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
-                presupuesto.Proyecto.DireccionDistrito = await DaoDistrito.Instancia.BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
-                presupuesto.Plan = await DaoPlan.Instancia.BuscarPorPlanID(presupuesto.PlanID);
+                await cnn.OpenAsync();
+                var presupuesto = await new DaoPresupuesto(cnn).BuscarPorPresupuestoID(presupuestoID);
+                if (presupuesto != null)
+                {
+                    presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                    presupuesto.Cliente = await new DaoCliente(cnn).BuscarPorClienteID(presupuesto.ClienteID);
+                    presupuesto.Cliente.TipoDocumentoIdentidad = await new DaoTipoDocumentoIdentidad(cnn).BuscarPorTipoDocumentoIdentidadID(presupuesto.Cliente.TipoDocumentoIdentidadID);
+                    presupuesto.Proyecto = await new DaoProyecto(cnn).BuscarPorProyectoID(presupuesto.ProyectoID);
+                    presupuesto.Proyecto.DireccionDepartamento = await new DaoDepartamento(cnn).BuscarPorDepartamentoID(presupuesto.Proyecto.DireccionDepartamentoID);
+                    presupuesto.Proyecto.DireccionProvincia = await new DaoProvincia(cnn).BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
+                    presupuesto.Proyecto.DireccionDistrito = await new DaoDistrito(cnn).BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
+                    presupuesto.Plan = await new DaoPlan(cnn).BuscarPorPlanID(presupuesto.PlanID);
 
-                if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                    if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                }
+                Close(cnn);
+                return presupuesto;
             }
-
-            return presupuesto;
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<List<Presupuesto>> PresupuestoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte estado)
@@ -91,33 +119,53 @@ namespace CapaLogica
             if (estado == 1) activo = true;
             else if (estado == 2) activo = false;
 
-            var listaPresupuestos = await DaoPresupuesto.Instancia.BusquedaGeneral(fechaDesde, fechaHasta, clienteID, proyectoID, activo);
-            if (listaPresupuestos.Count > 0)
+            SqlConnection cnn = this.Conectar();
+            try
             {
-                var tiposDocumentoIdentidad = await DaoTipoDocumentoIdentidad.Instancia.ListarTodos();
-                var ubigeos = await LogDepartamento.Instancia.DepartamentoBuscarTodos();
-                foreach (var presupuesto in listaPresupuestos)
+                await cnn.OpenAsync();
+                var listaPresupuestos = await new DaoPresupuesto(cnn).BusquedaGeneral(fechaDesde, fechaHasta, clienteID, proyectoID, activo);
+                if (listaPresupuestos.Count > 0)
                 {
-                    presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
-                    presupuesto.Cliente = await DaoCliente.Instancia.BuscarPorClienteID(presupuesto.ClienteID);
-                    presupuesto.Cliente.TipoDocumentoIdentidad = tiposDocumentoIdentidad.Find(x => x.TipoDocumentoIdentidadID == presupuesto.Cliente.TipoDocumentoIdentidadID);
-                    presupuesto.Proyecto = await DaoProyecto.Instancia.BuscarPorProyectoID(presupuesto.ProyectoID);
-                    presupuesto.Proyecto.DireccionDepartamento = await DaoDepartamento.Instancia.BuscarPorDepartamentoID(presupuesto.Proyecto.DireccionDepartamentoID);
-                    presupuesto.Proyecto.DireccionProvincia = await DaoProvincia.Instancia.BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
-                    presupuesto.Proyecto.DireccionDistrito = await DaoDistrito.Instancia.BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
-                    presupuesto.Plan = await DaoPlan.Instancia.BuscarPorPlanID(presupuesto.PlanID);
+                    var tiposDocumentoIdentidad = await new DaoTipoDocumentoIdentidad(cnn).ListarTodos();
+                    foreach (var presupuesto in listaPresupuestos)
+                    {
+                        presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                        presupuesto.Cliente = await new DaoCliente(cnn).BuscarPorClienteID(presupuesto.ClienteID);
+                        presupuesto.Cliente.TipoDocumentoIdentidad = tiposDocumentoIdentidad.Find(x => x.TipoDocumentoIdentidadID == presupuesto.Cliente.TipoDocumentoIdentidadID);
+                        presupuesto.Proyecto = await new DaoProyecto(cnn).BuscarPorProyectoID(presupuesto.ProyectoID);
+                        presupuesto.Proyecto.DireccionDepartamento = await new DaoDepartamento(cnn).BuscarPorDepartamentoID(presupuesto.Proyecto.DireccionDepartamentoID);
+                        presupuesto.Proyecto.DireccionProvincia = await new DaoProvincia(cnn).BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
+                        presupuesto.Proyecto.DireccionDistrito = await new DaoDistrito(cnn).BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
+                        presupuesto.Plan = await new DaoPlan(cnn).BuscarPorPlanID(presupuesto.PlanID);
 
-                    if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await DaoUsuario.Instancia.BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                        if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                    }
                 }
+                Close(cnn);
+                return listaPresupuestos;
             }
-
-            return listaPresupuestos;
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<List<PresupuestoDetalle>> PresupuestoDetalleBuscarPorPresupuestoID(int presupuestoID)
         {
-            var presupuestoDetalles = await DaoPresupuestoDetalle.Instancia.BuscarPorPresupuestoID(presupuestoID);
-            return presupuestoDetalles;
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var presupuestoDetalles = await new DaoPresupuestoDetalle(cnn).BuscarPorPresupuestoID(presupuestoID);
+                Close(cnn);
+                return presupuestoDetalles;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         #endregion metodos

@@ -1,14 +1,17 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CapaLogica
 {
-    public class LogPresupuestoCategoria
-	{
+    [Serializable]
+    public class LogPresupuestoCategoria : Conexion, ILogPresupuestoCategoria
+    {
         #region sigleton
         private static readonly LogPresupuestoCategoria _instancia = new LogPresupuestoCategoria();
         public static LogPresupuestoCategoria Instancia { get { return _instancia; } }
@@ -18,26 +21,95 @@ namespace CapaLogica
 
         public async Task<short> PresupuestoCategoriaInsertar(PresupuestoCategoria presupuestoCategoria)
         {
-            return await DaoPresupuestoCategoria.Instancia.Insertar(presupuestoCategoria);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        var presupuestoCategoriaId = await new DaoPresupuestoCategoria(tran).Insertar(presupuestoCategoria);
+                        tran.Commit();
+                        Close(cnn);
+                        return presupuestoCategoriaId;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task PresupuestoCategoriaActualizar(PresupuestoCategoria presupuestoCategoria)
         {
-            await DaoPresupuestoCategoria.Instancia.Actualizar(presupuestoCategoria);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoPresupuestoCategoria(tran).Actualizar(presupuestoCategoria);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<PresupuestoCategoria> PresupuestoCategoriaBuscarPorPresupuestoCategoriaID(short PresupuestoCategoriaID)
         {
-            return await DaoPresupuestoCategoria.Instancia.BuscarPorPresupuestoCategoriaID(PresupuestoCategoriaID);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var presupuestoCategoria = await new DaoPresupuestoCategoria(cnn).BuscarPorPresupuestoCategoriaID(PresupuestoCategoriaID);
+                Close(cnn);
+                return presupuestoCategoria;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<List<PresupuestoCategoria>> PresupuestoCategoriaBuscarTodos()
         {
-            var presupuestoCategorias = await DaoPresupuestoCategoria.Instancia.BuscarTodos();
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var presupuestoCategorias = await new DaoPresupuestoCategoria(cnn).BuscarTodos();
+                presupuestoCategorias = PresupuestoCategoriaJerarquizar(presupuestoCategorias);
 
-            presupuestoCategorias = PresupuestoCategoriaJerarquizar(presupuestoCategorias);
-
-			return presupuestoCategorias;
+                Close(cnn);
+                return presupuestoCategorias;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         private List<PresupuestoCategoria> PresupuestoCategoriaJerarquizar(List<PresupuestoCategoria> presupuestoCategorias)
@@ -56,16 +128,16 @@ namespace CapaLogica
                         {
                             PresupuestoCategoriaID = iteracion.PadrePresupuestoCategoriaID.Value
                         };
-						diccionario.Add(padrePresupuestoCategoria.PresupuestoCategoriaID, padrePresupuestoCategoria);
-						iteracion.PadrePresupuestoCategoria = padrePresupuestoCategoria;
-					}
-					padrePresupuestoCategoria.SubPresupuestoCategorias.Add(iteracion);
-				}
+                        diccionario.Add(padrePresupuestoCategoria.PresupuestoCategoriaID, padrePresupuestoCategoria);
+                        //iteracion.PadrePresupuestoCategoria = padrePresupuestoCategoria;
+                    }
+                    padrePresupuestoCategoria.SubPresupuestoCategorias.Add(iteracion);
+                }
                 else
                 {
-					PresupuestoCategoria presupuestoCategoria = null;
-					diccionario.TryGetValue(iteracion.PresupuestoCategoriaID, out presupuestoCategoria);
-					if (presupuestoCategoria != null)
+                    PresupuestoCategoria presupuestoCategoria = null;
+                    diccionario.TryGetValue(iteracion.PresupuestoCategoriaID, out presupuestoCategoria);
+                    if (presupuestoCategoria != null)
                     {
                         presupuestoCategoria.Nombre = iteracion.Nombre;
                         presupuestoCategoria.Observaciones = iteracion.Observaciones;
@@ -75,8 +147,8 @@ namespace CapaLogica
                     {
                         diccionario.Add(iteracion.PresupuestoCategoriaID, iteracion);
                     }
-				}
-			}
+                }
+            }
 
             return diccionario.Values.ToList();
         }

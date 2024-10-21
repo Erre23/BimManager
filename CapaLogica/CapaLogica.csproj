@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Apis\ApisPeru.cs" />
     <Compile Include="Apis\Response.cs" />
+    <Compile Include="Conexion.cs" />
     <Compile Include="LogPlan.cs" />
     <Compile Include="LogPresupuestoCategoria.cs" />
     <Compile Include="LogPresupuesto.cs" />
@@ -73,6 +74,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -92,6 +94,10 @@
     <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
       <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
       <Name>CapaEntidad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapaILogica\CapaILogica.csproj">
+      <Project>{9aa83025-56f7-4961-ac2b-e33cc1c5d6d5}</Project>
+      <Name>CapaILogica</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

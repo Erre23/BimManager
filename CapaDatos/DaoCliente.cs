@@ -9,46 +9,45 @@ namespace CapaDatos
 {
     public class DaoCliente
     {
-        #region sigleton
-        private static readonly DaoCliente _instancia = new DaoCliente();
-        public static DaoCliente Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoCliente(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoCliente(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
         public async Task<int> Insertar(Cliente cliente)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
-            { 
-                try
-                {
-                    cmd = new SqlCommand("spClienteInsertar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                cmd = new SqlCommand("spClienteInsertar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", cliente.TipoDocumentoIdentidadID));
-                    cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", cliente.DocumentoIdentidadNumero, 20));
-                    cmd.Parameters.Add(CreateParams.NVarchar("RazonSocial", cliente.RazonSocial, 250));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombres", cliente.Nombres, 100));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", cliente.Apellido1, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", cliente.Apellido2, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Celular", cliente.Celular, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Email", cliente.Email, 100));
+                cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", cliente.TipoDocumentoIdentidadID));
+                cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", cliente.DocumentoIdentidadNumero, 20));
+                cmd.Parameters.Add(CreateParams.NVarchar("RazonSocial", cliente.RazonSocial, 250));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombres", cliente.Nombres, 100));
+                cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", cliente.Apellido1, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", cliente.Apellido2, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Celular", cliente.Celular, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Email", cliente.Email, 100));
 
-                    cliente.ClienteID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                cliente.ClienteID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
 
             return cliente.ClienteID;
@@ -58,37 +57,28 @@ namespace CapaDatos
         public async Task Actualizar(Cliente cliente)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spClienteActualizar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spClienteActualizar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.Int("ClienteID", cliente.ClienteID));
-                    cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", cliente.TipoDocumentoIdentidadID));
-                    cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", cliente.DocumentoIdentidadNumero, 20));
-                    cmd.Parameters.Add(CreateParams.NVarchar("RazonSocial", cliente.RazonSocial, 250));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombres", cliente.Nombres, 100));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", cliente.Apellido1, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", cliente.Apellido2, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Celular", cliente.Celular, 50));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Email", cliente.Email, 100));
+                cmd.Parameters.Add(CreateParams.Int("ClienteID", cliente.ClienteID));
+                cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", cliente.TipoDocumentoIdentidadID));
+                cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", cliente.DocumentoIdentidadNumero, 20));
+                cmd.Parameters.Add(CreateParams.NVarchar("RazonSocial", cliente.RazonSocial, 250));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombres", cliente.Nombres, 100));
+                cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", cliente.Apellido1, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", cliente.Apellido2, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Celular", cliente.Celular, 50));
+                cmd.Parameters.Add(CreateParams.NVarchar("Email", cliente.Email, 100));
 
-                    cmd.ExecuteNonQuery();
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -96,30 +86,19 @@ namespace CapaDatos
         public async Task Deshabilitar(int clienteID)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
-            { 
-                try
-                {
-                    cmd = new SqlCommand("spClienteDeshabilitar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                cmd = new SqlCommand("spClienteDeshabilitar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
 
-                    cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
-
-                    cmd.ExecuteNonQuery(); 
-                    
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                await cmd.ExecuteNonQueryAsync();                     
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -129,12 +108,9 @@ namespace CapaDatos
             var cliente = (Cliente)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spClienteBuscarPorClienteID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -142,15 +118,12 @@ namespace CapaDatos
                     cliente = await ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return cliente;
@@ -162,13 +135,10 @@ namespace CapaDatos
             var cliente = (Cliente)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spClienteBuscarPorDocumentoIdentidad", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
                 cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", documentoIdentidadNumero, 20));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -176,15 +146,12 @@ namespace CapaDatos
                     cliente = await ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return cliente;
@@ -196,17 +163,14 @@ namespace CapaDatos
             var listaClientes = new List<Cliente>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spClienteBusquedaGeneral", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
                 cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", documentoIdentidadNumero, 20));
                 cmd.Parameters.Add(CreateParams.NVarchar("RazonSocial", rasonSocial, 250));
                 cmd.Parameters.Add(CreateParams.NVarchar("Nombres", nombres, 100));
                 cmd.Parameters.Add(CreateParams.NVarchar("Apellido1", apellido1, 50));
                 cmd.Parameters.Add(CreateParams.NVarchar("Apellido2", apellido2, 50));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -215,15 +179,12 @@ namespace CapaDatos
                     listaClientes.Add(cliente);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaClientes;

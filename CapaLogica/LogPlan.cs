@@ -1,11 +1,15 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace CapaLogica
 {
-    public class LogPlan
+    [Serializable]
+    public class LogPlan : Conexion, ILogPlan
     {
         #region sigleton
         private static readonly LogPlan _instancia = new LogPlan();
@@ -16,12 +20,36 @@ namespace CapaLogica
 
         public async Task<Plan> PlanBuscarPorPlanID(short PlanID)
         {
-            return await DaoPlan.Instancia.BuscarPorPlanID(PlanID);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var plan = await new DaoPlan(cnn).BuscarPorPlanID(PlanID);
+                Close(cnn);
+                return plan;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<List<Plan>> PlanListarActivos()
         {
-            return await DaoPlan.Instancia.ListarActivos();
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var planes = await new DaoPlan(cnn).ListarActivos();
+                Close(cnn);
+                return planes;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         #endregion metodos

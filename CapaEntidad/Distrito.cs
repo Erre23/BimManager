@@ -1,19 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace CapaEntidad
 {
+    [DataContract]
     public class Distrito
     {
+        [DataMember]
         public short DistritoID { get; set; }
+
+        [DataMember]
         public string Nombre { get; set; }
+
+        [DataMember]
         public short ProvinciaID { get; set; }
-		public string CodigoUbigeoSunat { get; set; }
-		public string CodigoUbigeoReniec { get; set; }
-		public bool Activo { get; set; }
-		public Provincia Provincia { get; set; }
+
+        [DataMember]
+        public string CodigoUbigeoSunat { get; set; }
+
+        [DataMember]
+        public string CodigoUbigeoReniec { get; set; }
+
+        [DataMember]
+        public bool Activo { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
+        public Provincia Provincia { get; set; }
     }
 }

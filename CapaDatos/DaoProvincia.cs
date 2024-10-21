@@ -9,10 +9,19 @@ namespace CapaDatos
 {
     public class DaoProvincia
     {
-        #region sigleton
-        private static readonly DaoProvincia _instancia = new DaoProvincia();
-        public static DaoProvincia Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoProvincia(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoProvincia(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
 
@@ -22,12 +31,9 @@ namespace CapaDatos
             var Provincia = (Provincia)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spProvinciaBuscarPorProvinciaID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("ProvinciaID", provinciaID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -35,15 +41,12 @@ namespace CapaDatos
                     Provincia = ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return Provincia;
@@ -55,12 +58,9 @@ namespace CapaDatos
             var listaProvincias = new List<Provincia>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spProvinciaBuscarPorDepartamentoID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("DepartamentoID", departamentoID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -69,15 +69,12 @@ namespace CapaDatos
                     listaProvincias.Add(Provincia);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaProvincias;
@@ -89,10 +86,8 @@ namespace CapaDatos
             var listaProvincias = new List<Provincia>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spProvinciaBuscarTodos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -101,15 +96,12 @@ namespace CapaDatos
                     listaProvincias.Add(Provincia);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaProvincias;

@@ -1,10 +1,14 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
+using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace CapaLogica
 {
-    public class LogUsuario
+    [Serializable]
+    public class LogUsuario : Conexion, ILogUsuario
     {
         #region sigleton
         private static readonly LogUsuario _instancia = new LogUsuario();
@@ -12,20 +16,68 @@ namespace CapaLogica
         #endregion singleton
 
         #region metodos
-        
+
         public async Task<int> UsuarioInsertar(Usuario usuario)
         {
-            return await DaoUsuario.Instancia.Insertar(usuario);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        var usuarioID = await new DaoUsuario(tran).Insertar(usuario);
+                        tran.Commit();
+                        Close(cnn);
+                        return usuarioID;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<Usuario> UsuarioLogin(string username, string password)
         {
-            return await DaoUsuario.Instancia.Login(username, password);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var usuario = await new DaoUsuario(cnn).Login(username, password);
+                Close(cnn);
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<Usuario> UsuarioBuscarPorUsername(string username)
         {
-            return await DaoUsuario.Instancia.BuscarPorUsername(username);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var usuario = await new DaoUsuario(cnn).BuscarPorUsername(username);
+                Close(cnn);
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         #endregion metodos

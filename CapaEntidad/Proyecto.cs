@@ -1,28 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace CapaEntidad
 {
-	public  class Proyecto
+    [DataContract]
+    public  class Proyecto
 	{
-		public int ProyectoID { get; set; }
-		public int ClienteID { get; set; }
-		public Cliente Cliente { get; set; }
-		public string Nombre { get; set; }
-		public string Direccion { get; set; }
-		public string DireccionReferencia { get; set; }
-		public short DireccionDistritoID { get; set; }
-		public Distrito DireccionDistrito { get; set; }
-		public short DireccionProvinciaID { get; set; }
-		public Provincia DireccionProvincia { get; set; }
-		public short DireccionDepartamentoID { get; set; }
-		public Departamento DireccionDepartamento { get; set; }
-		public bool Activo { get; set; }
+        [DataMember]
+        public int ProyectoID { get; set; }
 
-		public string DireccionCompleta
+        [DataMember]
+        public int ClienteID { get; set; }
+
+        [DataMember]
+        public Cliente Cliente { get; set; }
+
+        [DataMember]
+        public string Nombre { get; set; }
+
+        [DataMember]
+        public string Direccion { get; set; }
+
+        [DataMember]
+        public string DireccionReferencia { get; set; }
+
+        [DataMember]
+        public short DireccionDistritoID { get; set; }
+
+        [DataMember]
+        public Distrito DireccionDistrito { get; set; }
+
+        [DataMember]
+        public short DireccionProvinciaID { get; set; }
+
+        [DataMember]
+        public Provincia DireccionProvincia { get; set; }
+
+        [DataMember]
+        public short DireccionDepartamentoID { get; set; }
+
+        [DataMember]
+        public Departamento DireccionDepartamento { get; set; }
+
+        [DataMember]
+        public bool Activo { get; set; }
+
+        public string DireccionCompleta
 		{
 			get
 			{

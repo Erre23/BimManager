@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace CapaEntidad
 {
-	public class PresupuestoCategoria
+    [DataContract]
+    public class PresupuestoCategoria
 	{
+		[DataMember]
 		public short PresupuestoCategoriaID { get; set; }
-		public string Nombre { get; set; }
-		public string Observaciones { get; set; }
-		public decimal? Porcentaje { get; set; }
-		public short? PadrePresupuestoCategoriaID { get; set; }
 
-		public string TextoResumen
+        [DataMember]
+        public string Nombre { get; set; }
+
+        [DataMember]
+        public string Observaciones { get; set; }
+
+        [DataMember]
+        public decimal? Porcentaje { get; set; }
+
+        [DataMember]
+        public short? PadrePresupuestoCategoriaID { get; set; }
+
+        public string TextoResumen
 		{
 			get 
 			{
@@ -24,7 +32,11 @@ namespace CapaEntidad
                 return textoResumen; 
 			}
 		}
-		public PresupuestoCategoria PadrePresupuestoCategoria { get; set; }
-		public List<PresupuestoCategoria> SubPresupuestoCategorias { get; set; } = new List<PresupuestoCategoria>();
+
+        [DataMember(EmitDefaultValue = false)]
+        public PresupuestoCategoria PadrePresupuestoCategoria { get; set; }
+
+        [DataMember]
+        public List<PresupuestoCategoria> SubPresupuestoCategorias { get; set; } = new List<PresupuestoCategoria>();
 	}
 }

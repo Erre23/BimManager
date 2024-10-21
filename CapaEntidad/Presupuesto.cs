@@ -1,35 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace CapaEntidad
 {
-	public class Presupuesto
+    [DataContract]
+    public class Presupuesto
 	{
-		public int PresupuestoID { get; set; }
-		public int CreacionUsuarioID { get; set; }
-		public Usuario CreacionUsuario { get; set; }
-		public DateTime CreacionFecha { get; set; }
-		public int ClienteID { get; set; }
-		public Cliente Cliente { get; set; }
-		public int ProyectoID { get; set; }
-		public Proyecto Proyecto { get; set; }
-		public DateTime FechaExpiracion { get; set; }
-		public int? AnulacionUsuarioID { get; set; }
-		public Usuario AnulacionUsuario { get; set; }
-		public DateTime? AnulacionFecha { get; set; }
-		public string AnulacionMotivo { get; set; }
-		public bool Activo { get; set; }
-		public decimal AreaTotal { get; set; }
-		public decimal AreaLibre { get; set; }
-		public byte AreaLibrePorcentaje { get; set; }
-		public decimal AreaTechada { get; set; }
-		public byte NumeroPisos { get; set; }
-		public byte PlanID { get; set; }
-		public Plan Plan { get; set; }
-		public decimal ImporteTotal { get; set; }
-		public List<PresupuestoDetalle> PresupuestoDetalles { get; set; }
+        [DataMember]
+        public int PresupuestoID { get; set; }
+
+        [DataMember]
+        public int CreacionUsuarioID { get; set; }
+
+        [DataMember]
+        public Usuario CreacionUsuario { get; set; }
+
+        [DataMember]
+        public DateTime CreacionFecha { get; set; }
+
+        [DataMember]
+        public int ClienteID { get; set; }
+
+        [DataMember]
+        public Cliente Cliente { get; set; }
+
+        [DataMember]
+        public int ProyectoID { get; set; }
+
+        [DataMember]
+        public Proyecto Proyecto { get; set; }
+
+        [DataMember]
+        public DateTime FechaExpiracion { get; set; }
+
+        [DataMember]
+        public int? AnulacionUsuarioID { get; set; }
+
+        [DataMember]
+        public Usuario AnulacionUsuario { get; set; }
+
+        [DataMember]
+        public DateTime? AnulacionFecha { get; set; }
+
+        [DataMember]
+        public string AnulacionMotivo { get; set; }
+
+        [DataMember]
+        public bool Activo { get; set; }
+
+        [DataMember]
+        public decimal AreaTotal { get; set; }
+
+        [DataMember]
+        public decimal AreaLibre { get; set; }
+
+        [DataMember]
+        public byte AreaLibrePorcentaje { get; set; }
+
+        [DataMember]
+        public decimal AreaTechada { get; set; }
+
+        [DataMember]
+        public byte NumeroPisos { get; set; }
+
+        [DataMember]
+        public byte PlanID { get; set; }
+
+        [DataMember]
+        public Plan Plan { get; set; }
+
+        [DataMember]
+        public decimal ImporteTotal { get; set; }
+
+        [DataMember]
+        public List<PresupuestoDetalle> PresupuestoDetalles { get; set; }
     }
 }

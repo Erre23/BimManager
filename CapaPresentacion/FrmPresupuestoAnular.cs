@@ -1,15 +1,10 @@
 ﻿using CapaEntidad;
-using CapaLogica;
-using CapaPresentacion.Controls;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPresupuestoAnular : Form
+    public partial class FrmPresupuestoAnular : FrmBase
     {
         private Presupuesto _presupuesto;
         private readonly Usuario _usuario;
@@ -47,7 +42,7 @@ namespace CapaPresentacion
 
                 this._presupuesto.AnulacionUsuarioID = this._usuario.UsuarioID;
                 this._presupuesto.AnulacionMotivo = TbMotivo.Text.Trim();
-                await LogPresupuesto.Instancia.PresupuestoAnular(this._presupuesto);
+                await this.ObjRemoteObject.LogPresupuesto.PresupuestoAnular(this._presupuesto);
                 MessageBox.Show(this, "El presupuesto ha sido anulado correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
             }

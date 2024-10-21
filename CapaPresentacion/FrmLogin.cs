@@ -1,19 +1,10 @@
 ﻿using CapaEntidad;
-using CapaLogica;
-using CapaPresentacion.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmLogin : Form
+    public partial class FrmLogin : FrmBase
     {
         public FrmLogin()
         {
@@ -39,7 +30,9 @@ namespace CapaPresentacion
                     return;
                 }
 
-                var usuarioLogin = await LogUsuario.Instancia.UsuarioLogin(TbUsername.Text.Trim(), TbPassword.Text);
+                BnIngresar.Enabled = false;
+                this.Cursor = Cursors.WaitCursor;
+                var usuarioLogin = await this.ObjRemoteObject.LogUsuario.UsuarioLogin(TbUsername.Text.Trim(), TbPassword.Text);
                 if (usuarioLogin == null)
                 {
                     MessageBox.Show(this, "Contraseña incorrecta", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -66,6 +59,11 @@ namespace CapaPresentacion
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                BnIngresar.Enabled = true;
+                this.Cursor = Cursors.Default;
             }
         }
 

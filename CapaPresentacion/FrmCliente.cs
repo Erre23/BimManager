@@ -1,23 +1,14 @@
 ﻿using CapaEntidad;
-using CapaLogica;
+using CapaPresentacion.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CapaPresentacion.Controls;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting;
 using System.Net.Mail;
+using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmCliente : Form
+    public partial class FrmCliente : FrmBase
     {
         ToolStripMenuItem _menu;
         public FrmCliente(ToolStripMenuItem menu)
@@ -35,7 +26,7 @@ namespace CapaPresentacion
             {
                 CmbTipoDocumentoIdentidad.Items.Clear();
                 CmbTipoDocumentoIdentidad.DisplayMember = "Nombre";
-                var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
+                var tiposDocumentoIdentidad = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadListarActivos();
                 foreach (var item in tiposDocumentoIdentidad)
                 {
                     CmbTipoDocumentoIdentidad.Items.Add(item);
@@ -287,7 +278,7 @@ namespace CapaPresentacion
             {
                 BnDeshabilitar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
-                await LogCliente.Instancia.ClienteDeshabilitar(cliente.ClienteID);
+                await this.ObjRemoteObject.LogCliente.ClienteDeshabilitar(cliente.ClienteID);
                 cliente.Activo = false;
                 DgvCliente_Actualizar(cliente);
 
@@ -382,12 +373,12 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this.CurrentCliente.ClienteID = await LogCliente.Instancia.ClienteInsertar(this.CurrentCliente);
+                    this.CurrentCliente.ClienteID = await this.ObjRemoteObject.LogCliente.ClienteInsertar(this.CurrentCliente);
                     DgvCliente_Agregar(this.CurrentCliente);
                 }
                 else
                 {
-                    await LogCliente.Instancia.ClienteActualizar(this.CurrentCliente);
+                    await this.ObjRemoteObject.LogCliente.ClienteActualizar(this.CurrentCliente);
                     DgvCliente_Actualizar(this.CurrentCliente);
                 }
 
@@ -420,7 +411,7 @@ namespace CapaPresentacion
                 this.Cursor = Cursors.WaitCursor;
 
                 var tipoDocumentoIdentidad = (TipoDocumentoIdentidad)CmbTipoDocumentoIdentidad.SelectedItem;
-                var listaClientes = await LogCliente.Instancia.ClienteBusquedaGeneral(
+                var listaClientes = await this.ObjRemoteObject.LogCliente.ClienteBusquedaGeneral(
                     tipoDocumentoIdentidad?.TipoDocumentoIdentidadID,
                     TbDocumentoIdentidadNumero.Text.Trim(),
                     TbRazonSocial.Text.Trim(),
@@ -495,7 +486,7 @@ namespace CapaPresentacion
 				BnConsultaAPI.Enabled = false;
 				this.Cursor = Cursors.WaitCursor;
                 				
-				var cliente = await LogCliente.Instancia.ClienteConsultaApiPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbDocumentoIdentidadNumero.Text.Trim());
+				var cliente = await this.ObjRemoteObject.LogCliente.ClienteConsultaApiPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbDocumentoIdentidadNumero.Text.Trim());
                 
 				this.Cursor = Cursors.Default;
 				if (cliente == null)

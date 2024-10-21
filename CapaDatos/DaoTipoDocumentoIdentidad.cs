@@ -9,46 +9,46 @@ namespace CapaDatos
 {
     public class DaoTipoDocumentoIdentidad
     {
-        #region sigleton
-        private static readonly DaoTipoDocumentoIdentidad _instancia = new DaoTipoDocumentoIdentidad();        
-        public static DaoTipoDocumentoIdentidad Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoTipoDocumentoIdentidad(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoTipoDocumentoIdentidad(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
 
         #region metodos    
         public async Task<short> Insertar(TipoDocumentoIdentidad tipoDocumentoIdentidad)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spTipoDocumentoIdentidadInsertar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spTipoDocumentoIdentidadInsertar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoIdentidad.Nombre, 50));
-                    cmd.Parameters.Add(CreateParams.Bit("LongitudExacta", tipoDocumentoIdentidad.LongitudExacta));
-                    cmd.Parameters.Add(CreateParams.TinyInt("LongitudMinima", tipoDocumentoIdentidad.LongitudMinima));
-                    cmd.Parameters.Add(CreateParams.TinyInt("LongitudMaxima", tipoDocumentoIdentidad.LongitudMaxima));
-                    cmd.Parameters.Add(CreateParams.Bit("Alfanumerico", tipoDocumentoIdentidad.Alfanumerico));
-                    cmd.Parameters.Add(CreateParams.Bit("PersonaJuridica", tipoDocumentoIdentidad.PersonaJuridica));
-					cmd.Parameters.Add(CreateParams.Bit("ConsultaApi", tipoDocumentoIdentidad.ConsultaApi));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoIdentidad.Nombre, 50));
+                cmd.Parameters.Add(CreateParams.Bit("LongitudExacta", tipoDocumentoIdentidad.LongitudExacta));
+                cmd.Parameters.Add(CreateParams.TinyInt("LongitudMinima", tipoDocumentoIdentidad.LongitudMinima));
+                cmd.Parameters.Add(CreateParams.TinyInt("LongitudMaxima", tipoDocumentoIdentidad.LongitudMaxima));
+                cmd.Parameters.Add(CreateParams.Bit("Alfanumerico", tipoDocumentoIdentidad.Alfanumerico));
+                cmd.Parameters.Add(CreateParams.Bit("PersonaJuridica", tipoDocumentoIdentidad.PersonaJuridica));
+				cmd.Parameters.Add(CreateParams.Bit("ConsultaApi", tipoDocumentoIdentidad.ConsultaApi));
 
-					tipoDocumentoIdentidad.TipoDocumentoIdentidadID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+				tipoDocumentoIdentidad.TipoDocumentoIdentidadID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
 
             return tipoDocumentoIdentidad.TipoDocumentoIdentidadID;
@@ -58,37 +58,27 @@ namespace CapaDatos
         public async Task Actualizar(TipoDocumentoIdentidad tipoDocumentoIdentidad)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spTipoDocumentoIdentidadActualizar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spTipoDocumentoIdentidadActualizar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", tipoDocumentoIdentidad.TipoDocumentoIdentidadID));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoIdentidad.Nombre, 50));
-                    cmd.Parameters.Add(CreateParams.Bit("LongitudExacta", tipoDocumentoIdentidad.LongitudExacta));
-                    cmd.Parameters.Add(CreateParams.TinyInt("LongitudMinima", tipoDocumentoIdentidad.LongitudMinima));
-                    cmd.Parameters.Add(CreateParams.TinyInt("LongitudMaxima", tipoDocumentoIdentidad.LongitudMaxima));
-                    cmd.Parameters.Add(CreateParams.Bit("Alfanumerico", tipoDocumentoIdentidad.Alfanumerico));
-                    cmd.Parameters.Add(CreateParams.Bit("PersonaJuridica", tipoDocumentoIdentidad.PersonaJuridica));
-					cmd.Parameters.Add(CreateParams.Bit("ConsultaApi", tipoDocumentoIdentidad.ConsultaApi));
+                cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", tipoDocumentoIdentidad.TipoDocumentoIdentidadID));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoIdentidad.Nombre, 50));
+                cmd.Parameters.Add(CreateParams.Bit("LongitudExacta", tipoDocumentoIdentidad.LongitudExacta));
+                cmd.Parameters.Add(CreateParams.TinyInt("LongitudMinima", tipoDocumentoIdentidad.LongitudMinima));
+                cmd.Parameters.Add(CreateParams.TinyInt("LongitudMaxima", tipoDocumentoIdentidad.LongitudMaxima));
+                cmd.Parameters.Add(CreateParams.Bit("Alfanumerico", tipoDocumentoIdentidad.Alfanumerico));
+                cmd.Parameters.Add(CreateParams.Bit("PersonaJuridica", tipoDocumentoIdentidad.PersonaJuridica));
+				cmd.Parameters.Add(CreateParams.Bit("ConsultaApi", tipoDocumentoIdentidad.ConsultaApi));
 
-					cmd.ExecuteNonQuery();
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+				await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -96,30 +86,19 @@ namespace CapaDatos
         public async Task Deshabilitar(int tipoDocumentoIdentidadID)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spTipoDocumentoIdentidadDeshabilitar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spTipoDocumentoIdentidadDeshabilitar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
 
-                    cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
-
-                    cmd.ExecuteNonQuery();
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -128,14 +107,10 @@ namespace CapaDatos
             var cmd = (SqlCommand)null;
             var entidad = (TipoDocumentoIdentidad)null;
             try
-            {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
+            {                
                 cmd = new SqlCommand("spTipoDocumentoIdentidadBuscarPorTipoDocumentoIdentidadID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
-
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -143,13 +118,10 @@ namespace CapaDatos
                     entidad = ReadEntidad(dr);
                 }
                 dr.Close();
-
-                cmd.Connection.Close();
                 cmd.Dispose();
             }
             catch (Exception e)
             {
-                cmd.Connection.Close();
                 cmd.Dispose();
                 throw e;
             }
@@ -163,10 +135,8 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoIdentidad>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spTipoDocumentoIdentidadListarActivos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -175,13 +145,10 @@ namespace CapaDatos
                     objLista.Add(obj);
                 }
                 dr.Close();
-
-                cmd.Connection.Close();
                 cmd.Dispose();
             }
             catch (Exception e)
             {
-                cmd.Connection.Close();
                 cmd.Dispose();
                 throw e;
             }
@@ -195,25 +162,20 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoIdentidad>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spTipoDocumentoIdentidadListarTodos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
                 {
                     var obj = ReadEntidad(dr);
                     objLista.Add(obj);
                 }
                 dr.Close();
-
-                cmd.Connection.Close();
                 cmd.Dispose();
             }
             catch (Exception e)
             {
-                cmd.Connection.Close();
                 cmd.Dispose();
                 throw e;
             }
@@ -225,7 +187,6 @@ namespace CapaDatos
         {
             try
             {
-
                 var obj = new TipoDocumentoIdentidad();
                 obj.TipoDocumentoIdentidadID = Convert.ToInt16(dr["TipoDocumentoIdentidadID"]);
                 obj.Nombre = dr["Nombre"].ToString();

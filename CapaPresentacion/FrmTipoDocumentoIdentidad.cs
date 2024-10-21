@@ -1,21 +1,10 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaPresentacion.Controls;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
 
 namespace CapaPresentacion
 {
-    public partial class FrmTipoDocumentoIdentidad : Form
+    public partial class FrmTipoDocumentoIdentidad : FrmBase
     {
         ToolStripMenuItem _menu;
         public FrmTipoDocumentoIdentidad(ToolStripMenuItem menu)
@@ -33,7 +22,7 @@ namespace CapaPresentacion
                 DgvTipoDocumentoIdentidad.Rows.Clear();
                 this.Cursor = Cursors.WaitCursor;
 
-                var lista = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarTodos();
+                var lista = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadListarTodos();
 
                 foreach (var item in lista)
                 {
@@ -207,7 +196,7 @@ namespace CapaPresentacion
             {
                 BnDeshabilitar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
-                await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadDeshabilitar(tipoDocumentoIdentidad.TipoDocumentoIdentidadID);
+                await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadDeshabilitar(tipoDocumentoIdentidad.TipoDocumentoIdentidadID);
                 tipoDocumentoIdentidad.Activo = false;
                 DgvTipoDocumentoIdentidad_Actualizar(tipoDocumentoIdentidad);
 
@@ -263,12 +252,12 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this.CurrentTipoDocumentoIdentidad.TipoDocumentoIdentidadID = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadInsertar(this.CurrentTipoDocumentoIdentidad);
+                    this.CurrentTipoDocumentoIdentidad.TipoDocumentoIdentidadID = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadInsertar(this.CurrentTipoDocumentoIdentidad);
                     DgvTipoDocumentoIdentidad_Agregar(this.CurrentTipoDocumentoIdentidad);
                 }
                 else
                 {
-                    await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadActualizar(this.CurrentTipoDocumentoIdentidad);
+                    await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadActualizar(this.CurrentTipoDocumentoIdentidad);
                     DgvTipoDocumentoIdentidad_Actualizar(this.CurrentTipoDocumentoIdentidad);
                 }
 

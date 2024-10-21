@@ -1,21 +1,10 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CapaPresentacion.Controls;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
 
 namespace CapaPresentacion
 {
-    public partial class FrmTipoDocumentoSunat : Form
+    public partial class FrmTipoDocumentoSunat : FrmBase
     {
         ToolStripMenuItem _menu;
         public FrmTipoDocumentoSunat(ToolStripMenuItem menu)
@@ -33,7 +22,7 @@ namespace CapaPresentacion
                 DgvTipoDocumentoSunat.Rows.Clear();
                 this.Cursor = Cursors.WaitCursor;
 
-                var lista = await LogTipoDocumentoSunat.Instancia.TipoDocumentoSunatListarTodos();
+                var lista = await this.ObjRemoteObject.LogTipoDocumentoSunat.TipoDocumentoSunatListarTodos();
 
                 foreach (var item in lista)
                 {
@@ -180,7 +169,7 @@ namespace CapaPresentacion
             {
                 BnDeshabilitar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
-                await LogTipoDocumentoSunat.Instancia.TipoDocumentoSunatDeshabilitar(tipoDocumentoSunat.TipoDocumentoSunatID);
+                await this.ObjRemoteObject.LogTipoDocumentoSunat.TipoDocumentoSunatDeshabilitar(tipoDocumentoSunat.TipoDocumentoSunatID);
                 tipoDocumentoSunat.Activo = false;
                 DgvTipoDocumentoSunat_Actualizar(tipoDocumentoSunat);
 
@@ -230,12 +219,12 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this.CurrentTipoDocumentoSunat.TipoDocumentoSunatID = await LogTipoDocumentoSunat.Instancia.TipoDocumentoSunatInsertar(this.CurrentTipoDocumentoSunat);
+                    this.CurrentTipoDocumentoSunat.TipoDocumentoSunatID = await this.ObjRemoteObject.LogTipoDocumentoSunat.TipoDocumentoSunatInsertar(this.CurrentTipoDocumentoSunat);
                     DgvTipoDocumentoSunat_Agregar(this.CurrentTipoDocumentoSunat);
                 }
                 else
                 {
-                    await LogTipoDocumentoSunat.Instancia.TipoDocumentoSunatActualizar(this.CurrentTipoDocumentoSunat);
+                    await this.ObjRemoteObject.LogTipoDocumentoSunat.TipoDocumentoSunatActualizar(this.CurrentTipoDocumentoSunat);
                     DgvTipoDocumentoSunat_Actualizar(this.CurrentTipoDocumentoSunat);
                 }
 

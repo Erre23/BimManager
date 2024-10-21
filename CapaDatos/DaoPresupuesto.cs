@@ -9,14 +9,23 @@ namespace CapaDatos
 {
     public class DaoPresupuesto
 	{
-        #region sigleton
-        private static readonly DaoPresupuesto _instancia = new DaoPresupuesto();
-        public static DaoPresupuesto Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoPresupuesto(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoPresupuesto(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
 
-        public async Task<int> Insertar(Presupuesto presupuesto, SqlConnection cnn, SqlTransaction tran)
+        public async Task<int> Insertar(Presupuesto presupuesto)
         {
             var cmd = (SqlCommand)null;
             
@@ -39,9 +48,11 @@ namespace CapaDatos
                 cmd.Parameters.Add(CreateParams.Decimal("ImporteTotal", presupuesto.ImporteTotal, 10, 2));
 
                 presupuesto.PresupuestoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
             }
             catch (Exception e)
             {
+                cmd.Dispose();
                 throw e;
             }
 
@@ -49,7 +60,7 @@ namespace CapaDatos
         }
 
 
-        public async Task Anular(Presupuesto presupuesto, SqlConnection cnn, SqlTransaction tran)
+        public async Task Anular(Presupuesto presupuesto)
         {
             var cmd = (SqlCommand)null;
 
@@ -64,9 +75,11 @@ namespace CapaDatos
                 cmd.Parameters.Add(CreateParams.Int("PresupuestoID", presupuesto.PresupuestoID));
 
                 presupuesto.PresupuestoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
             }
             catch (Exception e)
             {
+                cmd.Dispose();
                 throw e;
             }
         }
@@ -77,12 +90,9 @@ namespace CapaDatos
             var Presupuesto = (Presupuesto)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoBuscarPorPresupuestoID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("PresupuestoID", PresupuestoID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -90,15 +100,12 @@ namespace CapaDatos
                     Presupuesto = await ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return Presupuesto;
@@ -110,7 +117,6 @@ namespace CapaDatos
             var listaPresupuestos = new List<Presupuesto>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoBusquedaGeneral", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -119,7 +125,6 @@ namespace CapaDatos
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
                 cmd.Parameters.Add(CreateParams.Int("ProyectoID", proyectoID));
                 cmd.Parameters.Add(CreateParams.Bit("Activo", activo));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -128,15 +133,12 @@ namespace CapaDatos
                     listaPresupuestos.Add(Presupuesto);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaPresupuestos;

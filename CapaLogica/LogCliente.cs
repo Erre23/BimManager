@@ -1,11 +1,17 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Threading.Tasks;
 
 namespace CapaLogica
 {
-    public class LogCliente
+    [Serializable]
+    public class LogCliente : Conexion, ILogCliente
     {
         #region sigleton
         private static readonly LogCliente _instancia = new LogCliente();
@@ -13,69 +19,188 @@ namespace CapaLogica
         #endregion singleton
 
         #region metodos
-        
+
         public async Task<int> ClienteInsertar(Cliente cliente)
         {
-            return await DaoCliente.Instancia.Insertar(cliente);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        var clienteID = await new DaoCliente(tran).Insertar(cliente);
+                        tran.Commit();
+                        Close(cnn);
+                        return clienteID;
+                    }
+                    catch(Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }  
+            catch(Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task ClienteActualizar(Cliente cliente)
         {
-            await DaoCliente.Instancia.Actualizar(cliente);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoCliente(tran).Actualizar(cliente);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task ClienteDeshabilitar(int idCliente)
         {
-            await DaoCliente.Instancia.Deshabilitar(idCliente);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoCliente(tran).Deshabilitar(idCliente);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<Cliente> ClienteBuscarPorIdCliente(int idCliente)
         {
-            return await DaoCliente.Instancia.BuscarPorClienteID(idCliente);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var cliente = await new DaoCliente(cnn).BuscarPorClienteID(idCliente);
+                Close(cnn);
+                return cliente;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<Cliente> ClienteBuscarPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad, bool buscarProyectos = false, bool buscarEnAPI = false)
         {
-            var cliente = await DaoCliente.Instancia.BuscarPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
-            if (cliente != null && buscarProyectos) 
+            SqlConnection cnn = this.Conectar();
+            try
             {
-                cliente.Proyectos = await DaoProyecto.Instancia.BuscarPorClienteID(cliente.ClienteID);
-                foreach (var proyecto in cliente.Proyectos)
+                await cnn.OpenAsync();
+                var daoCliente = new DaoCliente(cnn);
+                var cliente = await daoCliente.BuscarPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
+                /*if (cliente != null && buscarProyectos)
                 {
-                    proyecto.DireccionDepartamento = await DaoDepartamento.Instancia.BuscarPorDepartamentoID(proyecto.DireccionDepartamentoID);
-                    proyecto.DireccionProvincia = await DaoProvincia.Instancia.BuscarPorProvinciaID(proyecto.DireccionProvinciaID);
-                    proyecto.DireccionDistrito = await DaoDistrito.Instancia.BuscarPorDistritoID(proyecto.DireccionDistritoID);
+                    cliente.Proyectos = await new DaoProyecto(cnn).BuscarPorClienteID(cliente.ClienteID);
+                    foreach (var proyecto in cliente.Proyectos)
+                    {
+                        proyecto.DireccionDepartamento = await new DaoDepartamento(cnn).BuscarPorDepartamentoID(proyecto.DireccionDepartamentoID);
+                        proyecto.DireccionProvincia = await new DaoProvincia(cnn).BuscarPorProvinciaID(proyecto.DireccionProvinciaID);
+                        proyecto.DireccionDistrito = await new DaoDistrito(cnn).BuscarPorDistritoID(proyecto.DireccionDistritoID);
+                    }
                 }
+                else */if (cliente == null && buscarEnAPI)
+                {
+                    cliente = await ClienteConsultaApiPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
+                    if (cliente != null)
+                    {
+                        using (var tran = cnn.BeginTransaction())
+                        {
+                            try
+                            {
+                                cliente.ClienteID = await new DaoCliente(tran).Insertar(cliente);
+                                tran.Commit();
+                            }
+                            catch(Exception ex)
+                            {
+                                tran.Rollback();
+                                throw ex;
+                            }
+                        }
+                    }
+                }
+
+                if (cliente != null && cliente.TipoDocumentoIdentidad == null) cliente.TipoDocumentoIdentidad = await new DaoTipoDocumentoIdentidad(cnn).BuscarPorTipoDocumentoIdentidadID(cliente.TipoDocumentoIdentidadID);
+                Close(cnn);
+                return cliente;
             }
-            else if (cliente == null && buscarEnAPI)
+            catch (Exception ex)
             {
-                cliente = await ClienteConsultaApiPorDocumentoIdentidad(idTipoDocumentoIdentidad, numeroDocumentoIdentidad);
-                if (cliente != null) cliente.ClienteID = await DaoCliente.Instancia.Insertar(cliente);
-            }
+                Close(cnn);
+                throw ex;
+            }            
+        }
 
-            if (cliente != null && cliente.TipoDocumentoIdentidad == null) cliente.TipoDocumentoIdentidad = await DaoTipoDocumentoIdentidad.Instancia.BuscarPorTipoDocumentoIdentidadID(cliente.TipoDocumentoIdentidadID);
-            return cliente;
-		}
-
-		public async Task<Cliente> ClienteConsultaApiPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad)
-		{
-            if (idTipoDocumentoIdentidad == 1) return await Apis.ApisPeru.Instancia.GetCliente_PersonaNaturalAsync(numeroDocumentoIdentidad);
-			else return await Apis.ApisPeru.Instancia.GetCliente_PersonaJuridicaAsync(numeroDocumentoIdentidad);
-		}
-
-		public async Task<List<Cliente>> ClienteBusquedaGeneral(short? idTipoDocumentoIdentidad, string numeroDocumentoIdentidad, string razonSocial, string nombres, string apellido1, string apellido2)
+        public async Task<Cliente> ClienteConsultaApiPorDocumentoIdentidad(short idTipoDocumentoIdentidad, string numeroDocumentoIdentidad)
         {
-            var listaClientes = await DaoCliente.Instancia.BusquedaGeneral(idTipoDocumentoIdentidad, numeroDocumentoIdentidad, razonSocial, nombres, apellido1, apellido2);
-            if (listaClientes.Count > 0)
-            {
-                var tiposDocumentoIdentidad = await DaoTipoDocumentoIdentidad.Instancia.ListarTodos();
-                foreach (var cliente in listaClientes)
-                {
-                    cliente.TipoDocumentoIdentidad = tiposDocumentoIdentidad.Find(x => x.TipoDocumentoIdentidadID == cliente.TipoDocumentoIdentidadID);
-                }
-            }
+            if (idTipoDocumentoIdentidad == 1) return await Apis.ApisPeru.Instancia.GetCliente_PersonaNaturalAsync(numeroDocumentoIdentidad);
+            else return await Apis.ApisPeru.Instancia.GetCliente_PersonaJuridicaAsync(numeroDocumentoIdentidad);
+        }
 
-            return listaClientes;
+        public async Task<List<Cliente>> ClienteBusquedaGeneral(short? idTipoDocumentoIdentidad, string numeroDocumentoIdentidad, string razonSocial, string nombres, string apellido1, string apellido2)
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var listaClientes = await new DaoCliente(cnn).BusquedaGeneral(idTipoDocumentoIdentidad, numeroDocumentoIdentidad, razonSocial, nombres, apellido1, apellido2);
+                if (listaClientes.Count > 0)
+                {
+                    var tiposDocumentoIdentidad = await new DaoTipoDocumentoIdentidad(cnn).ListarTodos();
+                    foreach (var cliente in listaClientes)
+                    {
+                        cliente.TipoDocumentoIdentidad = tiposDocumentoIdentidad.Find(x => x.TipoDocumentoIdentidadID == cliente.TipoDocumentoIdentidadID);
+                    }
+                }
+                Close(cnn);
+                return listaClientes;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         #endregion metodos

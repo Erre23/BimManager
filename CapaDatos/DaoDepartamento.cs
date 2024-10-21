@@ -9,10 +9,19 @@ namespace CapaDatos
 {
     public class DaoDepartamento
     {
-        #region sigleton
-        private static readonly DaoDepartamento _instancia = new DaoDepartamento();
-        public static DaoDepartamento Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoDepartamento(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoDepartamento(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
 
@@ -22,12 +31,9 @@ namespace CapaDatos
             var Departamento = (Departamento)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spDepartamentoBuscarPorDepartamentoID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("DepartamentoID", departamentoID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -35,15 +41,12 @@ namespace CapaDatos
                     Departamento = ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return Departamento;
@@ -55,10 +58,8 @@ namespace CapaDatos
             var listaDepartamentos = new List<Departamento>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spDepartamentoBuscarTodos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -67,15 +68,12 @@ namespace CapaDatos
                     listaDepartamentos.Add(Departamento);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaDepartamentos;

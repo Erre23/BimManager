@@ -1,5 +1,4 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-	public partial class FrmProyecto : Form
+	public partial class FrmProyecto : FrmBase
     {
         ToolStripMenuItem _menu;
         public FrmProyecto(ToolStripMenuItem menu)
@@ -26,7 +25,7 @@ namespace CapaPresentacion
             {
                 CmbTipoDocumentoIdentidad.Items.Clear();
                 CmbTipoDocumentoIdentidad.DisplayMember = "Nombre";
-                var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
+                var tiposDocumentoIdentidad = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadListarActivos();
                 foreach (var item in tiposDocumentoIdentidad)
                 {
                     CmbTipoDocumentoIdentidad.Items.Add(item);
@@ -34,7 +33,7 @@ namespace CapaPresentacion
 
                 if (CmbTipoDocumentoIdentidad.Items.Count > 0) CmbTipoDocumentoIdentidad.SelectedIndex = 0;
 
-				var departamentos = await LogDepartamento.Instancia.DepartamentoBuscarTodos();
+				var departamentos = await this.ObjRemoteObject.LogDepartamento.DepartamentoBuscarTodos();
 				var departamentoDefault = new Departamento { Nombre = "Todos" };
 				LLenarComboBox<Departamento>(departamentoDefault, departamentos, CbDepartamento);
 			}
@@ -302,7 +301,7 @@ namespace CapaPresentacion
             {
                 BnDeshabilitar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
-                await LogCliente.Instancia.ClienteDeshabilitar(proyecto.ProyectoID);
+                await this.ObjRemoteObject.LogCliente.ClienteDeshabilitar(proyecto.ProyectoID);
                 proyecto.Activo = false;
                 DgvProyecto_Actualizar(proyecto);
 
@@ -373,13 +372,13 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this.CurrentProyecto.ProyectoID = await LogProyecto.Instancia.ProyectoInsertar(this.CurrentProyecto);
+                    this.CurrentProyecto.ProyectoID = await this.ObjRemoteObject.LogProyecto.ProyectoInsertar(this.CurrentProyecto);
                     this.CurrentProyecto.Activo = true;
                     DgvProyecto_Agregar(this.CurrentProyecto);
                 }
                 else
                 {
-                    await LogProyecto.Instancia.ProyectoActualizar(this.CurrentProyecto);
+                    await this.ObjRemoteObject.LogProyecto.ProyectoActualizar(this.CurrentProyecto);
                     DgvProyecto_Actualizar(this.CurrentProyecto);
                 }
 
@@ -415,7 +414,7 @@ namespace CapaPresentacion
 				var provincia = (Provincia)CbProvincia.SelectedItem;
 				var distrito = (Distrito)CbDistrito.SelectedItem;
 
-				var listaProyecto = await LogProyecto.Instancia.ProyectoBusquedaGeneral(
+				var listaProyecto = await this.ObjRemoteObject.LogProyecto.ProyectoBusquedaGeneral(
                     this.CurrentCliente?.TipoDocumentoIdentidadID,
                     TbNombre.Text.Trim(),
                     distrito?.DistritoID,
@@ -480,7 +479,7 @@ namespace CapaPresentacion
 				BnBuscarCliente.Enabled = false;
 				this.Cursor = Cursors.WaitCursor;
 
-				this.CurrentCliente = await LogCliente.Instancia.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, numeroDocumentoIdentidad);
+				this.CurrentCliente = await this.ObjRemoteObject.LogCliente.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, numeroDocumentoIdentidad);
 
 				this.Cursor = Cursors.Default;
 				BnBuscarCliente.Enabled = true;

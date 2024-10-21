@@ -1,16 +1,12 @@
 ﻿using CapaEntidad;
-using CapaLogica;
-using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPrespuestoCategoriaBuscar : Form
+    public partial class FrmPrespuestoCategoriaBuscar : FrmBase
     {
         private FrmPrespuestoCategoria GetFormPresupuestoCategoria { get { return this.Owner as FrmPrespuestoCategoria; } }
         public FrmPrespuestoCategoriaBuscar()

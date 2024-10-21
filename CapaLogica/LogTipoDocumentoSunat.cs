@@ -1,11 +1,15 @@
 ﻿using CapaDatos;
 using CapaEntidad;
+using CapaILogica;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace CapaLogica
 {
-	public class LogTipoDocumentoSunat
+    [Serializable]
+    public class LogTipoDocumentoSunat : Conexion, ILogTipoDocumentoSunat
     {
         #region sigleton
         private static readonly LogTipoDocumentoSunat _instancia = new LogTipoDocumentoSunat();
@@ -15,28 +19,122 @@ namespace CapaLogica
         #region metodos
         public async Task<short> TipoDocumentoSunatInsertar(TipoDocumentoSunat tipoDocumentoSunat)
         {
-            return await DaoTipoDocumentoSunat.Instancia.Insertar(tipoDocumentoSunat);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        var tipoDocumentoSunatID = await new DaoTipoDocumentoSunat(tran).Insertar(tipoDocumentoSunat);
+                        tran.Commit();
+                        Close(cnn);
+                        return tipoDocumentoSunatID;
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task TipoDocumentoSunatActualizar(TipoDocumentoSunat tipoDocumentoSunat)
         {
-            await DaoTipoDocumentoSunat.Instancia.Actualizar(tipoDocumentoSunat);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoTipoDocumentoSunat(tran).Actualizar(tipoDocumentoSunat);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task TipoDocumentoSunatDeshabilitar(short idTipoDocumentoSunat)
         {
-            await DaoTipoDocumentoSunat.Instancia.Deshabilitar(idTipoDocumentoSunat);
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                using (var tran = cnn.BeginTransaction())
+                {
+                    try
+                    {
+                        await new DaoTipoDocumentoSunat(tran).Deshabilitar(idTipoDocumentoSunat);
+                        tran.Commit();
+                        Close(cnn);
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         ///listado
         public async Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarActivos()
         {
-            return await DaoTipoDocumentoSunat.Instancia.ListarActivos();
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var lista = await new DaoTipoDocumentoSunat(cnn).ListarActivos();
+                Close(cnn);
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         public async Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarTodos()
         {
-            return await DaoTipoDocumentoSunat.Instancia.ListarTodos();
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var lista = await new DaoTipoDocumentoSunat(cnn).ListarTodos();
+                Close(cnn);
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
         }
 
         #endregion metodos

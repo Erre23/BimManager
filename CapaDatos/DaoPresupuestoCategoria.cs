@@ -9,43 +9,42 @@ namespace CapaDatos
 {
     public class DaoPresupuestoCategoria
 	{
-        #region sigleton
-        private static readonly DaoPresupuestoCategoria _instancia = new DaoPresupuestoCategoria();
-        public static DaoPresupuestoCategoria Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoPresupuestoCategoria(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoPresupuestoCategoria(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
 
         public async Task<short> Insertar(PresupuestoCategoria presupuestoCategoria)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spPresupuestoCategoriaInsertar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spPresupuestoCategoriaInsertar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", presupuestoCategoria.Nombre, 250));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Observaciones", presupuestoCategoria.Observaciones, -1));
-                    cmd.Parameters.Add(CreateParams.Decimal("Porcentaje", presupuestoCategoria.Porcentaje, 3, 0));
-                    cmd.Parameters.Add(CreateParams.SmallInt("PadrePresupuestoCategoriaID", presupuestoCategoria.PadrePresupuestoCategoriaID));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombre", presupuestoCategoria.Nombre, 250));
+                cmd.Parameters.Add(CreateParams.NVarchar("Observaciones", presupuestoCategoria.Observaciones, -1));
+                cmd.Parameters.Add(CreateParams.Decimal("Porcentaje", presupuestoCategoria.Porcentaje, 3, 0));
+                cmd.Parameters.Add(CreateParams.SmallInt("PadrePresupuestoCategoriaID", presupuestoCategoria.PadrePresupuestoCategoriaID));
 
-                    presupuestoCategoria.PresupuestoCategoriaID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                presupuestoCategoria.PresupuestoCategoriaID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
 
             return presupuestoCategoria.PresupuestoCategoriaID;
@@ -55,33 +54,23 @@ namespace CapaDatos
         public async Task Actualizar(PresupuestoCategoria presupuestoCategoria)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spPresupuestoCategoriaActualizar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spPresupuestoCategoriaActualizar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.SmallInt("PresupuestoCategoriaID", presupuestoCategoria.PresupuestoCategoriaID));
+                cmd.Parameters.Add(CreateParams.NVarchar("Nombre", presupuestoCategoria.Nombre, 250));
+                cmd.Parameters.Add(CreateParams.NVarchar("Observaciones", presupuestoCategoria.Observaciones, -1));
+                cmd.Parameters.Add(CreateParams.Decimal("Porcentaje", presupuestoCategoria.Porcentaje, 3, 0));
+                cmd.Parameters.Add(CreateParams.SmallInt("PadrePresupuestoCategoriaID", presupuestoCategoria.PadrePresupuestoCategoriaID));
 
-                    cmd.Parameters.Add(CreateParams.SmallInt("PresupuestoCategoriaID", presupuestoCategoria.PresupuestoCategoriaID));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Nombre", presupuestoCategoria.Nombre, 250));
-                    cmd.Parameters.Add(CreateParams.NVarchar("Observaciones", presupuestoCategoria.Observaciones, -1));
-                    cmd.Parameters.Add(CreateParams.Decimal("Porcentaje", presupuestoCategoria.Porcentaje, 3, 0));
-                    cmd.Parameters.Add(CreateParams.SmallInt("PadrePresupuestoCategoriaID", presupuestoCategoria.PadrePresupuestoCategoriaID));
-
-                    cmd.ExecuteNonQuery();
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -91,12 +80,9 @@ namespace CapaDatos
             var PresupuestoCategoria = (PresupuestoCategoria)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoCategoriaBuscarPorPresupuestoCategoriaID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.SmallInt("PresupuestoCategoriaID", PresupuestoCategoriaID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -104,15 +90,12 @@ namespace CapaDatos
                     PresupuestoCategoria = await ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return PresupuestoCategoria;
@@ -124,12 +107,9 @@ namespace CapaDatos
             var listaPresupuestoCategorias = new List<PresupuestoCategoria>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoCategoriaBuscarPorpadrePresupuestoCaterogiaID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.SmallInt("padrePresupuestoCaterogiaID", padrePresupuestoCaterogiaID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -138,15 +118,12 @@ namespace CapaDatos
                     listaPresupuestoCategorias.Add(PresupuestoCategoria);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaPresupuestoCategorias;
@@ -158,10 +135,8 @@ namespace CapaDatos
             var listaPresupuestoCategorias = new List<PresupuestoCategoria>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoCategoriaBuscarTodos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -170,15 +145,12 @@ namespace CapaDatos
                     listaPresupuestoCategorias.Add(PresupuestoCategoria);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaPresupuestoCategorias;
@@ -193,8 +165,7 @@ namespace CapaDatos
                 obj.Nombre = Convert.ToString(dr["Nombre"]);
 				if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Observaciones")))) obj.Observaciones = dr["Observaciones"].ToString();
                 if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Porcentaje")))) obj.Porcentaje = Convert.ToDecimal(dr["Porcentaje"]);
-                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("PadrePresupuestoCategoriaID")))) obj.PadrePresupuestoCategoriaID = Convert.ToInt16(dr["PadrePresupuestoCategoriaID"]);
-                
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("PadrePresupuestoCategoriaID")))) obj.PadrePresupuestoCategoriaID = Convert.ToInt16(dr["PadrePresupuestoCategoriaID"]);                
 
                 return obj;
             }

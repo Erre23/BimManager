@@ -50,6 +50,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FormAccion.cs" />
+    <Compile Include="FrmBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBase.Designer.cs">
+      <DependentUpon>FrmBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrespuestoCategoriaBuscar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,9 +212,13 @@
       <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
       <Name>CapaEntidad</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CapaLogica\CapaLogica.csproj">
-      <Project>{692b37f3-0e91-433d-8ef2-44cd2e0c3aae}</Project>
-      <Name>CapaLogica</Name>
+    <ProjectReference Include="..\CapaILogica\CapaILogica.csproj">
+      <Project>{9aa83025-56f7-4961-ac2b-e33cc1c5d6d5}</Project>
+      <Name>CapaILogica</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WCF.WinApp\WCF.WinApp.csproj">
+      <Project>{43d1732d-0b8f-4555-9cff-8060df0867a3}</Project>
+      <Name>WCF.WinApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

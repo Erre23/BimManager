@@ -9,45 +9,43 @@ namespace CapaDatos
 {
     public class DaoProyecto
     {
-        #region sigleton
-        private static readonly DaoProyecto _instancia = new DaoProyecto();
-        public static DaoProyecto Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoProyecto(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoProyecto(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
         public async Task<int> Insertar(Proyecto Proyecto)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
-            { 
-                try
-                {
-                    cmd = new SqlCommand("spProyectoInsertar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                cmd = new SqlCommand("spProyectoInsertar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ClienteID", Proyecto.ClienteID));
+				cmd.Parameters.Add(CreateParams.NVarchar("Nombre", Proyecto.Nombre, 250));
+				cmd.Parameters.Add(CreateParams.NVarchar("Direccion", Proyecto.Direccion, 250));
+				cmd.Parameters.Add(CreateParams.NVarchar("DireccionReferencia", Proyecto.DireccionReferencia, 250));
+				cmd.Parameters.Add(CreateParams.SmallInt("DireccionDistritoID", Proyecto.DireccionDistritoID));
+				cmd.Parameters.Add(CreateParams.SmallInt("DireccionProvinciaID", Proyecto.DireccionProvinciaID));
+				cmd.Parameters.Add(CreateParams.SmallInt("DireccionDepartamentoID", Proyecto.DireccionDepartamentoID));
 
-                    cmd.Parameters.Add(CreateParams.Int("ClienteID", Proyecto.ClienteID));
-					cmd.Parameters.Add(CreateParams.NVarchar("Nombre", Proyecto.Nombre, 250));
-					cmd.Parameters.Add(CreateParams.NVarchar("Direccion", Proyecto.Direccion, 250));
-					cmd.Parameters.Add(CreateParams.NVarchar("DireccionReferencia", Proyecto.DireccionReferencia, 250));
-					cmd.Parameters.Add(CreateParams.SmallInt("DireccionDistritoID", Proyecto.DireccionDistritoID));
-					cmd.Parameters.Add(CreateParams.SmallInt("DireccionProvinciaID", Proyecto.DireccionProvinciaID));
-					cmd.Parameters.Add(CreateParams.SmallInt("DireccionDepartamentoID", Proyecto.DireccionDepartamentoID));
-
-                    Proyecto.ProyectoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
-
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                Proyecto.ProyectoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
 
             return Proyecto.ProyectoID;
@@ -57,36 +55,26 @@ namespace CapaDatos
         public async Task Actualizar(Proyecto Proyecto)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
+            try
             {
-                try
-                {
-                    cmd = new SqlCommand("spProyectoActualizar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                cmd = new SqlCommand("spProyectoActualizar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ProyectoID", Proyecto.ProyectoID));
+				cmd.Parameters.Add(CreateParams.Int("ClienteID", Proyecto.ClienteID));
+				cmd.Parameters.Add(CreateParams.NVarchar("Nombre", Proyecto.Nombre, 250));
+				cmd.Parameters.Add(CreateParams.NVarchar("Direccion", Proyecto.Direccion, 250));
+				cmd.Parameters.Add(CreateParams.NVarchar("DireccionReferencia", Proyecto.DireccionReferencia, 250));
+				cmd.Parameters.Add(CreateParams.SmallInt("DireccionDistritoID", Proyecto.DireccionDistritoID));
+				cmd.Parameters.Add(CreateParams.SmallInt("DireccionProvinciaID", Proyecto.DireccionProvinciaID));
+				cmd.Parameters.Add(CreateParams.SmallInt("DireccionDepartamentoID", Proyecto.DireccionDepartamentoID));
 
-                    cmd.Parameters.Add(CreateParams.Int("ProyectoID", Proyecto.ProyectoID));
-					cmd.Parameters.Add(CreateParams.Int("ClienteID", Proyecto.ClienteID));
-					cmd.Parameters.Add(CreateParams.NVarchar("Nombre", Proyecto.Nombre, 250));
-					cmd.Parameters.Add(CreateParams.NVarchar("Direccion", Proyecto.Direccion, 250));
-					cmd.Parameters.Add(CreateParams.NVarchar("DireccionReferencia", Proyecto.DireccionReferencia, 250));
-					cmd.Parameters.Add(CreateParams.SmallInt("DireccionDistritoID", Proyecto.DireccionDistritoID));
-					cmd.Parameters.Add(CreateParams.SmallInt("DireccionProvinciaID", Proyecto.DireccionProvinciaID));
-					cmd.Parameters.Add(CreateParams.SmallInt("DireccionDepartamentoID", Proyecto.DireccionDepartamentoID));
-
-					cmd.ExecuteNonQuery();
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+				await cmd.ExecuteNonQueryAsync();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -94,30 +82,19 @@ namespace CapaDatos
         public async Task Deshabilitar(int ProyectoID)
         {
             var cmd = (SqlCommand)null;
-            SqlConnection cnn = Conexion.Instancia.Conectar();
-            await cnn.OpenAsync();
-            using (var tran = cnn.BeginTransaction())
-            { 
-                try
-                {
-                    cmd = new SqlCommand("spProyectoDeshabilitar", cnn, tran);
-                    cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                cmd = new SqlCommand("spProyectoDeshabilitar", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ProyectoID", ProyectoID));
 
-                    cmd.Parameters.Add(CreateParams.Int("ProyectoID", ProyectoID));
-
-                    cmd.ExecuteNonQuery(); 
-                    
-                    tran.Commit();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                }
-                catch (Exception e)
-                {
-                    tran.Rollback();
-                    cmd.Connection.Close();
-                    cmd.Dispose();
-                    throw e;
-                }
+                await cmd.ExecuteNonQueryAsync(); 
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
             }
         }
 
@@ -127,12 +104,9 @@ namespace CapaDatos
             var Proyecto = (Proyecto)null;
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spProyectoBuscarPorProyectoID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("ProyectoID", proyectoID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -140,15 +114,12 @@ namespace CapaDatos
                     Proyecto = await ReadEntidad(dr);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return Proyecto;
@@ -160,12 +131,9 @@ namespace CapaDatos
             var listaProyectos = new List<Proyecto>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spProyectoBuscarPorClienteID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -174,15 +142,12 @@ namespace CapaDatos
                     listaProyectos.Add(proyecto);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaProyectos;
@@ -194,7 +159,6 @@ namespace CapaDatos
             var listaProyectos = new List<Proyecto>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spProyectoBusquedaGeneral", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -203,7 +167,6 @@ namespace CapaDatos
                 cmd.Parameters.Add(CreateParams.SmallInt("DistritoID", distritoID));
 				cmd.Parameters.Add(CreateParams.SmallInt("ProvinciaID", provinciaID));
 				cmd.Parameters.Add(CreateParams.SmallInt("DepartamentoID", departamentoID));
-				await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -212,15 +175,12 @@ namespace CapaDatos
                     listaProyectos.Add(Proyecto);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaProyectos;

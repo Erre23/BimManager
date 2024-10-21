@@ -9,14 +9,23 @@ namespace CapaDatos
 {
     public class DaoPresupuestoDetalle
 	{
-        #region sigleton
-        private static readonly DaoPresupuestoDetalle _instancia = new DaoPresupuestoDetalle();
-        public static DaoPresupuestoDetalle Instancia { get { return _instancia; } }
-        #endregion singleton
+        private readonly SqlConnection cnn;
+        private readonly SqlTransaction tran;
+
+        public DaoPresupuestoDetalle(SqlConnection _cnn)
+        {
+            cnn = _cnn;
+        }
+
+        public DaoPresupuestoDetalle(SqlTransaction _tran)
+        {
+            tran = _tran;
+            cnn = _tran.Connection;
+        }
 
         #region métodos
 
-        public async Task<int> Insertar(PresupuestoDetalle presupuestoDetalle, SqlConnection cnn, SqlTransaction tran)
+        public async Task<int> Insertar(PresupuestoDetalle presupuestoDetalle)
         {
             var cmd = (SqlCommand)null;
             
@@ -32,9 +41,11 @@ namespace CapaDatos
                 cmd.Parameters.Add(CreateParams.Decimal("Importe", presupuestoDetalle.Importe, 10, 2));
 
                 presupuestoDetalle.PresupuestoDetalleID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                cmd.Dispose();
             }
             catch (Exception e)
             {
+                cmd.Dispose();
                 throw e;
             }
 
@@ -47,12 +58,9 @@ namespace CapaDatos
             var presupuestoDetalles = new List<PresupuestoDetalle>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoDetalleBuscarPorPresupuestoID", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.Add(CreateParams.Int("PresupuestoID", presupuestoID));
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -61,15 +69,12 @@ namespace CapaDatos
                     presupuestoDetalles.Add(presupuestoDetalle);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return presupuestoDetalles;
@@ -81,10 +86,8 @@ namespace CapaDatos
             var listaPresupuestoDetalles = new List<PresupuestoDetalle>();
             try
             {
-                SqlConnection cnn = Conexion.Instancia.Conectar();
                 cmd = new SqlCommand("spPresupuestoDetalleBuscarTodos", cnn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                await cnn.OpenAsync();
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -93,15 +96,12 @@ namespace CapaDatos
                     listaPresupuestoDetalles.Add(PresupuestoDetalle);
                 }
                 dr.Close();
+                cmd.Dispose();
             }
             catch (Exception e)
             {
-                throw e;
-            }
-            finally
-            {
-                cmd.Connection.Close();
                 cmd.Dispose();
+                throw e;
             }
 
             return listaPresupuestoDetalles;

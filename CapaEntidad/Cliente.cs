@@ -1,25 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace CapaEntidad
 {
+    [DataContract]
     public class Cliente
     {
+        [DataMember]
         public int ClienteID { get; set; }
+
+        [DataMember]
         public short TipoDocumentoIdentidadID { get; set; }
+
+        [DataMember]
         public TipoDocumentoIdentidad TipoDocumentoIdentidad { get; set; }
+
+        [DataMember]
         public string DocumentoIdentidadNumero { get; set; }
+
+        [DataMember]
         public string RazonSocial { get; set; }
+
+        [DataMember]
         public string Nombres { get; set; }
+
+        [DataMember]
         public string Apellido1 { get; set; }
+
+        [DataMember]
         public string Apellido2 { get; set; }
+
+        [DataMember]
         public string Celular { get; set; }
+
+        [DataMember]
         public string Email { get; set; }
+
+        [DataMember]
         public bool Activo { get; set; } = true;
-        public List<Proyecto> Proyectos { get; set; } = new List<Proyecto>();
+
+        [DataMember(EmitDefaultValue = false)]
+        public List<Proyecto> Proyectos { get; set; }
 
         public string TipoDocumentoIdentidad_RazonSocialOrApellidosYNombres
         {
@@ -29,8 +50,7 @@ namespace CapaEntidad
             }
         }
 
-
-		public string RazonSocialOrApellidosYNombres
+        public string RazonSocialOrApellidosYNombres
         {
             get 
             {

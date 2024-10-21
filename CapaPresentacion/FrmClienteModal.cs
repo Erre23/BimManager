@@ -1,14 +1,12 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using CapaPresentacion.Controls;
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmClienteModal : Form
+    public partial class FrmClienteModal : FrmBase
     {
         private readonly TipoDocumentoIdentidad _tipoDocumentoIdentidad;
         private readonly string _documentoIdentidadNumero;
@@ -31,7 +29,7 @@ namespace CapaPresentacion
             {
                 CmbTipoDocumentoIdentidad.Items.Clear();
                 CmbTipoDocumentoIdentidad.DisplayMember = "Nombre";
-                var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
+                var tiposDocumentoIdentidad = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadListarActivos();
                 var selectedIndex = -1;
                 foreach (var item in tiposDocumentoIdentidad)
                 {
@@ -222,11 +220,11 @@ namespace CapaPresentacion
 
                 if (this.Accion == FormAccion.nuevo)
                 {
-                    this._currentCliente.ClienteID = await LogCliente.Instancia.ClienteInsertar(this._currentCliente);
+                    this._currentCliente.ClienteID = await this.ObjRemoteObject.LogCliente.ClienteInsertar(this._currentCliente);
                 }
                 else
                 {
-                    await LogCliente.Instancia.ClienteActualizar(this._currentCliente);
+                    await this.ObjRemoteObject.LogCliente.ClienteActualizar(this._currentCliente);
                 }
 
                 

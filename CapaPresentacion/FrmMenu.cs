@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-	public partial class FrmMenu : Form
+	public partial class FrmMenu : FrmBase
     {
         public FrmMenu()
 

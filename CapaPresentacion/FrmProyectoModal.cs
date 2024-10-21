@@ -1,14 +1,11 @@
 ﻿using CapaEntidad;
-using CapaLogica;
-using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-	public partial class FrmProyectoModal : Form
+    public partial class FrmProyectoModal : FrmBase
     {
         private readonly Cliente _cliente;
         private FormAccion Accion;
@@ -29,7 +26,7 @@ namespace CapaPresentacion
                 TbDocumentoIdentidadNumero.Text = _cliente.DocumentoIdentidadNumero;
                 TbCliente.Text = _cliente.RazonSocialOrApellidosYNombres;
 
-				var departamentos = await LogDepartamento.Instancia.DepartamentoBuscarTodos();
+				var departamentos = await this.ObjRemoteObject.LogDepartamento.DepartamentoBuscarTodos();
 				LLenarComboBox<Departamento>(departamentos, CbDepartamento);
 			}
             catch (Exception ex)
@@ -141,7 +138,7 @@ namespace CapaPresentacion
                 BnGuardar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                this._currentProyecto.ProyectoID = await LogProyecto.Instancia.ProyectoInsertar(this._currentProyecto);
+                this._currentProyecto.ProyectoID = await this.ObjRemoteObject.LogProyecto.ProyectoInsertar(this._currentProyecto);
                 this._currentProyecto.Activo = true;
 
                 

@@ -1,16 +1,14 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.Remoting;
 using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPresupuesto : Form
+    public partial class FrmPresupuesto : FrmBase
     {
         ToolStripMenuItem _menu;
         Usuario _usuario;
@@ -119,6 +117,7 @@ namespace CapaPresentacion
         {
             CbProyectoNombre.Items.Clear();
             CbProyectoNombre.DisplayMember = "Nombre";
+            CbProyectoNombre.DataSource = proyectos;
             var selectedIndex = -1;
             foreach (var proyecto in proyectos)
             {
@@ -338,7 +337,7 @@ namespace CapaPresentacion
             {
                 CbTipoDocumentoIdentidad.Items.Clear();
                 CbTipoDocumentoIdentidad.DisplayMember = "Nombre";
-                var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
+                var tiposDocumentoIdentidad = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadListarActivos();
                 foreach (var item in tiposDocumentoIdentidad)
                 {
                     CbTipoDocumentoIdentidad.Items.Add(item);
@@ -347,14 +346,14 @@ namespace CapaPresentacion
 
 				CbPlan.Items.Clear();
 				CbPlan.DisplayMember = "Nombre";
-				var planes = await LogPlan.Instancia.PlanListarActivos();
+				var planes = await this.ObjRemoteObject.LogPlan.PlanListarActivos();
 				foreach (var item in planes)
 				{
 					CbPlan.Items.Add(item);
 				}
                 CbPlan.SelectedIndex = -1;
 
-				_presupuestoCategorias = await LogPresupuestoCategoria.Instancia.PresupuestoCategoriaBuscarTodos();
+				_presupuestoCategorias = await this.ObjRemoteObject.LogPresupuestoCategoria.PresupuestoCategoriaBuscarTodos();
             }
             catch (Exception ex)
             {
@@ -521,7 +520,7 @@ namespace CapaPresentacion
 
                 if (this._accion == FormAccion.nuevo)
                 {
-                    this._currentPresupuesto = await LogPresupuesto.Instancia.PresupuestoInsertar(this._currentPresupuesto);
+                    this._currentPresupuesto = await this.ObjRemoteObject.LogPresupuesto.PresupuestoInsertar(this._currentPresupuesto);
                     this._currentPresupuesto.Activo = true;
                 }
 
@@ -613,7 +612,7 @@ namespace CapaPresentacion
                 BnBuscarCliente.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                var cliente = await LogCliente.Instancia.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbNumeroDocumento.Text.Trim(), true, tipoDocumentoIdentidad.ConsultaApi);
+                var cliente = await this.ObjRemoteObject.LogCliente.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbNumeroDocumento.Text.Trim(), true, tipoDocumentoIdentidad.ConsultaApi);
 
                 this.Cursor = Cursors.Default;
                 if (cliente == null && MessageBox.Show(this, "No se encontraron datos ¿Desea agregar al cliente?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
@@ -637,7 +636,8 @@ namespace CapaPresentacion
                 {
                     TbCliente.Text = cliente.RazonSocialOrApellidosYNombres;
                     TbCliente.Tag = cliente;
-                    Proyecto_Cargar(cliente.Proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
+                    var proyectos = await this.ObjRemoteObject.LogProyecto.ProyectoBuscarPorClienteID(cliente.ClienteID);
+                    Proyecto_Cargar(proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
                 }
                 BnBuscarCliente.Enabled = true;
             }
@@ -716,8 +716,10 @@ namespace CapaPresentacion
             if (form.ShowDialog() == DialogResult.OK)
             {
                 var proyecto = form.GetProyecto;
-                cliente.Proyectos.Add(proyecto);
-                Proyecto_Cargar(cliente.Proyectos.OrderBy(x => x.Nombre).ToList(), proyecto.ProyectoID);
+                var proyectos = CbProyectoNombre.DataSource as List<Proyecto>;
+                if (proyecto == null) proyectos = new List<Proyecto>();
+                proyectos.Add(proyecto);
+                Proyecto_Cargar(proyectos.OrderBy(x => x.Nombre).ToList(), proyecto.ProyectoID);
             }
             form.Dispose();
         }

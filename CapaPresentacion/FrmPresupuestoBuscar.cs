@@ -1,5 +1,4 @@
 ﻿using CapaEntidad;
-using CapaLogica;
 using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
@@ -9,14 +8,13 @@ using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPresupuestoBuscar : Form
+    public partial class FrmPresupuestoBuscar : FrmBase
     {
         public FrmPresupuestoBuscar()
         {
             InitializeComponent();
         }
 
-        private FormAccion _accion;
         private Presupuesto _presupuestoSeleccionado;
         public Presupuesto GetPresupuestoSeleccionado { get { return this._presupuestoSeleccionado; } }
 
@@ -32,10 +30,11 @@ namespace CapaPresentacion
         {
             CbProyectoNombre.Items.Clear();
             CbProyectoNombre.DisplayMember = "Nombre";
-            foreach (var proyecto in proyectos)
-            {
-                CbProyectoNombre.Items.Add(proyecto);
-            }
+            CbProyectoNombre.DataSource = proyectos;
+            //foreach (var proyecto in proyectos)
+            //{
+            //    CbProyectoNombre.Items.Add(proyecto);
+            //}
 
             if (CbProyectoNombre.Items.Count > 0) CbProyectoNombre.SelectedIndex = 0;
 		}
@@ -69,7 +68,7 @@ namespace CapaPresentacion
                 ControlesBusqueda_MostrarOcultar();
                 CbTipoDocumentoIdentidad.Items.Clear();
                 CbTipoDocumentoIdentidad.DisplayMember = "Nombre";
-                var tiposDocumentoIdentidad = await LogTipoDocumentoIdentidad.Instancia.TipoDocumentoIdentidadListarActivos();
+                var tiposDocumentoIdentidad = await this.ObjRemoteObject.LogTipoDocumentoIdentidad.TipoDocumentoIdentidadListarActivos();
                 foreach (var item in tiposDocumentoIdentidad)
                 {
                     CbTipoDocumentoIdentidad.Items.Add(item);
@@ -98,7 +97,7 @@ namespace CapaPresentacion
                 }
 
                 this._presupuestoSeleccionado = DgvPresupuesto.CurrentRow.Tag as Presupuesto;
-                this._presupuestoSeleccionado.PresupuestoDetalles = await LogPresupuesto.Instancia.PresupuestoDetalleBuscarPorPresupuestoID(this._presupuestoSeleccionado.PresupuestoID);
+                this._presupuestoSeleccionado.PresupuestoDetalles = await this.ObjRemoteObject.LogPresupuesto.PresupuestoDetalleBuscarPorPresupuestoID(this._presupuestoSeleccionado.PresupuestoID);
                 this.DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
@@ -127,12 +126,14 @@ namespace CapaPresentacion
             }
             TbNumeroDocumento.Clear();
             Cliente_Clear();
+            CbProyectoNombre.Tag = null;
             CbProyectoNombre.Items.Clear();
         }
 
         private void TbNumeroDocumento_TextChanged(object sender, EventArgs e)
         {
             Cliente_Clear();
+            CbProyectoNombre.Tag = null;
             CbProyectoNombre.Items.Clear();
         }
 
@@ -172,7 +173,7 @@ namespace CapaPresentacion
                 BnBuscarCliente.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                var cliente = await LogCliente.Instancia.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbNumeroDocumento.Text.Trim(), true);
+                var cliente = await this.ObjRemoteObject.LogCliente.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, TbNumeroDocumento.Text.Trim(), true);
 
                 this.Cursor = Cursors.Default;
                 if (cliente == null)
@@ -184,7 +185,8 @@ namespace CapaPresentacion
                 {
                     TbCliente.Text = cliente.RazonSocialOrApellidosYNombres;
                     TbCliente.Tag = cliente;
-                    Proyecto_Cargar(cliente.Proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
+                    var proyectos = await this.ObjRemoteObject.LogProyecto.ProyectoBuscarPorClienteID(cliente.ClienteID);
+                    Proyecto_Cargar(proyectos.FindAll(x => x.Activo).OrderBy(x => x.Nombre).ToList());
                 }
                 BnBuscarCliente.Enabled = true;
             }
@@ -229,12 +231,12 @@ namespace CapaPresentacion
 
                 if (RbNumeroPresupuesto.Checked)
                 {
-                    var presupuesto = await LogPresupuesto.Instancia.PresupuestoBuscarPorPresupuestoID(presupuestoID);
+                    var presupuesto = await this.ObjRemoteObject.LogPresupuesto.PresupuestoBuscarPorPresupuestoID(presupuestoID);
                     if (presupuesto != null) DgvPresupuesto_AddRow(presupuesto);
                 }
                 else
                 {
-                    var listaPresupuestos = await LogPresupuesto.Instancia.PresupuestoBusquedaGeneral(fechaDesde, fechaHasta, cliente?.ClienteID, proyecto?.ClienteID, Convert.ToByte(CbEstado.SelectedIndex));
+                    var listaPresupuestos = await this.ObjRemoteObject.LogPresupuesto.PresupuestoBusquedaGeneral(fechaDesde, fechaHasta, cliente?.ClienteID, proyecto?.ClienteID, Convert.ToByte(CbEstado.SelectedIndex));
                     foreach (var presupuesto in listaPresupuestos)
                     {
                         DgvPresupuesto_AddRow(presupuesto);
