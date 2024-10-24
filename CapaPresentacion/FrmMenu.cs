@@ -12,8 +12,6 @@ namespace CapaPresentacion
             InitializeComponent();
         }
 
-        private Usuario _currentUsuario;
-
         private void FrmMenu_Load(object sender, EventArgs e)
         {
             this.Visible = false;
@@ -22,7 +20,7 @@ namespace CapaPresentacion
             if (frmLogin.ShowDialog() == DialogResult.OK)
             {
                 this.Visible = true;
-                this._currentUsuario = frmLogin.GetUsuarioActual;
+                this._usuario = frmLogin.GetUsuarioActual;
                 frmLogin.Dispose();
             }
             else
@@ -67,16 +65,48 @@ namespace CapaPresentacion
 			form.Show();
         }
 
+        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void mnuPresupuesto_Click(object sender, EventArgs e)
         {
-            var form = new FrmPresupuesto((ToolStripMenuItem)sender, this._currentUsuario);
+            var form = new FrmPresupuesto((ToolStripMenuItem)sender, this._usuario);
             form.MdiParent = this;
             form.Show();
         }
 
-        private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
+        private void mnuContrato_Click(object sender, EventArgs e)
         {
-            this.Close();
+            var form = new FrmContrato((ToolStripMenuItem)sender, this._usuario);
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void mnuComprobanteBusqueda_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuComprobanteEnvio_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuComunicacionBaja_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuResumenDiario_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuResumenContingencia_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

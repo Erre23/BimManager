@@ -1,4 +1,5 @@
 ﻿using CapaEntidad;
+using CapaPresentacion;
 using CapaPresentacion.Controls;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ namespace CapaPresentacion
 {
 	public partial class FrmProyecto : FrmBase
     {
-        ToolStripMenuItem _menu;
         public FrmProyecto(ToolStripMenuItem menu)
         {
             _menu = menu;
@@ -459,8 +459,9 @@ namespace CapaPresentacion
 			{
 				var datosFaltantes = "";
 				var tipoDocumentoIdentidad = (TipoDocumentoIdentidad)CmbTipoDocumentoIdentidad.SelectedItem;
+                if (tipoDocumentoIdentidad == null) datosFaltantes += "\n\r - Tipo de documento de identidad";
 
-				if (TbDocumentoIdentidadNumero.Text.Trim() == "") datosFaltantes += "\n\r - Nº de documento de identidad";
+                if (TbDocumentoIdentidadNumero.Text.Trim() == "") datosFaltantes += "\n\r - Nº de documento de identidad";
 
 				if (!string.IsNullOrEmpty(datosFaltantes))
 				{
@@ -481,20 +482,26 @@ namespace CapaPresentacion
 
 				this.CurrentCliente = await this.ObjRemoteObject.LogCliente.ClienteBuscarPorDocumentoIdentidad(tipoDocumentoIdentidad.TipoDocumentoIdentidadID, numeroDocumentoIdentidad);
 
-				this.Cursor = Cursors.Default;
-				BnBuscarCliente.Enabled = true;
+                this.Cursor = Cursors.Default;
 
-				if (this.CurrentCliente == null)
-				{
-					string msg = $"No se encontró el cliente con \"{tipoDocumentoIdentidad.Nombre}: {numeroDocumentoIdentidad}\"";
-                    MessageBox.Show(this, msg, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    TbDocumentoIdentidadNumero.Focus();
-				}
+
+                if (this.CurrentCliente == null && MessageBox.Show(this, "No se encontraron datos ¿Desea agregar al cliente?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    var form = new FrmClienteModal(tipoDocumentoIdentidad, TbDocumentoIdentidadNumero.Text.Trim());
+                    form.WindowState = FormWindowState.Normal;
+                    form.StartPosition = FormStartPosition.CenterScreen;
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        this.CurrentCliente = form.GetCliente;
+                    }
+                    form.Dispose();
+                }
                 else
                 {
-                    this.CurrentCliente.TipoDocumentoIdentidad = tipoDocumentoIdentidad;
-					TbCliente.Text = this.CurrentCliente.RazonSocialOrApellidosYNombres;
-				}
+                    TbDocumentoIdentidadNumero.Focus();
+                }
+
+				BnBuscarCliente.Enabled = true;
 			}
 			catch (Exception ex)
 			{
@@ -502,7 +509,6 @@ namespace CapaPresentacion
 				MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				BnBuscarCliente.Enabled = true;
 			}
-
-		}
+        }
 	}
 }

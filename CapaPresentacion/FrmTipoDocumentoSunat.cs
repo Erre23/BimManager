@@ -6,7 +6,6 @@ namespace CapaPresentacion
 {
     public partial class FrmTipoDocumentoSunat : FrmBase
     {
-        ToolStripMenuItem _menu;
         public FrmTipoDocumentoSunat(ToolStripMenuItem menu)
         {
             _menu = menu;

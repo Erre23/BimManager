@@ -10,7 +10,6 @@ namespace CapaPresentacion
 {
     public partial class FrmCliente : FrmBase
     {
-        ToolStripMenuItem _menu;
         public FrmCliente(ToolStripMenuItem menu)
         {
             _menu = menu;

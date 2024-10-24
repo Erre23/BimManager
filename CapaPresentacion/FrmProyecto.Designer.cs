@@ -102,7 +102,7 @@
             this.CbDistrito.FormattingEnabled = true;
             this.CbDistrito.Location = new System.Drawing.Point(742, 131);
             this.CbDistrito.Name = "CbDistrito";
-            this.CbDistrito.Size = new System.Drawing.Size(199, 25);
+            this.CbDistrito.Size = new System.Drawing.Size(199, 29);
             this.CbDistrito.TabIndex = 17;
             // 
             // CbProvincia
@@ -111,7 +111,7 @@
             this.CbProvincia.FormattingEnabled = true;
             this.CbProvincia.Location = new System.Drawing.Point(448, 131);
             this.CbProvincia.Name = "CbProvincia";
-            this.CbProvincia.Size = new System.Drawing.Size(199, 25);
+            this.CbProvincia.Size = new System.Drawing.Size(199, 29);
             this.CbProvincia.TabIndex = 16;
             this.CbProvincia.SelectedIndexChanged += new System.EventHandler(this.CbProvincia_SelectedIndexChanged);
             // 
@@ -121,7 +121,7 @@
             this.CbDepartamento.FormattingEnabled = true;
             this.CbDepartamento.Location = new System.Drawing.Point(152, 131);
             this.CbDepartamento.Name = "CbDepartamento";
-            this.CbDepartamento.Size = new System.Drawing.Size(199, 25);
+            this.CbDepartamento.Size = new System.Drawing.Size(199, 29);
             this.CbDepartamento.TabIndex = 15;
             this.CbDepartamento.SelectedIndexChanged += new System.EventHandler(this.CbDepartamento_SelectedIndexChanged);
             // 
@@ -130,7 +130,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(663, 133);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 17);
+            this.label6.Size = new System.Drawing.Size(76, 21);
             this.label6.TabIndex = 14;
             this.label6.Text = "Distrito :";
             // 
@@ -139,7 +139,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(358, 133);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 17);
+            this.label5.Size = new System.Drawing.Size(87, 21);
             this.label5.TabIndex = 13;
             this.label5.Text = "Provincia :";
             // 
@@ -148,7 +148,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(18, 133);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(106, 17);
+            this.label4.Size = new System.Drawing.Size(128, 21);
             this.label4.TabIndex = 12;
             this.label4.Text = "Departamento :";
             // 
@@ -157,7 +157,7 @@
             this.TbDireccionReferencia.Location = new System.Drawing.Point(153, 95);
             this.TbDireccionReferencia.MaxLength = 50;
             this.TbDireccionReferencia.Name = "TbDireccionReferencia";
-            this.TbDireccionReferencia.Size = new System.Drawing.Size(788, 24);
+            this.TbDireccionReferencia.Size = new System.Drawing.Size(788, 28);
             this.TbDireccionReferencia.TabIndex = 11;
             // 
             // TbDireccion
@@ -165,7 +165,7 @@
             this.TbDireccion.Location = new System.Drawing.Point(153, 61);
             this.TbDireccion.MaxLength = 50;
             this.TbDireccion.Name = "TbDireccion";
-            this.TbDireccion.Size = new System.Drawing.Size(788, 24);
+            this.TbDireccion.Size = new System.Drawing.Size(788, 28);
             this.TbDireccion.TabIndex = 9;
             // 
             // TbNombre
@@ -173,7 +173,7 @@
             this.TbNombre.Location = new System.Drawing.Point(153, 25);
             this.TbNombre.MaxLength = 100;
             this.TbNombre.Name = "TbNombre";
-            this.TbNombre.Size = new System.Drawing.Size(788, 24);
+            this.TbNombre.Size = new System.Drawing.Size(788, 28);
             this.TbNombre.TabIndex = 7;
             // 
             // LbApellido2
@@ -181,7 +181,7 @@
             this.LbApellido2.AutoSize = true;
             this.LbApellido2.Location = new System.Drawing.Point(14, 96);
             this.LbApellido2.Name = "LbApellido2";
-            this.LbApellido2.Size = new System.Drawing.Size(105, 17);
+            this.LbApellido2.Size = new System.Drawing.Size(132, 21);
             this.LbApellido2.TabIndex = 10;
             this.LbApellido2.Text = "Dir. Referencia :";
             // 
@@ -190,7 +190,7 @@
             this.LbApellido1.AutoSize = true;
             this.LbApellido1.Location = new System.Drawing.Point(56, 64);
             this.LbApellido1.Name = "LbApellido1";
-            this.LbApellido1.Size = new System.Drawing.Size(73, 17);
+            this.LbApellido1.Size = new System.Drawing.Size(90, 21);
             this.LbApellido1.TabIndex = 8;
             this.LbApellido1.Text = "Dirección :";
             // 
@@ -199,7 +199,7 @@
             this.LbNombres.AutoSize = true;
             this.LbNombres.Location = new System.Drawing.Point(67, 28);
             this.LbNombres.Name = "LbNombres";
-            this.LbNombres.Size = new System.Drawing.Size(66, 17);
+            this.LbNombres.Size = new System.Drawing.Size(79, 21);
             this.LbNombres.TabIndex = 6;
             this.LbNombres.Text = "Nombre :";
             // 
@@ -207,7 +207,7 @@
             // 
             this.TbDocumentoIdentidadNumero.Location = new System.Drawing.Point(546, 27);
             this.TbDocumentoIdentidadNumero.Name = "TbDocumentoIdentidadNumero";
-            this.TbDocumentoIdentidadNumero.Size = new System.Drawing.Size(228, 24);
+            this.TbDocumentoIdentidadNumero.Size = new System.Drawing.Size(228, 28);
             this.TbDocumentoIdentidadNumero.TabIndex = 3;
             this.TbDocumentoIdentidadNumero.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
             // 
@@ -217,7 +217,7 @@
             this.CmbTipoDocumentoIdentidad.FormattingEnabled = true;
             this.CmbTipoDocumentoIdentidad.Location = new System.Drawing.Point(152, 26);
             this.CmbTipoDocumentoIdentidad.Name = "CmbTipoDocumentoIdentidad";
-            this.CmbTipoDocumentoIdentidad.Size = new System.Drawing.Size(228, 25);
+            this.CmbTipoDocumentoIdentidad.Size = new System.Drawing.Size(228, 29);
             this.CmbTipoDocumentoIdentidad.TabIndex = 1;
             this.CmbTipoDocumentoIdentidad.SelectedIndexChanged += new System.EventHandler(this.CmbTipoDocumentoIdentidad_SelectedIndexChanged);
             // 
@@ -226,7 +226,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(410, 29);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(110, 17);
+            this.label3.Size = new System.Drawing.Size(130, 21);
             this.label3.TabIndex = 2;
             this.label3.Text = "Nº Documento :";
             // 
@@ -235,7 +235,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(5, 29);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(116, 17);
+            this.label2.Size = new System.Drawing.Size(141, 21);
             this.label2.TabIndex = 0;
             this.label2.Text = "Tipo Doc. Ident. :";
             // 
@@ -371,22 +371,30 @@
             // BnGuardar
             // 
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(724, 332);
             this.BnGuardar.Name = "BnGuardar";
+            this.BnGuardar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnGuardar.Size = new System.Drawing.Size(110, 35);
             this.BnGuardar.TabIndex = 3;
             this.BnGuardar.Text = "Guardar";
+            this.BnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnGuardar.UseVisualStyleBackColor = true;
             this.BnGuardar.Click += new System.EventHandler(this.BnGuardar_Click);
             // 
             // BnCancelar
             // 
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(843, 332);
             this.BnCancelar.Name = "BnCancelar";
+            this.BnCancelar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnCancelar.Size = new System.Drawing.Size(110, 35);
             this.BnCancelar.TabIndex = 4;
             this.BnCancelar.Text = "Cancelar";
+            this.BnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnCancelar.UseVisualStyleBackColor = true;
             this.BnCancelar.Click += new System.EventHandler(this.BnCancelar_Click);
             // 
@@ -394,11 +402,15 @@
             // 
             this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnNuevo.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnNuevo.Location = new System.Drawing.Point(12, 656);
             this.BnNuevo.Name = "BnNuevo";
+            this.BnNuevo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnNuevo.Size = new System.Drawing.Size(110, 35);
             this.BnNuevo.TabIndex = 7;
             this.BnNuevo.Text = "Nuevo";
+            this.BnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnNuevo.UseVisualStyleBackColor = true;
             this.BnNuevo.Click += new System.EventHandler(this.BnNuevo_Click);
             // 
@@ -406,11 +418,15 @@
             // 
             this.BnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnEditar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnEditar.Image = global::CapaPresentacion.Properties.Resources.Editar;
+            this.BnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnEditar.Location = new System.Drawing.Point(128, 656);
             this.BnEditar.Name = "BnEditar";
+            this.BnEditar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnEditar.Size = new System.Drawing.Size(110, 35);
             this.BnEditar.TabIndex = 8;
             this.BnEditar.Text = "Editar";
+            this.BnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnEditar.UseVisualStyleBackColor = true;
             this.BnEditar.Click += new System.EventHandler(this.BnEditar_Click);
             // 
@@ -418,11 +434,15 @@
             // 
             this.BnDeshabilitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnDeshabilitar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnDeshabilitar.Image = global::CapaPresentacion.Properties.Resources.Anular;
+            this.BnDeshabilitar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnDeshabilitar.Location = new System.Drawing.Point(244, 656);
             this.BnDeshabilitar.Name = "BnDeshabilitar";
+            this.BnDeshabilitar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnDeshabilitar.Size = new System.Drawing.Size(137, 35);
             this.BnDeshabilitar.TabIndex = 9;
             this.BnDeshabilitar.Text = "Deshabilitar";
+            this.BnDeshabilitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnDeshabilitar.UseVisualStyleBackColor = true;
             this.BnDeshabilitar.Click += new System.EventHandler(this.BnDeshabilitar_Click);
             // 
@@ -430,11 +450,15 @@
             // 
             this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscar.Location = new System.Drawing.Point(387, 656);
             this.BnBuscar.Name = "BnBuscar";
+            this.BnBuscar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnBuscar.Size = new System.Drawing.Size(110, 35);
             this.BnBuscar.TabIndex = 10;
             this.BnBuscar.Text = "Buscar";
+            this.BnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnBuscar.UseVisualStyleBackColor = true;
             this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
             // 
@@ -442,22 +466,30 @@
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnSalir.Location = new System.Drawing.Point(860, 656);
             this.BnSalir.Name = "BnSalir";
+            this.BnSalir.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnSalir.Size = new System.Drawing.Size(110, 35);
             this.BnSalir.TabIndex = 11;
             this.BnSalir.Text = "Salir";
+            this.BnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnSalir.UseVisualStyleBackColor = true;
             this.BnSalir.Click += new System.EventHandler(this.BnSalir_Click);
             // 
             // BnFiltrar
             // 
             this.BnFiltrar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnFiltrar.Image = global::CapaPresentacion.Properties.Resources.Filtrar;
+            this.BnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnFiltrar.Location = new System.Drawing.Point(843, 332);
             this.BnFiltrar.Name = "BnFiltrar";
+            this.BnFiltrar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnFiltrar.Size = new System.Drawing.Size(110, 35);
             this.BnFiltrar.TabIndex = 5;
             this.BnFiltrar.Text = "Filtrar";
+            this.BnFiltrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnFiltrar.UseVisualStyleBackColor = true;
             this.BnFiltrar.Click += new System.EventHandler(this.BnFiltrar_Click);
             // 
@@ -480,11 +512,15 @@
             // BnBuscarCliente
             // 
             this.BnBuscarCliente.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnBuscarCliente.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscarCliente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscarCliente.Location = new System.Drawing.Point(780, 22);
             this.BnBuscarCliente.Name = "BnBuscarCliente";
+            this.BnBuscarCliente.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnBuscarCliente.Size = new System.Drawing.Size(161, 35);
             this.BnBuscarCliente.TabIndex = 6;
             this.BnBuscarCliente.Text = "Buscar Cliente";
+            this.BnBuscarCliente.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnBuscarCliente.UseVisualStyleBackColor = true;
             this.BnBuscarCliente.Click += new System.EventHandler(this.BnBuscarCliente_Click);
             // 
@@ -493,7 +529,7 @@
             this.TbCliente.Location = new System.Drawing.Point(153, 65);
             this.TbCliente.MaxLength = 250;
             this.TbCliente.Name = "TbCliente";
-            this.TbCliente.Size = new System.Drawing.Size(788, 24);
+            this.TbCliente.Size = new System.Drawing.Size(788, 28);
             this.TbCliente.TabIndex = 5;
             // 
             // label11
@@ -501,13 +537,13 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(74, 68);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 17);
+            this.label11.Size = new System.Drawing.Size(72, 21);
             this.label11.TabIndex = 4;
             this.label11.Text = "Cliente :";
             // 
             // FrmProyecto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 703);
             this.Controls.Add(this.GbDatos_Cliente);

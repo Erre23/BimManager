@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.GbDatos = new System.Windows.Forms.GroupBox();
+            this.TbDocumentoIdentidadNumero = new CapaPresentacion.Controls.CustomTextBox();
             this.TbEmail = new System.Windows.Forms.TextBox();
             this.TbCelular = new System.Windows.Forms.TextBox();
             this.LbEmail = new System.Windows.Forms.Label();
@@ -48,7 +49,6 @@
             this.BnGuardar = new System.Windows.Forms.Button();
             this.BnCancelar = new System.Windows.Forms.Button();
             this.LbOpcion = new System.Windows.Forms.Label();
-            this.TbDocumentoIdentidadNumero = new CapaPresentacion.Controls.CustomTextBox();
             this.GbDatos.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +76,14 @@
             this.GbDatos.TabIndex = 1;
             this.GbDatos.TabStop = false;
             this.GbDatos.Text = "Datos del Cliente";
+            // 
+            // TbDocumentoIdentidadNumero
+            // 
+            this.TbDocumentoIdentidadNumero.Location = new System.Drawing.Point(547, 34);
+            this.TbDocumentoIdentidadNumero.Name = "TbDocumentoIdentidadNumero";
+            this.TbDocumentoIdentidadNumero.Size = new System.Drawing.Size(228, 28);
+            this.TbDocumentoIdentidadNumero.TabIndex = 3;
+            this.TbDocumentoIdentidadNumero.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // TbEmail
             // 
@@ -223,22 +231,30 @@
             // BnGuardar
             // 
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(558, 230);
             this.BnGuardar.Name = "BnGuardar";
+            this.BnGuardar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnGuardar.Size = new System.Drawing.Size(110, 35);
             this.BnGuardar.TabIndex = 3;
             this.BnGuardar.Text = "Guardar";
+            this.BnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnGuardar.UseVisualStyleBackColor = true;
             this.BnGuardar.Click += new System.EventHandler(this.BnGuardar_Click);
             // 
             // BnCancelar
             // 
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(677, 230);
             this.BnCancelar.Name = "BnCancelar";
+            this.BnCancelar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnCancelar.Size = new System.Drawing.Size(110, 35);
             this.BnCancelar.TabIndex = 4;
             this.BnCancelar.Text = "Cancelar";
+            this.BnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnCancelar.UseVisualStyleBackColor = true;
             this.BnCancelar.Click += new System.EventHandler(this.BnCancelar_Click);
             // 
@@ -253,14 +269,6 @@
             this.LbOpcion.TabIndex = 2;
             this.LbOpcion.Text = "OPCIÓN : NUEVO / EDITAR / BUSCAR";
             this.LbOpcion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TbDocumentoIdentidadNumero
-            // 
-            this.TbDocumentoIdentidadNumero.Location = new System.Drawing.Point(547, 34);
-            this.TbDocumentoIdentidadNumero.Name = "TbDocumentoIdentidadNumero";
-            this.TbDocumentoIdentidadNumero.Size = new System.Drawing.Size(228, 28);
-            this.TbDocumentoIdentidadNumero.TabIndex = 3;
-            this.TbDocumentoIdentidadNumero.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // FrmClienteModal
             // 

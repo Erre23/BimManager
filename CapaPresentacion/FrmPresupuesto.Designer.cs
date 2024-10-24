@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LbTitulo = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TbCreadoPor = new System.Windows.Forms.TextBox();
@@ -64,12 +64,12 @@
             this.label8 = new System.Windows.Forms.Label();
             this.GbCategorias = new System.Windows.Forms.GroupBox();
             this.DgvPresupuestoCategoria = new System.Windows.Forms.DataGridView();
-            this.BnNuevo = new System.Windows.Forms.Button();
-            this.BnBuscar = new System.Windows.Forms.Button();
-            this.BnAnular = new System.Windows.Forms.Button();
+            this.colSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colObservaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAntecedentes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colImporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BnSalir = new System.Windows.Forms.Button();
-            this.BnGuardar = new System.Windows.Forms.Button();
-            this.BnCancelar = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.TbPlanPlazo = new CapaPresentacion.Controls.CustomTextBox();
@@ -79,11 +79,11 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.TbMontoTotal = new CapaPresentacion.Controls.CustomTextBox();
-            this.colSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colObservaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAntecedentes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colImporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BnCancelar = new System.Windows.Forms.Button();
+            this.BnGuardar = new System.Windows.Forms.Button();
+            this.BnAnular = new System.Windows.Forms.Button();
+            this.BnBuscar = new System.Windows.Forms.Button();
+            this.BnNuevo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -101,7 +101,7 @@
             this.LbTitulo.Location = new System.Drawing.Point(0, 0);
             this.LbTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LbTitulo.Name = "LbTitulo";
-            this.LbTitulo.Size = new System.Drawing.Size(928, 41);
+            this.LbTitulo.Size = new System.Drawing.Size(982, 41);
             this.LbTitulo.TabIndex = 0;
             this.LbTitulo.Text = "Registro de Presupuesto";
             this.LbTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -258,12 +258,16 @@
             // 
             // BnBuscarCliente
             // 
-            this.BnBuscarCliente.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnBuscarCliente.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnBuscarCliente.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscarCliente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscarCliente.Location = new System.Drawing.Point(701, 22);
             this.BnBuscarCliente.Name = "BnBuscarCliente";
+            this.BnBuscarCliente.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnBuscarCliente.Size = new System.Drawing.Size(116, 32);
             this.BnBuscarCliente.TabIndex = 4;
             this.BnBuscarCliente.Text = "Buscar";
+            this.BnBuscarCliente.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnBuscarCliente.UseVisualStyleBackColor = true;
             this.BnBuscarCliente.Click += new System.EventHandler(this.BnBuscarCliente_Click);
             // 
@@ -411,12 +415,16 @@
             // 
             // BnAgregarProyecto
             // 
-            this.BnAgregarProyecto.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnAgregarProyecto.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnAgregarProyecto.Image = global::CapaPresentacion.Properties.Resources.Add;
+            this.BnAgregarProyecto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnAgregarProyecto.Location = new System.Drawing.Point(701, 22);
             this.BnAgregarProyecto.Name = "BnAgregarProyecto";
+            this.BnAgregarProyecto.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnAgregarProyecto.Size = new System.Drawing.Size(117, 32);
             this.BnAgregarProyecto.TabIndex = 2;
             this.BnAgregarProyecto.Text = "Agregar";
+            this.BnAgregarProyecto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnAgregarProyecto.UseVisualStyleBackColor = true;
             this.BnAgregarProyecto.Click += new System.EventHandler(this.BnAgregarProyecto_Click);
             // 
@@ -458,7 +466,7 @@
             this.GbCategorias.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GbCategorias.Location = new System.Drawing.Point(9, 478);
             this.GbCategorias.Name = "GbCategorias";
-            this.GbCategorias.Size = new System.Drawing.Size(912, 364);
+            this.GbCategorias.Size = new System.Drawing.Size(966, 264);
             this.GbCategorias.TabIndex = 4;
             this.GbCategorias.TabStop = false;
             this.GbCategorias.Text = "Categorias";
@@ -483,93 +491,85 @@
             this.DgvPresupuestoCategoria.RowHeadersWidth = 51;
             this.DgvPresupuestoCategoria.RowTemplate.Height = 24;
             this.DgvPresupuestoCategoria.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvPresupuestoCategoria.Size = new System.Drawing.Size(900, 327);
+            this.DgvPresupuestoCategoria.Size = new System.Drawing.Size(954, 227);
             this.DgvPresupuestoCategoria.TabIndex = 0;
             this.DgvPresupuestoCategoria.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvPresupuestoCategoria_CellContentClick);
             this.DgvPresupuestoCategoria.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvPresupuestoCategoria_KeyDown);
             // 
-            // BnNuevo
+            // colSeleccionar
             // 
-            this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevo.Location = new System.Drawing.Point(9, 894);
-            this.BnNuevo.Name = "BnNuevo";
-            this.BnNuevo.Size = new System.Drawing.Size(117, 31);
-            this.BnNuevo.TabIndex = 5;
-            this.BnNuevo.Text = "Nuevo";
-            this.BnNuevo.UseVisualStyleBackColor = true;
-            this.BnNuevo.Click += new System.EventHandler(this.BnNuevo_Click);
+            this.colSeleccionar.HeaderText = "Seleccionar";
+            this.colSeleccionar.MinimumWidth = 6;
+            this.colSeleccionar.Name = "colSeleccionar";
+            this.colSeleccionar.ReadOnly = true;
+            this.colSeleccionar.Width = 125;
             // 
-            // BnBuscar
+            // colDescripcion
             // 
-            this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Location = new System.Drawing.Point(132, 894);
-            this.BnBuscar.Name = "BnBuscar";
-            this.BnBuscar.Size = new System.Drawing.Size(117, 31);
-            this.BnBuscar.TabIndex = 6;
-            this.BnBuscar.Text = "Buscar";
-            this.BnBuscar.UseVisualStyleBackColor = true;
-            this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
+            this.colDescripcion.HeaderText = "Descripción";
+            this.colDescripcion.MinimumWidth = 6;
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDescripcion.Width = 300;
             // 
-            // BnAnular
+            // colObservaciones
             // 
-            this.BnAnular.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BnAnular.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnAnular.Location = new System.Drawing.Point(255, 894);
-            this.BnAnular.Name = "BnAnular";
-            this.BnAnular.Size = new System.Drawing.Size(117, 31);
-            this.BnAnular.TabIndex = 7;
-            this.BnAnular.Text = "Anular";
-            this.BnAnular.UseVisualStyleBackColor = true;
-            this.BnAnular.Click += new System.EventHandler(this.BnAnular_Click);
+            this.colObservaciones.HeaderText = "Observacion";
+            this.colObservaciones.MinimumWidth = 6;
+            this.colObservaciones.Name = "colObservaciones";
+            this.colObservaciones.ReadOnly = true;
+            this.colObservaciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colObservaciones.Width = 300;
+            // 
+            // colAntecedentes
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colAntecedentes.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colAntecedentes.HeaderText = "Antecedentes";
+            this.colAntecedentes.MinimumWidth = 6;
+            this.colAntecedentes.Name = "colAntecedentes";
+            this.colAntecedentes.ReadOnly = true;
+            this.colAntecedentes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colAntecedentes.Width = 125;
+            // 
+            // colImporte
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colImporte.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colImporte.HeaderText = "Importe S/";
+            this.colImporte.MinimumWidth = 6;
+            this.colImporte.Name = "colImporte";
+            this.colImporte.ReadOnly = true;
+            this.colImporte.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colImporte.Width = 125;
             // 
             // BnSalir
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Location = new System.Drawing.Point(804, 894);
+            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnSalir.Location = new System.Drawing.Point(858, 794);
             this.BnSalir.Name = "BnSalir";
+            this.BnSalir.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnSalir.Size = new System.Drawing.Size(117, 31);
-            this.BnSalir.TabIndex = 10;
+            this.BnSalir.TabIndex = 11;
             this.BnSalir.Text = "Salir";
+            this.BnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnSalir.UseVisualStyleBackColor = true;
             this.BnSalir.Click += new System.EventHandler(this.BnSalir_Click);
-            // 
-            // BnGuardar
-            // 
-            this.BnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnGuardar.Location = new System.Drawing.Point(378, 894);
-            this.BnGuardar.Name = "BnGuardar";
-            this.BnGuardar.Size = new System.Drawing.Size(117, 31);
-            this.BnGuardar.TabIndex = 8;
-            this.BnGuardar.Text = "Guardar";
-            this.BnGuardar.UseVisualStyleBackColor = true;
-            this.BnGuardar.Click += new System.EventHandler(this.BnGuardar_Click);
-            // 
-            // BnCancelar
-            // 
-            this.BnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCancelar.Location = new System.Drawing.Point(501, 894);
-            this.BnCancelar.Name = "BnCancelar";
-            this.BnCancelar.Size = new System.Drawing.Size(117, 31);
-            this.BnCancelar.TabIndex = 9;
-            this.BnCancelar.Text = "Cancelar";
-            this.BnCancelar.UseVisualStyleBackColor = true;
-            this.BnCancelar.Click += new System.EventHandler(this.BnCancelar_Click);
             // 
             // label14
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(611, 856);
+            this.label14.Location = new System.Drawing.Point(665, 756);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(176, 28);
-            this.label14.TabIndex = 11;
+            this.label14.TabIndex = 12;
             this.label14.Text = "Monto Total S/ :";
             // 
             // groupBox4
@@ -654,67 +654,100 @@
             this.TbMontoTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.TbMontoTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TbMontoTotal.Font = new System.Drawing.Font("Tahoma", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TbMontoTotal.Location = new System.Drawing.Point(766, 852);
+            this.TbMontoTotal.Location = new System.Drawing.Point(820, 752);
             this.TbMontoTotal.Name = "TbMontoTotal";
             this.TbMontoTotal.ReadOnly = true;
             this.TbMontoTotal.Size = new System.Drawing.Size(155, 35);
-            this.TbMontoTotal.TabIndex = 12;
+            this.TbMontoTotal.TabIndex = 13;
             this.TbMontoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TbMontoTotal.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
-            // colSeleccionar
+            // BnCancelar
             // 
-            this.colSeleccionar.HeaderText = "Seleccionar";
-            this.colSeleccionar.MinimumWidth = 6;
-            this.colSeleccionar.Name = "colSeleccionar";
-            this.colSeleccionar.ReadOnly = true;
-            this.colSeleccionar.Width = 125;
+            this.BnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnCancelar.Location = new System.Drawing.Point(501, 794);
+            this.BnCancelar.Name = "BnCancelar";
+            this.BnCancelar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnCancelar.Size = new System.Drawing.Size(117, 31);
+            this.BnCancelar.TabIndex = 10;
+            this.BnCancelar.Text = "Cancelar";
+            this.BnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnCancelar.UseVisualStyleBackColor = true;
+            this.BnCancelar.Click += new System.EventHandler(this.BnCancelar_Click);
             // 
-            // colDescripcion
+            // BnGuardar
             // 
-            this.colDescripcion.HeaderText = "Descripción";
-            this.colDescripcion.MinimumWidth = 6;
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.ReadOnly = true;
-            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colDescripcion.Width = 300;
+            this.BnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnGuardar.Location = new System.Drawing.Point(378, 794);
+            this.BnGuardar.Name = "BnGuardar";
+            this.BnGuardar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnGuardar.Size = new System.Drawing.Size(117, 31);
+            this.BnGuardar.TabIndex = 9;
+            this.BnGuardar.Text = "Guardar";
+            this.BnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnGuardar.UseVisualStyleBackColor = true;
+            this.BnGuardar.Click += new System.EventHandler(this.BnGuardar_Click);
             // 
-            // colObservaciones
+            // BnAnular
             // 
-            this.colObservaciones.HeaderText = "Observacion";
-            this.colObservaciones.MinimumWidth = 6;
-            this.colObservaciones.Name = "colObservaciones";
-            this.colObservaciones.ReadOnly = true;
-            this.colObservaciones.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colObservaciones.Width = 300;
+            this.BnAnular.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BnAnular.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnAnular.Image = global::CapaPresentacion.Properties.Resources.Anular;
+            this.BnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnAnular.Location = new System.Drawing.Point(255, 794);
+            this.BnAnular.Name = "BnAnular";
+            this.BnAnular.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnAnular.Size = new System.Drawing.Size(117, 31);
+            this.BnAnular.TabIndex = 7;
+            this.BnAnular.Text = "Anular";
+            this.BnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnAnular.UseVisualStyleBackColor = true;
+            this.BnAnular.Click += new System.EventHandler(this.BnAnular_Click);
             // 
-            // colAntecedentes
+            // BnBuscar
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colAntecedentes.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colAntecedentes.HeaderText = "Antecedentes";
-            this.colAntecedentes.MinimumWidth = 6;
-            this.colAntecedentes.Name = "colAntecedentes";
-            this.colAntecedentes.ReadOnly = true;
-            this.colAntecedentes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colAntecedentes.Width = 125;
+            this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnBuscar.Location = new System.Drawing.Point(132, 794);
+            this.BnBuscar.Name = "BnBuscar";
+            this.BnBuscar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnBuscar.Size = new System.Drawing.Size(117, 31);
+            this.BnBuscar.TabIndex = 6;
+            this.BnBuscar.Text = "Buscar";
+            this.BnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnBuscar.UseVisualStyleBackColor = true;
+            this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
             // 
-            // colImporte
+            // BnNuevo
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colImporte.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colImporte.HeaderText = "Importe S/";
-            this.colImporte.MinimumWidth = 6;
-            this.colImporte.Name = "colImporte";
-            this.colImporte.ReadOnly = true;
-            this.colImporte.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colImporte.Width = 125;
+            this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BnNuevo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnNuevo.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnNuevo.Location = new System.Drawing.Point(9, 794);
+            this.BnNuevo.Name = "BnNuevo";
+            this.BnNuevo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnNuevo.Size = new System.Drawing.Size(117, 31);
+            this.BnNuevo.TabIndex = 5;
+            this.BnNuevo.Text = "Nuevo";
+            this.BnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnNuevo.UseVisualStyleBackColor = true;
+            this.BnNuevo.Click += new System.EventHandler(this.BnNuevo_Click);
             // 
             // FrmPresupuesto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(928, 933);
+            this.ClientSize = new System.Drawing.Size(982, 833);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.TbMontoTotal);
             this.Controls.Add(this.label14);

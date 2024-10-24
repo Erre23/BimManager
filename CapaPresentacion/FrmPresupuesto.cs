@@ -10,8 +10,6 @@ namespace CapaPresentacion
 {
     public partial class FrmPresupuesto : FrmBase
     {
-        ToolStripMenuItem _menu;
-        Usuario _usuario;
         public FrmPresupuesto(ToolStripMenuItem menu, Usuario usuario)
         {
             _menu = menu;
@@ -416,6 +414,38 @@ namespace CapaPresentacion
             }
         }
 
+        private void BnGenerarContrato_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this._currentPresupuesto == null)
+                {
+                    MessageBox.Show(this, "Olvidó seleccionar un presupuesto", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                if (this._currentPresupuesto.Activo == false)
+                {
+                    MessageBox.Show(this, "No se puede continuar ya que el presupuesto seleccionado se encuentra anulado", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                var form = new FrmPresupuestoAnular(this._currentPresupuesto, this._usuario);
+                form.WindowState = FormWindowState.Normal;
+                form.StartPosition = FormStartPosition.CenterScreen;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    this._currentPresupuesto.Activo = false;
+                }
+                form.Dispose();
+                SetEstado(this._currentPresupuesto.Activo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private async void BnGuardar_Click(object sender, EventArgs e)
         {
@@ -583,16 +613,15 @@ namespace CapaPresentacion
         {
             try
             {
+                var datosFaltantes = "";
                 var tipoDocumentoIdentidad = (TipoDocumentoIdentidad)CbTipoDocumentoIdentidad.SelectedItem;
-                if (tipoDocumentoIdentidad == null && !tipoDocumentoIdentidad.ConsultaApi)
-                {
-                    MessageBox.Show(this, "No se puede hacer consultas API con este tipo de documento", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-                if (TbNumeroDocumento.Text.Trim() == "")
+                if (tipoDocumentoIdentidad == null) datosFaltantes += "\n\r - Tipo de documento de identidad";
+                if (TbNumeroDocumento.Text.Trim() == "") datosFaltantes += "\n\r - Nº de documento de identidad";
+
+                if (!string.IsNullOrEmpty(datosFaltantes))
                 {
-                    MessageBox.Show(this, $"Olvidó ingresar el número {tipoDocumentoIdentidad.Nombre}", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, "Olvidó ingresar los siguientes datos: " + datosFaltantes, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 

@@ -31,6 +31,7 @@ namespace CapaPresentacion
         private void InitializeComponent()
         {
             this.GbDatos = new System.Windows.Forms.GroupBox();
+            this.TbPorcentaje = new CapaPresentacion.Controls.CustomTextBox();
             this.LbCelular = new System.Windows.Forms.Label();
             this.TbObservaciones = new System.Windows.Forms.TextBox();
             this.LbApellido1 = new System.Windows.Forms.Label();
@@ -42,7 +43,6 @@ namespace CapaPresentacion
             this.LbOpcion = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TbCategoriaRaiz = new System.Windows.Forms.TextBox();
-            this.TbPorcentaje = new CapaPresentacion.Controls.CustomTextBox();
             this.GbDatos.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -62,12 +62,21 @@ namespace CapaPresentacion
             this.GbDatos.TabStop = false;
             this.GbDatos.Text = "Datos de la Categoría";
             // 
+            // TbPorcentaje
+            // 
+            this.TbPorcentaje.Location = new System.Drawing.Point(116, 94);
+            this.TbPorcentaje.MaxLength = 50;
+            this.TbPorcentaje.Name = "TbPorcentaje";
+            this.TbPorcentaje.Size = new System.Drawing.Size(135, 28);
+            this.TbPorcentaje.TabIndex = 5;
+            this.TbPorcentaje.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            // 
             // LbCelular
             // 
             this.LbCelular.AutoSize = true;
             this.LbCelular.Location = new System.Drawing.Point(12, 97);
             this.LbCelular.Name = "LbCelular";
-            this.LbCelular.Size = new System.Drawing.Size(101, 17);
+            this.LbCelular.Size = new System.Drawing.Size(122, 21);
             this.LbCelular.TabIndex = 4;
             this.LbCelular.Text = "Porcentaje % :";
             // 
@@ -76,7 +85,7 @@ namespace CapaPresentacion
             this.TbObservaciones.Location = new System.Drawing.Point(116, 59);
             this.TbObservaciones.MaxLength = 50;
             this.TbObservaciones.Name = "TbObservaciones";
-            this.TbObservaciones.Size = new System.Drawing.Size(657, 24);
+            this.TbObservaciones.Size = new System.Drawing.Size(657, 28);
             this.TbObservaciones.TabIndex = 3;
             // 
             // LbApellido1
@@ -84,7 +93,7 @@ namespace CapaPresentacion
             this.LbApellido1.AutoSize = true;
             this.LbApellido1.Location = new System.Drawing.Point(7, 62);
             this.LbApellido1.Name = "LbApellido1";
-            this.LbApellido1.Size = new System.Drawing.Size(106, 17);
+            this.LbApellido1.Size = new System.Drawing.Size(129, 21);
             this.LbApellido1.TabIndex = 2;
             this.LbApellido1.Text = "Observaciones :";
             // 
@@ -93,7 +102,7 @@ namespace CapaPresentacion
             this.LbNombres.AutoSize = true;
             this.LbNombres.Location = new System.Drawing.Point(47, 26);
             this.LbNombres.Name = "LbNombres";
-            this.LbNombres.Size = new System.Drawing.Size(66, 17);
+            this.LbNombres.Size = new System.Drawing.Size(79, 21);
             this.LbNombres.TabIndex = 0;
             this.LbNombres.Text = "Nombre :";
             // 
@@ -102,7 +111,7 @@ namespace CapaPresentacion
             this.TbNombre.Location = new System.Drawing.Point(116, 23);
             this.TbNombre.MaxLength = 250;
             this.TbNombre.Name = "TbNombre";
-            this.TbNombre.Size = new System.Drawing.Size(657, 24);
+            this.TbNombre.Size = new System.Drawing.Size(657, 28);
             this.TbNombre.TabIndex = 1;
             // 
             // LbTitulo
@@ -121,22 +130,30 @@ namespace CapaPresentacion
             // BnGuardar
             // 
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(558, 230);
             this.BnGuardar.Name = "BnGuardar";
+            this.BnGuardar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnGuardar.Size = new System.Drawing.Size(110, 35);
             this.BnGuardar.TabIndex = 2;
             this.BnGuardar.Text = "Guardar";
+            this.BnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnGuardar.UseVisualStyleBackColor = true;
             this.BnGuardar.Click += new System.EventHandler(this.BnGuardar_Click);
             // 
             // BnCancelar
             // 
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(677, 230);
             this.BnCancelar.Name = "BnCancelar";
+            this.BnCancelar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnCancelar.Size = new System.Drawing.Size(110, 35);
             this.BnCancelar.TabIndex = 3;
             this.BnCancelar.Text = "Cancelar";
+            this.BnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnCancelar.UseVisualStyleBackColor = true;
             this.BnCancelar.Click += new System.EventHandler(this.BnCancelar_Click);
             // 
@@ -168,21 +185,12 @@ namespace CapaPresentacion
             this.TbCategoriaRaiz.MaxLength = 250;
             this.TbCategoriaRaiz.Name = "TbCategoriaRaiz";
             this.TbCategoriaRaiz.ReadOnly = true;
-            this.TbCategoriaRaiz.Size = new System.Drawing.Size(761, 24);
+            this.TbCategoriaRaiz.Size = new System.Drawing.Size(761, 28);
             this.TbCategoriaRaiz.TabIndex = 0;
-            // 
-            // TbPorcentaje
-            // 
-            this.TbPorcentaje.Location = new System.Drawing.Point(116, 94);
-            this.TbPorcentaje.MaxLength = 50;
-            this.TbPorcentaje.Name = "TbPorcentaje";
-            this.TbPorcentaje.Size = new System.Drawing.Size(135, 24);
-            this.TbPorcentaje.TabIndex = 5;
-            this.TbPorcentaje.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // FrmPrespuestoCategoriaModal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 277);
             this.Controls.Add(this.groupBox1);

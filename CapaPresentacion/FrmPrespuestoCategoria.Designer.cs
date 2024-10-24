@@ -57,11 +57,15 @@
             // 
             this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevo.Location = new System.Drawing.Point(12, 656);
+            this.BnNuevo.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnNuevo.Location = new System.Drawing.Point(12, 658);
             this.BnNuevo.Name = "BnNuevo";
-            this.BnNuevo.Size = new System.Drawing.Size(143, 35);
+            this.BnNuevo.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnNuevo.Size = new System.Drawing.Size(160, 35);
             this.BnNuevo.TabIndex = 4;
             this.BnNuevo.Text = "Nueva Categoría";
+            this.BnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnNuevo.UseVisualStyleBackColor = true;
             this.BnNuevo.Click += new System.EventHandler(this.BnNuevo_Click);
             // 
@@ -69,11 +73,15 @@
             // 
             this.BnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnEditar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnEditar.Location = new System.Drawing.Point(330, 656);
+            this.BnEditar.Image = global::CapaPresentacion.Properties.Resources.Editar;
+            this.BnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnEditar.Location = new System.Drawing.Point(364, 658);
             this.BnEditar.Name = "BnEditar";
+            this.BnEditar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnEditar.Size = new System.Drawing.Size(110, 35);
             this.BnEditar.TabIndex = 6;
             this.BnEditar.Text = "Editar";
+            this.BnEditar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnEditar.UseVisualStyleBackColor = true;
             this.BnEditar.Click += new System.EventHandler(this.BnEditar_Click);
             // 
@@ -81,11 +89,15 @@
             // 
             this.BnDeshabilitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnDeshabilitar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnDeshabilitar.Location = new System.Drawing.Point(446, 656);
+            this.BnDeshabilitar.Image = global::CapaPresentacion.Properties.Resources.Anular;
+            this.BnDeshabilitar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnDeshabilitar.Location = new System.Drawing.Point(480, 658);
             this.BnDeshabilitar.Name = "BnDeshabilitar";
+            this.BnDeshabilitar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnDeshabilitar.Size = new System.Drawing.Size(137, 35);
             this.BnDeshabilitar.TabIndex = 7;
             this.BnDeshabilitar.Text = "Deshabilitar";
+            this.BnDeshabilitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnDeshabilitar.UseVisualStyleBackColor = true;
             this.BnDeshabilitar.Click += new System.EventHandler(this.BnDeshabilitar_Click);
             // 
@@ -93,11 +105,15 @@
             // 
             this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Location = new System.Drawing.Point(589, 656);
+            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnBuscar.Location = new System.Drawing.Point(623, 658);
             this.BnBuscar.Name = "BnBuscar";
+            this.BnBuscar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnBuscar.Size = new System.Drawing.Size(110, 35);
             this.BnBuscar.TabIndex = 8;
             this.BnBuscar.Text = "Buscar";
+            this.BnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnBuscar.UseVisualStyleBackColor = true;
             this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
             // 
@@ -105,11 +121,15 @@
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Location = new System.Drawing.Point(860, 656);
+            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnSalir.Location = new System.Drawing.Point(860, 658);
             this.BnSalir.Name = "BnSalir";
+            this.BnSalir.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnSalir.Size = new System.Drawing.Size(110, 35);
             this.BnSalir.TabIndex = 9;
             this.BnSalir.Text = "Salir";
+            this.BnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnSalir.UseVisualStyleBackColor = true;
             this.BnSalir.Click += new System.EventHandler(this.BnSalir_Click);
             // 
@@ -129,11 +149,15 @@
             // 
             this.BnNuevoSubcategoria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevoSubcategoria.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevoSubcategoria.Location = new System.Drawing.Point(160, 656);
+            this.BnNuevoSubcategoria.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevoSubcategoria.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnNuevoSubcategoria.Location = new System.Drawing.Point(178, 658);
             this.BnNuevoSubcategoria.Name = "BnNuevoSubcategoria";
-            this.BnNuevoSubcategoria.Size = new System.Drawing.Size(164, 35);
+            this.BnNuevoSubcategoria.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnNuevoSubcategoria.Size = new System.Drawing.Size(181, 35);
             this.BnNuevoSubcategoria.TabIndex = 5;
             this.BnNuevoSubcategoria.Text = "Nueva Subcategoría";
+            this.BnNuevoSubcategoria.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnNuevoSubcategoria.UseVisualStyleBackColor = true;
             this.BnNuevoSubcategoria.Click += new System.EventHandler(this.BnNuevoSubcategoria_Click);
             // 
@@ -142,7 +166,7 @@
             this.ChkExpandirTodo.AutoSize = true;
             this.ChkExpandirTodo.Location = new System.Drawing.Point(12, 39);
             this.ChkExpandirTodo.Name = "ChkExpandirTodo";
-            this.ChkExpandirTodo.Size = new System.Drawing.Size(117, 21);
+            this.ChkExpandirTodo.Size = new System.Drawing.Size(138, 25);
             this.ChkExpandirTodo.TabIndex = 10;
             this.ChkExpandirTodo.Text = "Expandir Todo";
             this.ChkExpandirTodo.UseVisualStyleBackColor = true;
@@ -153,7 +177,7 @@
             this.ChkContraerTodo.AutoSize = true;
             this.ChkContraerTodo.Location = new System.Drawing.Point(142, 39);
             this.ChkContraerTodo.Name = "ChkContraerTodo";
-            this.ChkContraerTodo.Size = new System.Drawing.Size(117, 21);
+            this.ChkContraerTodo.Size = new System.Drawing.Size(138, 25);
             this.ChkContraerTodo.TabIndex = 11;
             this.ChkContraerTodo.Text = "Contraer Todo";
             this.ChkContraerTodo.UseVisualStyleBackColor = true;
@@ -161,7 +185,7 @@
             // 
             // FrmPrespuestoCategoria
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(982, 703);
             this.Controls.Add(this.ChkContraerTodo);

@@ -51,7 +51,7 @@ namespace CapaPresentacion
                     /* NOTA: Esta pendiente el cambio de contraseña de forma obligatoria */
                 }
 
-                MessageBox.Show(this, $"Bienvenido {usuarioLogin.ApellidosNombres}");
+                MessageBox.Show(this, $"Bienvenido {usuarioLogin.ApellidosNombres}", "Login Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 _usuarioActual = usuarioLogin;
                 this.DialogResult = DialogResult.OK;

@@ -7,7 +7,6 @@ namespace CapaPresentacion
     public partial class FrmPresupuestoAnular : FrmBase
     {
         private Presupuesto _presupuesto;
-        private readonly Usuario _usuario;
 
         public FrmPresupuestoAnular(Presupuesto presupuesto, Usuario usuario)
         {

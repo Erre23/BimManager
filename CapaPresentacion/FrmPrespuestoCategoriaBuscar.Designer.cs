@@ -56,7 +56,7 @@ namespace CapaPresentacion
             this.LbNombres.AutoSize = true;
             this.LbNombres.Location = new System.Drawing.Point(8, 26);
             this.LbNombres.Name = "LbNombres";
-            this.LbNombres.Size = new System.Drawing.Size(66, 17);
+            this.LbNombres.Size = new System.Drawing.Size(79, 21);
             this.LbNombres.TabIndex = 0;
             this.LbNombres.Text = "Nombre :";
             // 
@@ -65,7 +65,7 @@ namespace CapaPresentacion
             this.TbNombre.Location = new System.Drawing.Point(78, 23);
             this.TbNombre.MaxLength = 250;
             this.TbNombre.Name = "TbNombre";
-            this.TbNombre.Size = new System.Drawing.Size(695, 24);
+            this.TbNombre.Size = new System.Drawing.Size(695, 28);
             this.TbNombre.TabIndex = 1;
             // 
             // LbTitulo
@@ -84,22 +84,30 @@ namespace CapaPresentacion
             // BnBuscar
             // 
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Location = new System.Drawing.Point(446, 97);
+            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Filtrar;
+            this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnBuscar.Location = new System.Drawing.Point(438, 97);
             this.BnBuscar.Name = "BnBuscar";
+            this.BnBuscar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnBuscar.Size = new System.Drawing.Size(110, 35);
             this.BnBuscar.TabIndex = 3;
             this.BnBuscar.Text = "Buscar";
+            this.BnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnBuscar.UseVisualStyleBackColor = true;
             this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
             // 
             // BnCerrar
             // 
             this.BnCerrar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnCerrar.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCerrar.Location = new System.Drawing.Point(678, 97);
             this.BnCerrar.Name = "BnCerrar";
+            this.BnCerrar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.BnCerrar.Size = new System.Drawing.Size(110, 35);
             this.BnCerrar.TabIndex = 6;
             this.BnCerrar.Text = "Cerrar";
+            this.BnCerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnCerrar.UseVisualStyleBackColor = true;
             this.BnCerrar.Click += new System.EventHandler(this.BnCerrar_Click);
             // 
@@ -107,17 +115,21 @@ namespace CapaPresentacion
             // 
             this.BnSiguiente.Enabled = false;
             this.BnSiguiente.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSiguiente.Location = new System.Drawing.Point(562, 97);
+            this.BnSiguiente.Image = global::CapaPresentacion.Properties.Resources.foward;
+            this.BnSiguiente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnSiguiente.Location = new System.Drawing.Point(554, 97);
             this.BnSiguiente.Name = "BnSiguiente";
-            this.BnSiguiente.Size = new System.Drawing.Size(110, 35);
+            this.BnSiguiente.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnSiguiente.Size = new System.Drawing.Size(118, 35);
             this.BnSiguiente.TabIndex = 5;
             this.BnSiguiente.Text = "Siguiente";
+            this.BnSiguiente.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BnSiguiente.UseVisualStyleBackColor = true;
             this.BnSiguiente.Click += new System.EventHandler(this.BnSiguiente_Click);
             // 
             // FrmPrespuestoCategoriaBuscar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 140);
             this.Controls.Add(this.BnSiguiente);

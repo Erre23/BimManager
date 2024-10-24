@@ -6,7 +6,6 @@ namespace CapaPresentacion
 {
     public partial class FrmPrespuestoCategoria : FrmBase
     {
-        ToolStripMenuItem _menu;
         public FrmPrespuestoCategoria(ToolStripMenuItem menu)
         {
             _menu = menu;

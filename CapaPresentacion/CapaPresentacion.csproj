@@ -56,6 +56,12 @@
     <Compile Include="FrmBase.Designer.cs">
       <DependentUpon>FrmBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmContrato.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContrato.Designer.cs">
+      <DependentUpon>FrmContrato.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrespuestoCategoriaBuscar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +148,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmContrato.resx">
+      <DependentUpon>FrmContrato.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPrespuestoCategoriaBuscar.resx">
       <DependentUpon>FrmPrespuestoCategoriaBuscar.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,6 +229,45 @@
       <Project>{43d1732d-0b8f-4555-9cff-8060df0867a3}</Project>
       <Name>WCF.WinApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cerrar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Guardar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Imprimir.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Nuevo.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buscar.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anular.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancelar.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Editar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Filtrar.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sincronizar.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\foward.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

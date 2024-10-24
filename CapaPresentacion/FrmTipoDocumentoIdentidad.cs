@@ -6,7 +6,6 @@ namespace CapaPresentacion
 {
     public partial class FrmTipoDocumentoIdentidad : FrmBase
     {
-        ToolStripMenuItem _menu;
         public FrmTipoDocumentoIdentidad(ToolStripMenuItem menu)
         {
             _menu = menu;

@@ -51,10 +51,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente.cs" />
+    <Compile Include="ComprobantePagoDocumento.cs" />
     <Compile Include="Configuracion.cs" />
+    <Compile Include="ComprobantePago.cs" />
+    <Compile Include="ContratoComprobante.cs" />
+    <Compile Include="ContratoEstado.cs" />
     <Compile Include="Departamento.cs" />
+    <Compile Include="Estructuras\CDR.cs" />
     <Compile Include="Plan.cs" />
     <Compile Include="Distrito.cs" />
+    <Compile Include="Contrato.cs" />
     <Compile Include="Presupuesto.cs" />
     <Compile Include="PresupuestoCategoria.cs" />
     <Compile Include="PresupuestoDetalle.cs" />
