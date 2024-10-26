@@ -57,6 +57,7 @@
     <Compile Include="Apis\Response.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="LogPlan.cs" />
+    <Compile Include="LogContrato.cs" />
     <Compile Include="LogPresupuestoCategoria.cs" />
     <Compile Include="LogPresupuesto.cs" />
     <Compile Include="LogProyecto.cs" />

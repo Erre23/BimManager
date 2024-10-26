@@ -52,7 +52,7 @@ namespace CapaPresentacion
             TbEstado.Clear();
             DtpFechaDesde.Text = string.Empty;
             DtpFechaHasta.Text = string.Empty;
-            TbCreadoPor.Clear();
+            TbUsuario.Clear();
             CbTipoDocumentoIdentidad.SelectedIndex = -1;
             TbNumeroDocumento.Clear();
             CbProyectoNombre.SelectedIndex = -1;
@@ -198,6 +198,7 @@ namespace CapaPresentacion
                 );                
 
                 DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Khaki;
+                DgvPresupuestoCategoria.Rows[index].Cells[0].Style.SelectionBackColor = Color.Khaki;
             }
             else
             {
@@ -209,6 +210,7 @@ namespace CapaPresentacion
 
 				DgvPresupuestoCategoria.Rows[index].DefaultCellStyle.BackColor = Color.Gainsboro;
                 DgvPresupuestoCategoria.Rows[index].Cells[0].Style.BackColor = Color.Black;
+                DgvPresupuestoCategoria.Rows[index].Cells[0].Style.SelectionBackColor = Color.Black;
             }
 
             DgvPresupuestoCategoria.Rows[index].Tag = presupuestoDetalle;
@@ -278,19 +280,22 @@ namespace CapaPresentacion
             }
         }
 
-        private void SetEstado(bool activo)
+        private void SetDatosEstado(Presupuesto presupuesto)
         {
-            TbEstado.Text = activo ? "ACTIVO" : "ANULADO";
+            TbEstado.Text = presupuesto.PresupuestoEstado.Nombre;
+            TbEstado.BackColor = presupuesto.PresupuestoEstado.Color;
+            TbUsuario.Text = presupuesto.UltimoEstadoUsuario;
+            TbComentario.Text = presupuesto.UltimoEstadoComentario;
         }
 
         private void Presupuesto_Mostrar(Presupuesto presupuesto)
         {
             this._currentPresupuesto = presupuesto;
             TbNumeroPresupuesto.Text = presupuesto.PresupuestoID.ToString();
-            SetEstado(presupuesto.Activo);
+            SetDatosEstado(presupuesto);
             DtpFechaDesde.Value = presupuesto.CreacionFecha.Date;
             DtpFechaHasta.Value = presupuesto.FechaExpiracion.Date;
-            TbCreadoPor.Text = presupuesto.CreacionUsuario.ApellidosNombres;            
+            TbUsuario.Text = presupuesto.CreacionUsuario.ApellidosNombres;            
             for (int index = 0; index < CbTipoDocumentoIdentidad.Items.Count - 1; index++)
             {
                 if ((CbTipoDocumentoIdentidad.Items[index] as TipoDocumentoIdentidad).TipoDocumentoIdentidadID == presupuesto.Cliente.TipoDocumentoIdentidadID)
@@ -366,7 +371,7 @@ namespace CapaPresentacion
             SetAccion(FormAccion.nuevo);
             DtpFechaDesde.Value = DateTime.Now.Date;
             DtpFechaHasta.Value = DateTime.Now.Date.AddDays(1);
-            TbCreadoPor.Text = _usuario.ApellidosNombres;
+            TbUsuario.Text = _usuario.ApellidosNombres;
         }
 
         private void BnBuscar_Click(object sender, EventArgs e)
@@ -392,7 +397,7 @@ namespace CapaPresentacion
                     return;
                 }
 
-                if (this._currentPresupuesto.Activo == false)
+                if (this._currentPresupuesto.PresupuestoEstadoId == 2)
                 {
                     MessageBox.Show(this, "No se puede continuar ya que el presupuesto seleccionado, ya se encuentra anulado", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
@@ -403,44 +408,12 @@ namespace CapaPresentacion
                 form.StartPosition = FormStartPosition.CenterScreen;
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    this._currentPresupuesto.Activo = false;
+                    this._currentPresupuesto = form.GetPresupuesto;
                 }
                 form.Dispose();
-                SetEstado(this._currentPresupuesto.Activo);
+                SetDatosEstado(this._currentPresupuesto);
             }
             catch(Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void BnGenerarContrato_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (this._currentPresupuesto == null)
-                {
-                    MessageBox.Show(this, "Olvidó seleccionar un presupuesto", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                if (this._currentPresupuesto.Activo == false)
-                {
-                    MessageBox.Show(this, "No se puede continuar ya que el presupuesto seleccionado se encuentra anulado", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
-                }
-
-                var form = new FrmPresupuestoAnular(this._currentPresupuesto, this._usuario);
-                form.WindowState = FormWindowState.Normal;
-                form.StartPosition = FormStartPosition.CenterScreen;
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    this._currentPresupuesto.Activo = false;
-                }
-                form.Dispose();
-                SetEstado(this._currentPresupuesto.Activo);
-            }
-            catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -481,7 +454,7 @@ namespace CapaPresentacion
                     return;
                 }
 
-                if (DateTime.Now.Date > DtpFechaDesde.Value.Date)
+                if (DateTime.Now.Date > DtpFechaHasta.Value.Date)
                 {
                     MessageBox.Show(this, "La fecha de vigencia de termino no puede ser menor a la fecha actual", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -553,7 +526,6 @@ namespace CapaPresentacion
                 if (this._accion == FormAccion.nuevo)
                 {
                     this._currentPresupuesto = await this.ObjRemoteObject.LogPresupuesto.PresupuestoInsertar(this._currentPresupuesto);
-                    this._currentPresupuesto.Activo = true;
                 }
 
                 this.Cursor = Cursors.Default;
@@ -562,7 +534,7 @@ namespace CapaPresentacion
 
                 SetAccion(FormAccion.visualizar);
                 TbNumeroPresupuesto.Text = this._currentPresupuesto.PresupuestoID.ToString();
-                SetEstado(this._currentPresupuesto.Activo);
+                SetDatosEstado(this._currentPresupuesto);
             }
             catch (Exception ex)
             {

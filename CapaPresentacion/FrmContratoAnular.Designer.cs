@@ -1,6 +1,6 @@
 ﻿namespace CapaPresentacion
 {
-    partial class FrmPresupuestoAnular
+    partial class FrmContratoAnular
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.TbAnuladoPor = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.TbNumeroPresupuesto = new System.Windows.Forms.TextBox();
+            this.TbNumeroContrato = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.LbTitulo.Name = "LbTitulo";
             this.LbTitulo.Size = new System.Drawing.Size(707, 34);
             this.LbTitulo.TabIndex = 0;
-            this.LbTitulo.Text = "Anulación de Presupuesto";
+            this.LbTitulo.Text = "Anulación de Contrato";
             this.LbTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BnCancelar
@@ -96,7 +96,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.TbAnuladoPor);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.TbNumeroPresupuesto);
+            this.groupBox1.Controls.Add(this.TbNumeroContrato);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(8, 42);
@@ -151,27 +151,27 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Anulado Por :";
             // 
-            // TbNumeroPresupuesto
+            // TbNumeroContrato
             // 
-            this.TbNumeroPresupuesto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TbNumeroPresupuesto.Location = new System.Drawing.Point(128, 23);
-            this.TbNumeroPresupuesto.Name = "TbNumeroPresupuesto";
-            this.TbNumeroPresupuesto.ReadOnly = true;
-            this.TbNumeroPresupuesto.Size = new System.Drawing.Size(215, 24);
-            this.TbNumeroPresupuesto.TabIndex = 1;
-            this.TbNumeroPresupuesto.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TbNumeroContrato.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TbNumeroContrato.Location = new System.Drawing.Point(128, 23);
+            this.TbNumeroContrato.Name = "TbNumeroContrato";
+            this.TbNumeroContrato.ReadOnly = true;
+            this.TbNumeroContrato.Size = new System.Drawing.Size(215, 24);
+            this.TbNumeroContrato.TabIndex = 1;
+            this.TbNumeroContrato.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 26);
+            this.label1.Location = new System.Drawing.Point(33, 26);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 17);
+            this.label1.Size = new System.Drawing.Size(92, 17);
             this.label1.TabIndex = 0;
-            this.label1.Text = "N° Presupuesto :";
+            this.label1.Text = "N° Contrato :";
             // 
-            // FrmPresupuestoAnular
+            // FrmContratoAnular
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -185,11 +185,11 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmPresupuestoAnular";
-            this.Text = "Anulación de Presupuesto";
+            this.Name = "FrmContratoAnular";
+            this.Text = "Anulación de Contrato";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPresupuestoAnular_FormClosing);
-            this.Load += new System.EventHandler(this.FrmPresupuestoAnular_Load);
+            this.Load += new System.EventHandler(this.FrmContratoAnular_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -204,7 +204,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox TbAnuladoPor;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox TbNumeroPresupuesto;
+        private System.Windows.Forms.TextBox TbNumeroContrato;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TbMotivo;
         private System.Windows.Forms.Label label2;

@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace CapaDatos
 {
-    public class DaoPlan
+    public class DaoContratoEstado
     {
         private readonly SqlConnection cnn;
         private readonly SqlTransaction tran;
 
-        public DaoPlan(SqlConnection _cnn)
+        public DaoContratoEstado(SqlConnection _cnn)
         {
             cnn = _cnn;
         }
 
-        public DaoPlan(SqlTransaction _tran)
+        public DaoContratoEstado(SqlTransaction _tran)
         {
             tran = _tran;
             cnn = _tran.Connection;
@@ -25,20 +25,20 @@ namespace CapaDatos
 
         #region métodos
 
-        public async Task<Plan> BuscarPorPlanID(short PlanID)
+        public async Task<ContratoEstado> BuscarPorContratoEstadoID(byte ContratoEstadoID)
         {
             var cmd = (SqlCommand)null;
-            var Plan = (Plan)null;
+            var ContratoEstado = (ContratoEstado)null;
             try
             {
-                cmd = new SqlCommand("spPlanBuscarPorPlanID", cnn, tran);
+                cmd = new SqlCommand("spContratoEstadoBuscarPorContratoEstadoID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(CreateParams.Int("PlanID", PlanID));
+                cmd.Parameters.Add(CreateParams.Int("ContratoEstadoID", ContratoEstadoID));
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
                 {
-                    Plan = ReadEntidad(dr);
+                    ContratoEstado = ReadEntidad(dr);
                 }
                 dr.Close();
                 cmd.Dispose();
@@ -49,23 +49,23 @@ namespace CapaDatos
                 throw e;
             }
 
-            return Plan;
+            return ContratoEstado;
         }
 
-        public async Task<List<Plan>> ListarActivos()
+        public async Task<List<ContratoEstado>> Listar()
         {
             var cmd = (SqlCommand)null;
-            var listaPlans = new List<Plan>();
+            var listaContratoEstados = new List<ContratoEstado>();
             try
             {
-                cmd = new SqlCommand("spPlanListarActivos", cnn, tran);
+                cmd = new SqlCommand("spContratoEstadoListar", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
                 {
-                    var Plan = ReadEntidad(dr);
-                    listaPlans.Add(Plan);
+                    var ContratoEstado = ReadEntidad(dr);
+                    listaContratoEstados.Add(ContratoEstado);
                 }
                 dr.Close();
                 cmd.Dispose();
@@ -76,19 +76,16 @@ namespace CapaDatos
                 throw e;
             }
 
-            return listaPlans;
+            return listaContratoEstados;
         }
 
-        private Plan ReadEntidad(SqlDataReader dr)
+        private ContratoEstado ReadEntidad(SqlDataReader dr)
         {
             try
             {
-                var obj = new Plan();
-                obj.PlanID = Convert.ToByte(dr["PlanID"]);
+                var obj = new ContratoEstado();
+                obj.ContratoEstadoID = Convert.ToByte(dr["ContratoEstadoID"]);
                 obj.Nombre = Convert.ToString(dr["Nombre"]);
-                obj.CostoPorM2 = Convert.ToDecimal(dr["CostoPorM2"]);
-				obj.PlazoDiasMinimo = Convert.ToByte(dr["PlazoDiasMinimo"]);
-				obj.PlazoDiasMaximo = Convert.ToByte(dr["PlazoDiasMaximo"]);
 
 				return obj;
             }

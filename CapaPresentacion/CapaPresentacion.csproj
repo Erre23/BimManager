@@ -80,11 +80,23 @@
     <Compile Include="FrmPrespuestoCategoria.Designer.cs">
       <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmContratoAnular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContratoAnular.Designer.cs">
+      <DependentUpon>FrmContratoAnular.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPresupuestoAnular.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmPresupuestoAnular.Designer.cs">
       <DependentUpon>FrmPresupuestoAnular.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmContratoBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContratoBuscar.Designer.cs">
+      <DependentUpon>FrmContratoBuscar.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmPresupuestoBuscar.cs">
       <SubType>Form</SubType>
@@ -160,8 +172,14 @@
     <EmbeddedResource Include="FrmPrespuestoCategoria.resx">
       <DependentUpon>FrmPrespuestoCategoria.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmContratoAnular.resx">
+      <DependentUpon>FrmContratoAnular.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmPresupuestoAnular.resx">
       <DependentUpon>FrmPresupuestoAnular.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmContratoBuscar.resx">
+      <DependentUpon>FrmContratoBuscar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPresupuestoBuscar.resx">
       <DependentUpon>FrmPresupuestoBuscar.cs</DependentUpon>
@@ -268,6 +286,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\foward.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Confirmar.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

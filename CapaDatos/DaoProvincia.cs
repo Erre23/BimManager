@@ -31,7 +31,7 @@ namespace CapaDatos
             var Provincia = (Provincia)null;
             try
             {
-                cmd = new SqlCommand("spProvinciaBuscarPorProvinciaID", cnn);
+                cmd = new SqlCommand("spProvinciaBuscarPorProvinciaID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("ProvinciaID", provinciaID));
 
@@ -58,7 +58,7 @@ namespace CapaDatos
             var listaProvincias = new List<Provincia>();
             try
             {
-                cmd = new SqlCommand("spProvinciaBuscarPorDepartamentoID", cnn);
+                cmd = new SqlCommand("spProvinciaBuscarPorDepartamentoID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("DepartamentoID", departamentoID));
 
@@ -86,7 +86,7 @@ namespace CapaDatos
             var listaProvincias = new List<Provincia>();
             try
             {
-                cmd = new SqlCommand("spProvinciaBuscarTodos", cnn);
+                cmd = new SqlCommand("spProvinciaBuscarTodos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();

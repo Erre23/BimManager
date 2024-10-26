@@ -95,7 +95,7 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoSunat>();
             try
             {
-                cmd = new SqlCommand("spTipoDocumentoSunatListarActivos", cnn);
+                cmd = new SqlCommand("spTipoDocumentoSunatListarActivos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
@@ -122,7 +122,7 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoSunat>();
             try
             {
-                cmd = new SqlCommand("spTipoDocumentoSunatListarTodos", cnn);
+                cmd = new SqlCommand("spTipoDocumentoSunatListarTodos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();

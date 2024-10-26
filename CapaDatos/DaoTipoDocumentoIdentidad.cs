@@ -108,7 +108,7 @@ namespace CapaDatos
             var entidad = (TipoDocumentoIdentidad)null;
             try
             {                
-                cmd = new SqlCommand("spTipoDocumentoIdentidadBuscarPorTipoDocumentoIdentidadID", cnn);
+                cmd = new SqlCommand("spTipoDocumentoIdentidadBuscarPorTipoDocumentoIdentidadID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
 
@@ -135,7 +135,7 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoIdentidad>();
             try
             {
-                cmd = new SqlCommand("spTipoDocumentoIdentidadListarActivos", cnn);
+                cmd = new SqlCommand("spTipoDocumentoIdentidadListarActivos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
@@ -162,7 +162,7 @@ namespace CapaDatos
             var objLista = new List<TipoDocumentoIdentidad>();
             try
             {
-                cmd = new SqlCommand("spTipoDocumentoIdentidadListarTodos", cnn);
+                cmd = new SqlCommand("spTipoDocumentoIdentidadListarTodos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();

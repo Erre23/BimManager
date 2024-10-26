@@ -61,6 +61,7 @@
     <Compile Include="Plan.cs" />
     <Compile Include="Distrito.cs" />
     <Compile Include="Contrato.cs" />
+    <Compile Include="PresupuestoEstado.cs" />
     <Compile Include="Presupuesto.cs" />
     <Compile Include="PresupuestoCategoria.cs" />
     <Compile Include="PresupuestoDetalle.cs" />

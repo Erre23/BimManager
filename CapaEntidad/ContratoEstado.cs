@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace CapaEntidad
 {
@@ -10,8 +11,17 @@ namespace CapaEntidad
         
         [DataMember]
         public string Nombre { get; set; }
-        
-        [DataMember]
-        public bool Activo { get; set; }
+
+        public Color Color
+        {
+            get
+            {
+                if (ContratoEstadoID == 1) return Color.SkyBlue;
+                else if (ContratoEstadoID == 2) return Color.Red;
+                else if (ContratoEstadoID == 3) return Color.Khaki;
+                else if (ContratoEstadoID == 4) return Color.LightGreen;
+                else return SystemColors.Control;
+            }
+        }
     }
 }

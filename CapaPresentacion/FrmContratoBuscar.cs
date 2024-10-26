@@ -8,17 +8,17 @@ using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPresupuestoBuscar : FrmBase
+    public partial class FrmContratoBuscar : FrmBase
     {
-        public FrmPresupuestoBuscar(byte? filtroPresupuestoEstadoId = null)
+        public FrmContratoBuscar(byte? filtroContratoEstadoId = null)
         {
             InitializeComponent();
-            _filtroPresupuestoEstadoId = filtroPresupuestoEstadoId;
+            _filtroContratoEstadoId = filtroContratoEstadoId;
         }
 
-        private Presupuesto _presupuestoSeleccionado;
-        public Presupuesto GetPresupuestoSeleccionado { get { return this._presupuestoSeleccionado; } }
-        private readonly byte? _filtroPresupuestoEstadoId;
+        private Contrato _contratoSeleccionado;
+        public Contrato GetContratoSeleccionado { get { return this._contratoSeleccionado; } }
+        private readonly byte? _filtroContratoEstadoId;
 
        
 
@@ -40,30 +40,31 @@ namespace CapaPresentacion
             if (CbProyectoNombre.Items.Count > 0) CbProyectoNombre.SelectedIndex = 0;
 		}
 
-		public void DgvPresupuesto_AddRow(Presupuesto presupuesto)
+		public void DgvContrato_AddRow(Contrato contrato)
         {
             var index = -1;
 
-            index = DgvPresupuesto.Rows.Add(
-                presupuesto.PresupuestoID,
-                presupuesto.PresupuestoEstado.Nombre,
-                presupuesto.CreacionFecha.Date.ToString("dd/MM/yyyy"),
-                presupuesto.FechaExpiracion.Date.ToString("dd/MM/yyyy"),
-                presupuesto.Cliente.RazonSocialOrApellidosYNombres,
-                presupuesto.Proyecto.Nombre,
-                presupuesto.AreaTotal,
-                presupuesto.AreaTechada,
-                presupuesto.NumeroPisos,
-                presupuesto.Plan.Nombre,
-                presupuesto.Plan.CostoPorM2.ToString("#,#0.00"),
-                presupuesto.Plan.PlazoRango,
-                presupuesto.ImporteTotal.ToString("#,#0.00")
+            index = DgvContrato.Rows.Add(
+                contrato.ContratoID,
+                contrato.ContratoEstado.Nombre,
+                contrato.FechaInicio.Date.ToString("dd/MM/yyyy"),
+                contrato.FechaEstimadaEntrega.Date.ToString("dd/MM/yyyy"),
+                contrato.PresupuestoID,
+                contrato.Presupuesto.Cliente.RazonSocialOrApellidosYNombres,
+                contrato.Presupuesto.Proyecto.Nombre,
+                contrato.Presupuesto.AreaTotal,
+                contrato.Presupuesto.AreaTechada,
+                contrato.Presupuesto.NumeroPisos,
+                contrato.Presupuesto.Plan.Nombre,
+                contrato.Presupuesto.Plan.CostoPorM2.ToString("#,#0.00"),
+                contrato.Presupuesto.Plan.PlazoRango,
+                contrato.Presupuesto.ImporteTotal.ToString("#,#0.00")
             );
 
-            DgvPresupuesto.Rows[index].Tag = presupuesto;
-            DgvPresupuesto.Rows[index].Cells[1].Style.BackColor = presupuesto.PresupuestoEstado.Color;
-            DgvPresupuesto.Rows[index].Cells[1].Style.SelectionBackColor = presupuesto.PresupuestoEstado.Color;
-            DgvPresupuesto.Rows[index].Cells[1].Style.SelectionForeColor = Color.Black;
+            DgvContrato.Rows[index].Tag = contrato;
+            DgvContrato.Rows[index].Cells[1].Style.BackColor = contrato.ContratoEstado.Color;
+            DgvContrato.Rows[index].Cells[1].Style.SelectionBackColor = contrato.ContratoEstado.Color;
+            DgvContrato.Rows[index].Cells[1].Style.SelectionForeColor = Color.Black;
         }
 
         private async void FrmPresupuesto_Load(object sender, EventArgs e)
@@ -82,16 +83,16 @@ namespace CapaPresentacion
 
                 CbEstado.Items.Clear();
                 CbEstado.DisplayMember = "Nombre";
-                var presupuestoEstados = await this.ObjRemoteObject.LogPresupuesto.PresupuestoEstadoListar();
-                if (_filtroPresupuestoEstadoId == null)
+                var contratoEstados = await this.ObjRemoteObject.LogContrato.ContratoEstadoListar();
+                if (_filtroContratoEstadoId == null)
                 {
-                    presupuestoEstados.Insert(0, new PresupuestoEstado { Nombre = "TODOS" });
+                    contratoEstados.Insert(0, new ContratoEstado { Nombre = "TODOS" });
                 }
                 else
                 {
-                    presupuestoEstados = presupuestoEstados.FindAll(x => x.PresupuestoEstadoID == _filtroPresupuestoEstadoId);
+                    contratoEstados = contratoEstados.FindAll(x => x.ContratoEstadoID == _filtroContratoEstadoId);
                 }
-                foreach (var item in presupuestoEstados)
+                foreach (var item in contratoEstados)
                 {
                     CbEstado.Items.Add(item);
                 }
@@ -107,13 +108,13 @@ namespace CapaPresentacion
         {
             try
             {
-                if (DgvPresupuesto.CurrentRow == null)
+                if (DgvContrato.CurrentRow == null)
                 {
                     MessageBox.Show(this, "Olvidó seleccionar un presupuesto", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
-                this._presupuestoSeleccionado = DgvPresupuesto.CurrentRow.Tag as Presupuesto;
-                this._presupuestoSeleccionado.PresupuestoDetalles = await this.ObjRemoteObject.LogPresupuesto.PresupuestoDetalleBuscarPorPresupuestoID(this._presupuestoSeleccionado.PresupuestoID);
+                this._contratoSeleccionado = DgvContrato.CurrentRow.Tag as Contrato;
+                this._contratoSeleccionado.Presupuesto.PresupuestoDetalles = await this.ObjRemoteObject.LogPresupuesto.PresupuestoDetalleBuscarPorPresupuestoID(this._contratoSeleccionado.Presupuesto.PresupuestoID);
                 this.DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
@@ -216,13 +217,22 @@ namespace CapaPresentacion
         {
             try
             {
+                var contratoID = Convert.ToInt32(string.IsNullOrEmpty(TbNumeroContrato.Text.Trim()) ? "0" : TbNumeroContrato.Text.Trim());
                 var presupuestoID = Convert.ToInt32(string.IsNullOrEmpty(TbNumeroPresupuesto.Text.Trim()) ? "0" : TbNumeroPresupuesto.Text.Trim());
                 var fechaDesde = DtpFechaDesde.Value.Date;
                 var fechaHasta = DtpFechaHasta.Value.Date;
                 var cliente = TbCliente.Tag as Cliente;
                 var proyecto = CbProyectoNombre.SelectedItem as Proyecto;
 
-                if (RbNumeroPresupuesto.Checked)
+                if (RbNumeroContrato.Checked)
+                {
+                    if (contratoID <= 0)
+                    {
+                        MessageBox.Show(this, "Olvidó ingresar el número de contrato", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else if (RbNumeroPresupuesto.Checked)
                 {
                     if (presupuestoID <= 0)
                     {
@@ -239,30 +249,35 @@ namespace CapaPresentacion
                     }
                 }
 
-                DgvPresupuesto.Rows.Clear();
+                DgvContrato.Rows.Clear();
                 BnBuscar.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
 
-                if (RbNumeroPresupuesto.Checked)
+                if (RbNumeroContrato.Checked)
                 {
-                    var presupuesto = await this.ObjRemoteObject.LogPresupuesto.PresupuestoBuscarPorPresupuestoID(presupuestoID);
-                    if (presupuesto != null) DgvPresupuesto_AddRow(presupuesto);
+                    var contrato = await this.ObjRemoteObject.LogContrato.ContratoBuscarPorContratoID(contratoID);
+                    if (contrato != null) DgvContrato_AddRow(contrato);
+                }
+                else if (RbNumeroPresupuesto.Checked)
+                {
+                    var contrato = await this.ObjRemoteObject.LogContrato.ContratoBuscarPorPresupuestoID(presupuestoID);
+                    if (contrato != null) DgvContrato_AddRow(contrato);
                 }
                 else
                 {
-                    var presupuestoEstado = CbEstado.SelectedItem as PresupuestoEstado;
-                    var presupuestoEstadoId = presupuestoEstado?.PresupuestoEstadoID;
-                    if (presupuestoEstadoId == 0) presupuestoEstadoId = null;
+                    var contratoEstado = CbEstado.SelectedItem as ContratoEstado;
+                    var contratoEstadoId = contratoEstado?.ContratoEstadoID;
+                    if (contratoEstadoId == 0) contratoEstadoId = null;
 
-                    var listaPresupuestos = await this.ObjRemoteObject.LogPresupuesto.PresupuestoBusquedaGeneral(fechaDesde, fechaHasta, cliente?.ClienteID, proyecto?.ProyectoID, presupuestoEstadoId);
-                    foreach (var presupuesto in listaPresupuestos)
+                    var listaContratos = await this.ObjRemoteObject.LogContrato.ContratoBusquedaGeneral(fechaDesde, fechaHasta, cliente?.ClienteID, proyecto?.ProyectoID, contratoEstadoId);
+                    foreach (var contrato in listaContratos)
                     {
-                        DgvPresupuesto_AddRow(presupuesto);
+                        DgvContrato_AddRow(contrato);
                     }
                 }
 
                 this.Cursor = Cursors.Default;
-                if (DgvPresupuesto.Rows.Count == 0) MessageBox.Show(this, "No se encontraron resultados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if (DgvContrato.Rows.Count == 0) MessageBox.Show(this, "No se encontraron resultados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 BnBuscar.Enabled = true;
             }
             catch (Exception ex)
@@ -271,6 +286,11 @@ namespace CapaPresentacion
                 MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 BnBuscar.Enabled = true;
             }
+        }
+
+        private void RbNumeroContrato_CheckedChanged(object sender, EventArgs e)
+        {
+            ControlesBusqueda_MostrarOcultar();
         }
 
         private void RbNumeroPresupuesto_CheckedChanged(object sender, EventArgs e)
@@ -285,34 +305,38 @@ namespace CapaPresentacion
 
         private void ControlesBusqueda_MostrarOcultar()
         {
-            var visibleGrupo1 = RbNumeroPresupuesto.Checked;
-            var visibleGrupo2 = RbBusquedaDetallada.Checked;
+            var visibleGrupo1 = RbNumeroContrato.Checked;
+            var visibleGrupo2 = RbNumeroPresupuesto.Checked;
+            var visibleGrupo3 = RbBusquedaDetallada.Checked;
 
-            LbPresupuesto.Visible = visibleGrupo1;
-            TbNumeroPresupuesto.Visible = visibleGrupo1;
+            LbContrato.Visible = visibleGrupo1;
+            TbNumeroContrato.Visible = visibleGrupo1;
 
-            LbDesde.Visible = visibleGrupo2;
-            DtpFechaDesde.Visible = visibleGrupo2;
-            LbAl.Visible = visibleGrupo2;
-            DtpFechaHasta.Visible = visibleGrupo2;
-            LbEstado.Visible = visibleGrupo2;
-            CbEstado.Visible = visibleGrupo2;
-            LbTipoDocumentoIdentidad.Visible = visibleGrupo2;
-            CbTipoDocumentoIdentidad.Visible = visibleGrupo2;
-            LbDocumentoIdentidadNumero.Visible = visibleGrupo2;
-            TbNumeroDocumento.Visible = visibleGrupo2;
-            BnBuscarCliente.Visible = visibleGrupo2;
-            LbCliente.Visible = visibleGrupo2;
-            TbCliente.Visible = visibleGrupo2;
-            LbProyecto.Visible = visibleGrupo2;
-            CbProyectoNombre.Visible = visibleGrupo2;
+            LbPresupuesto.Visible = visibleGrupo2;
+            TbNumeroPresupuesto.Visible = visibleGrupo2;
 
-            if (visibleGrupo1)
+            LbDesde.Visible = visibleGrupo3;
+            DtpFechaDesde.Visible = visibleGrupo3;
+            LbAl.Visible = visibleGrupo3;
+            DtpFechaHasta.Visible = visibleGrupo3;
+            LbEstado.Visible = visibleGrupo3;
+            CbEstado.Visible = visibleGrupo3;
+            LbTipoDocumentoIdentidad.Visible = visibleGrupo3;
+            CbTipoDocumentoIdentidad.Visible = visibleGrupo3;
+            LbDocumentoIdentidadNumero.Visible = visibleGrupo3;
+            TbNumeroDocumento.Visible = visibleGrupo3;
+            BnBuscarCliente.Visible = visibleGrupo3;
+            LbCliente.Visible = visibleGrupo3;
+            TbCliente.Visible = visibleGrupo3;
+            LbProyecto.Visible = visibleGrupo3;
+            CbProyectoNombre.Visible = visibleGrupo3;
+
+            if (visibleGrupo1 || visibleGrupo2)
             {
                 GbDatosBusqueda.Size = new Size(847, 60);
                 BnBuscar.Location = new Point(863, 103);
             }
-            else if (visibleGrupo2)
+            else if (visibleGrupo3)
             {
                 GbDatosBusqueda.Size = new Size(847, 180);
                 BnBuscar.Location = new Point(863, 223);

@@ -108,7 +108,7 @@ namespace CapaDatos
             var cliente = (Cliente)null;
             try
             {
-                cmd = new SqlCommand("spClienteBuscarPorClienteID", cnn);
+                cmd = new SqlCommand("spClienteBuscarPorClienteID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
 
@@ -135,7 +135,7 @@ namespace CapaDatos
             var cliente = (Cliente)null;
             try
             {
-                cmd = new SqlCommand("spClienteBuscarPorDocumentoIdentidad", cnn);
+                cmd = new SqlCommand("spClienteBuscarPorDocumentoIdentidad", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
                 cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", documentoIdentidadNumero, 20));
@@ -163,7 +163,7 @@ namespace CapaDatos
             var listaClientes = new List<Cliente>();
             try
             {
-                cmd = new SqlCommand("spClienteBusquedaGeneral", cnn);
+                cmd = new SqlCommand("spClienteBusquedaGeneral", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoIdentidadID", tipoDocumentoIdentidadID));
                 cmd.Parameters.Add(CreateParams.NVarchar("DocumentoIdentidadNumero", documentoIdentidadNumero, 20));

@@ -46,6 +46,7 @@
     <Compile Include="ILogCliente.cs" />
     <Compile Include="ILogDepartamento.cs" />
     <Compile Include="ILogPlan.cs" />
+    <Compile Include="ILogContrato.cs" />
     <Compile Include="ILogPresupuesto.cs" />
     <Compile Include="ILogPresupuestoCategoria.cs" />
     <Compile Include="ILogProyecto.cs" />

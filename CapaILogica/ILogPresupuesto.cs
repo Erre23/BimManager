@@ -10,18 +10,24 @@ namespace CapaILogica
     public interface ILogPresupuesto
     {
         [OperationContract]
-        Task PresupuestoAnular(Presupuesto presupuesto);
+        Task<Presupuesto> PresupuestoAnular(Presupuesto presupuesto);
 
         [OperationContract]
         Task<Presupuesto> PresupuestoBuscarPorPresupuestoID(int presupuestoID);
 
         [OperationContract]
-        Task<List<Presupuesto>> PresupuestoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte estado);
+        Task<List<Presupuesto>> PresupuestoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte? presupuestoEstadoId);
 
         [OperationContract]
         Task<List<PresupuestoDetalle>> PresupuestoDetalleBuscarPorPresupuestoID(int presupuestoID);
 
         [OperationContract]
         Task<Presupuesto> PresupuestoInsertar(Presupuesto presupuesto);
+
+        [OperationContract]
+        Task<PresupuestoEstado> PresupuestoEstadoBuscarPorPresupuestoEstadoID(byte presupuestoEstadoID);
+
+        [OperationContract]
+        Task<List<PresupuestoEstado>> PresupuestoEstadoListar();
     }
 }

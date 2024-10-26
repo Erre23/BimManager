@@ -7,8 +7,7 @@ using System.Xml;
 namespace WCF
 {
     public class Publicador
-    {
-        
+    {        
         public void publicar(int puerto)
         {
             Uri baseAddress = new Uri($"net.tcp://localhost:{puerto}/");
@@ -16,6 +15,10 @@ namespace WCF
             var serviceHostCliente = new ServiceHost(typeof(LogCliente), baseAddress);
             serviceHostCliente.AddServiceEndpoint(typeof(ILogCliente), CreateBinding(), "LogCliente");
             serviceHostCliente.Open();
+
+            var serviceHostContrato = new ServiceHost(typeof(LogContrato), baseAddress);
+            serviceHostContrato.AddServiceEndpoint(typeof(ILogContrato), CreateBinding(), "LogContrato");
+            serviceHostContrato.Open();
 
             var serviceHostDepartamento = new ServiceHost(typeof(LogDepartamento), baseAddress);
             serviceHostDepartamento.AddServiceEndpoint(typeof(ILogDepartamento), CreateBinding(), "LogDepartamento");

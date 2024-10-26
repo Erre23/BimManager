@@ -31,6 +31,7 @@ namespace CapaPresentacion
                 }
 
                 BnIngresar.Enabled = false;
+                BnSalir.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
                 var usuarioLogin = await this.ObjRemoteObject.LogUsuario.UsuarioLogin(TbUsername.Text.Trim(), TbPassword.Text);
                 if (usuarioLogin == null)
@@ -63,6 +64,7 @@ namespace CapaPresentacion
             finally
             {
                 BnIngresar.Enabled = true;
+                BnSalir.Enabled = true;
                 this.Cursor = Cursors.Default;
             }
         }

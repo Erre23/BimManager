@@ -1,5 +1,6 @@
 ﻿using CapaEntidad;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -58,38 +59,50 @@ namespace CapaLogica.Apis
 
 		public async Task<Cliente> GetCliente_PersonaNaturalAsync(string dni)
 		{
-			var url = GetApiURL("dni", dni);
-			var response = await GetResponseAsync<ApisPeruPersonaNatural>(url);
-			if (response.Success && response.Data != null)
-			{
-				return new Cliente
+			try
+			{ 
+				var url = GetApiURL("dni", dni);
+				var response = await GetResponseAsync<ApisPeruPersonaNatural>(url);
+				if (response.Success && response.Data != null)
 				{
-					TipoDocumentoIdentidadID = 1,
-					DocumentoIdentidadNumero = dni,
-					Nombres = response.Data.Nombres,
-					Apellido1 = response.Data.ApellidoPaterno,
-					Apellido2 = response.Data.ApellidoMaterno,
-				};
-			}
-			return null;
+					return new Cliente
+					{
+						TipoDocumentoIdentidadID = 1,
+						DocumentoIdentidadNumero = dni,
+						Nombres = response.Data.Nombres,
+						Apellido1 = response.Data.ApellidoPaterno,
+						Apellido2 = response.Data.ApellidoMaterno,
+					};
+				}
+            }
+            catch (Exception ex)
+            {
+            }
+            return null;
 		}
 
 		public async Task<Cliente> GetCliente_PersonaJuridicaAsync(string ruc)
 		{
-            var url = GetApiURL("ruc", ruc);
-            var response = await GetResponseAsync<ApisPeruPersonaJuridica>(url);
-			if (response.Success && response.Data != null)
-			{
-				return new Cliente
+			try
+			{ 
+				var url = GetApiURL("ruc", ruc);
+				var response = await GetResponseAsync<ApisPeruPersonaJuridica>(url);
+				if (response.Success && response.Data != null)
 				{
-					TipoDocumentoIdentidadID = 2,
-					DocumentoIdentidadNumero = ruc,
-					RazonSocial = response.Data.RazonSocial,
-					Celular = response.Data.Telefonos != null ? response.Data.Telefonos.FirstOrDefault() : null
-				};
-			}
-			return null;
-		}
+					return new Cliente
+					{
+						TipoDocumentoIdentidadID = 2,
+						DocumentoIdentidadNumero = ruc,
+						RazonSocial = response.Data.RazonSocial,
+						Celular = response.Data.Telefonos != null ? response.Data.Telefonos.FirstOrDefault() : null
+					};
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return null;
+        }
 
 		private async Task<Response<T>> GetResponseAsync<T>(string url)
 		{

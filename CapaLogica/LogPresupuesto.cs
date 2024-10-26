@@ -16,7 +16,7 @@ namespace CapaLogica
         public static LogPresupuesto Instancia { get { return _instancia; } }
         #endregion singleton
 
-        #region metodos
+        #region metodos Presupuesto
 
         public async Task<Presupuesto> PresupuestoInsertar(Presupuesto presupuesto)
         {
@@ -28,6 +28,9 @@ namespace CapaLogica
                 {
                     try
                     {
+                        presupuesto.CreacionFecha = DateTime.Now;
+                        presupuesto.PresupuestoEstadoId = 1;
+                        presupuesto.PresupuestoEstado = await new DaoPresupuestoEstado(tran).BuscarPorPresupuestoEstadoID(1);
                         presupuesto.PresupuestoID = await new DaoPresupuesto(tran).Insertar(presupuesto);
                         var daoPresupuestoDetalle = new DaoPresupuestoDetalle(tran);
                         foreach (var presupuestoDetalle in presupuesto.PresupuestoDetalles)
@@ -54,7 +57,7 @@ namespace CapaLogica
             }
         }
 
-        public async Task PresupuestoAnular(Presupuesto presupuesto)
+        public async Task<Presupuesto> PresupuestoAnular(Presupuesto presupuesto)
         {
             SqlConnection cnn = this.Conectar();
             try
@@ -64,10 +67,35 @@ namespace CapaLogica
                 {
                     try
                     {
-                        presupuesto.AnulacionFecha = DateTime.Now;
-                        await new DaoPresupuesto(tran).Anular(presupuesto);
+                        var daoPresupuesto = new DaoPresupuesto(tran);
+                        var presupuestoFromBD = await daoPresupuesto.BuscarPorPresupuestoID(presupuesto.PresupuestoID);
+                        if (presupuestoFromBD == null)
+                        {
+                            throw new Exception("El número de presupuesto no existe");
+                        }
+
+                        if (presupuestoFromBD.PresupuestoEstadoId == 2)
+                        {
+                            throw new Exception("No se puede anular el presupuesto, porque ya ha sido anulado en otro momento");
+                        }
+
+                        if (presupuestoFromBD.PresupuestoEstadoId == 3)
+                        {
+                            throw new Exception("No se puede anular el presupuesto, porque se encuentra con estado \"Vencido\"");
+                        }
+
+                        if (presupuestoFromBD.PresupuestoEstadoId == 4)
+                        {
+                            throw new Exception("No se puede anular el presupuesto, porque se encuentra con estado \"Aprobado\"");
+                        }
+
+                        presupuesto.UltActEstadoFecha = DateTime.Now;
+                        presupuesto.PresupuestoEstadoId = 2;
+                        presupuesto.PresupuestoEstado = await new DaoPresupuestoEstado(tran).BuscarPorPresupuestoEstadoID(2);
+                        await daoPresupuesto.ActualizarEstado(presupuesto);
                         tran.Commit();
                         Close(cnn);
+                        return presupuesto;
                     }
                     catch (Exception e)
                     {
@@ -100,8 +128,8 @@ namespace CapaLogica
                     presupuesto.Proyecto.DireccionProvincia = await new DaoProvincia(cnn).BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
                     presupuesto.Proyecto.DireccionDistrito = await new DaoDistrito(cnn).BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
                     presupuesto.Plan = await new DaoPlan(cnn).BuscarPorPlanID(presupuesto.PlanID);
-
-                    if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                    presupuesto.PresupuestoEstado = await new DaoPresupuestoEstado(cnn).BuscarPorPresupuestoEstadoID(presupuesto.PresupuestoEstadoId);
+                    if (presupuesto.UltActEstadoUsuarioID != null) presupuesto.UltActEstadoUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.UltActEstadoUsuarioID.Value);
                 }
                 Close(cnn);
                 return presupuesto;
@@ -113,20 +141,17 @@ namespace CapaLogica
             }
         }
 
-        public async Task<List<Presupuesto>> PresupuestoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte estado)
+        public async Task<List<Presupuesto>> PresupuestoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte? presupuestoEstadoId)
         {
-            bool? activo = null;
-            if (estado == 1) activo = true;
-            else if (estado == 2) activo = false;
-
             SqlConnection cnn = this.Conectar();
             try
             {
                 await cnn.OpenAsync();
-                var listaPresupuestos = await new DaoPresupuesto(cnn).BusquedaGeneral(fechaDesde, fechaHasta, clienteID, proyectoID, activo);
+                var listaPresupuestos = await new DaoPresupuesto(cnn).BusquedaGeneral(fechaDesde, fechaHasta, clienteID, proyectoID, presupuestoEstadoId);
                 if (listaPresupuestos.Count > 0)
                 {
                     var tiposDocumentoIdentidad = await new DaoTipoDocumentoIdentidad(cnn).ListarTodos();
+                    var presupuestoEstados = await new DaoPresupuestoEstado(cnn).Listar();
                     foreach (var presupuesto in listaPresupuestos)
                     {
                         presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
@@ -137,8 +162,8 @@ namespace CapaLogica
                         presupuesto.Proyecto.DireccionProvincia = await new DaoProvincia(cnn).BuscarPorProvinciaID(presupuesto.Proyecto.DireccionProvinciaID);
                         presupuesto.Proyecto.DireccionDistrito = await new DaoDistrito(cnn).BuscarPorDistritoID(presupuesto.Proyecto.DireccionDistritoID);
                         presupuesto.Plan = await new DaoPlan(cnn).BuscarPorPlanID(presupuesto.PlanID);
-
-                        if (presupuesto.AnulacionUsuarioID != null) presupuesto.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.CreacionUsuarioID);
+                        presupuesto.PresupuestoEstado = presupuestoEstados.Find(x => x.PresupuestoEstadoID == presupuesto.PresupuestoEstadoId);
+                        if (presupuesto.UltActEstadoUsuarioID != null) presupuesto.UltActEstadoUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(presupuesto.UltActEstadoUsuarioID.Value);
                     }
                 }
                 Close(cnn);
@@ -169,5 +194,41 @@ namespace CapaLogica
         }
 
         #endregion metodos
+
+        #region metodos PresupuestoEstado
+        public async Task<PresupuestoEstado> PresupuestoEstadoBuscarPorPresupuestoEstadoID(byte presupuestoEstadoID)
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var presupuestoEstado = await new DaoPresupuestoEstado(cnn).BuscarPorPresupuestoEstadoID(presupuestoEstadoID);
+                Close(cnn);
+                return presupuestoEstado;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
+        }
+
+        public async Task<List<PresupuestoEstado>> PresupuestoEstadoListar()
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var presupuestoEstados = await new DaoPresupuestoEstado(cnn).Listar();
+                Close(cnn);
+                return presupuestoEstados;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
+        }
+        #endregion
     }
 }

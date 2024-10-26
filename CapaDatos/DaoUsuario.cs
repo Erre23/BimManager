@@ -104,7 +104,7 @@ namespace CapaDatos
             var usuario = (Usuario)null;
             try
             {
-                cmd = new SqlCommand("spUsuarioBuscarPorUsername", cnn);
+                cmd = new SqlCommand("spUsuarioBuscarPorUsername", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.NVarchar("Username", username, 50));
 
@@ -135,7 +135,7 @@ namespace CapaDatos
             var usuario = (Usuario)null;
             try
             {
-                cmd = new SqlCommand("spUsuarioBuscarUsername", cnn);
+                cmd = new SqlCommand("spUsuarioBuscarUsername", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.NVarchar("username", username, 50));
 
@@ -161,7 +161,7 @@ namespace CapaDatos
             var usuario = (Usuario)null;
             try
             {
-                cmd = new SqlCommand("spUsuarioBuscarPorUsuarioID", cnn);
+                cmd = new SqlCommand("spUsuarioBuscarPorUsuarioID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("UsuarioID", usuerioID));
 

@@ -1,6 +1,6 @@
 ﻿namespace CapaPresentacion
 {
-    partial class FrmPresupuestoBuscar
+    partial class FrmContratoBuscar
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LbTitulo = new System.Windows.Forms.Label();
             this.GbDatosBusqueda = new System.Windows.Forms.GroupBox();
             this.CbProyectoNombre = new System.Windows.Forms.ComboBox();
@@ -54,11 +54,21 @@
             this.TbNumeroPresupuesto = new CapaPresentacion.Controls.CustomTextBox();
             this.LbPresupuesto = new System.Windows.Forms.Label();
             this.GbResultados = new System.Windows.Forms.GroupBox();
-            this.DgvPresupuesto = new System.Windows.Forms.DataGridView();
+            this.DgvContrato = new System.Windows.Forms.DataGridView();
+            this.label5 = new System.Windows.Forms.Label();
+            this.RbNumeroPresupuesto = new System.Windows.Forms.RadioButton();
+            this.RbBusquedaDetallada = new System.Windows.Forms.RadioButton();
+            this.BnBuscar = new System.Windows.Forms.Button();
+            this.BnAceptar = new System.Windows.Forms.Button();
+            this.BnSalir = new System.Windows.Forms.Button();
+            this.RbNumeroContrato = new System.Windows.Forms.RadioButton();
+            this.TbNumeroContrato = new CapaPresentacion.Controls.CustomTextBox();
+            this.LbContrato = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,15 +78,9 @@
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.RbNumeroPresupuesto = new System.Windows.Forms.RadioButton();
-            this.RbBusquedaDetallada = new System.Windows.Forms.RadioButton();
-            this.BnBuscar = new System.Windows.Forms.Button();
-            this.BnAceptar = new System.Windows.Forms.Button();
-            this.BnSalir = new System.Windows.Forms.Button();
             this.GbDatosBusqueda.SuspendLayout();
             this.GbResultados.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvPresupuesto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvContrato)).BeginInit();
             this.SuspendLayout();
             // 
             // LbTitulo
@@ -90,7 +94,7 @@
             this.LbTitulo.Name = "LbTitulo";
             this.LbTitulo.Size = new System.Drawing.Size(968, 34);
             this.LbTitulo.TabIndex = 0;
-            this.LbTitulo.Text = "Búsqueda de Presupuesto";
+            this.LbTitulo.Text = "Búsqueda de Contrato";
             this.LbTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // GbDatosBusqueda
@@ -112,13 +116,15 @@
             this.GbDatosBusqueda.Controls.Add(this.LbEstado);
             this.GbDatosBusqueda.Controls.Add(this.TbNumeroPresupuesto);
             this.GbDatosBusqueda.Controls.Add(this.LbPresupuesto);
+            this.GbDatosBusqueda.Controls.Add(this.TbNumeroContrato);
+            this.GbDatosBusqueda.Controls.Add(this.LbContrato);
             this.GbDatosBusqueda.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GbDatosBusqueda.Location = new System.Drawing.Point(9, 73);
             this.GbDatosBusqueda.Margin = new System.Windows.Forms.Padding(4);
             this.GbDatosBusqueda.Name = "GbDatosBusqueda";
             this.GbDatosBusqueda.Padding = new System.Windows.Forms.Padding(4);
             this.GbDatosBusqueda.Size = new System.Drawing.Size(847, 180);
-            this.GbDatosBusqueda.TabIndex = 4;
+            this.GbDatosBusqueda.TabIndex = 5;
             this.GbDatosBusqueda.TabStop = false;
             this.GbDatosBusqueda.Text = "Datos del Búsqueda";
             // 
@@ -216,7 +222,7 @@
             // LbCliente
             // 
             this.LbCliente.AutoSize = true;
-            this.LbCliente.Location = new System.Drawing.Point(75, 119);
+            this.LbCliente.Location = new System.Drawing.Point(77, 119);
             this.LbCliente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LbCliente.Name = "LbCliente";
             this.LbCliente.Size = new System.Drawing.Size(57, 17);
@@ -255,7 +261,7 @@
             // LbTipoDocumentoIdentidad
             // 
             this.LbTipoDocumentoIdentidad.AutoSize = true;
-            this.LbTipoDocumentoIdentidad.Location = new System.Drawing.Point(55, 90);
+            this.LbTipoDocumentoIdentidad.Location = new System.Drawing.Point(58, 90);
             this.LbTipoDocumentoIdentidad.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LbTipoDocumentoIdentidad.Name = "LbTipoDocumentoIdentidad";
             this.LbTipoDocumentoIdentidad.Size = new System.Drawing.Size(76, 17);
@@ -265,7 +271,7 @@
             // LbEstado
             // 
             this.LbEstado.AutoSize = true;
-            this.LbEstado.Location = new System.Drawing.Point(74, 59);
+            this.LbEstado.Location = new System.Drawing.Point(75, 59);
             this.LbEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LbEstado.Name = "LbEstado";
             this.LbEstado.Size = new System.Drawing.Size(59, 17);
@@ -297,27 +303,28 @@
             this.GbResultados.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.GbResultados.Controls.Add(this.DgvPresupuesto);
+            this.GbResultados.Controls.Add(this.DgvContrato);
             this.GbResultados.Location = new System.Drawing.Point(9, 260);
             this.GbResultados.Name = "GbResultados";
             this.GbResultados.Size = new System.Drawing.Size(952, 331);
-            this.GbResultados.TabIndex = 6;
+            this.GbResultados.TabIndex = 7;
             this.GbResultados.TabStop = false;
             this.GbResultados.Text = "Resultados :";
             // 
-            // DgvPresupuesto
+            // DgvContrato
             // 
-            this.DgvPresupuesto.AllowUserToAddRows = false;
-            this.DgvPresupuesto.AllowUserToDeleteRows = false;
-            this.DgvPresupuesto.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.DgvContrato.AllowUserToAddRows = false;
+            this.DgvContrato.AllowUserToDeleteRows = false;
+            this.DgvContrato.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DgvPresupuesto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvPresupuesto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DgvContrato.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvContrato.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column13,
             this.Column2,
             this.Column3,
+            this.Column14,
             this.Column4,
             this.Column5,
             this.Column6,
@@ -327,18 +334,131 @@
             this.Column10,
             this.Column11,
             this.Column12});
-            this.DgvPresupuesto.Location = new System.Drawing.Point(6, 23);
-            this.DgvPresupuesto.MultiSelect = false;
-            this.DgvPresupuesto.Name = "DgvPresupuesto";
-            this.DgvPresupuesto.RowHeadersWidth = 51;
-            this.DgvPresupuesto.RowTemplate.Height = 24;
-            this.DgvPresupuesto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvPresupuesto.Size = new System.Drawing.Size(940, 299);
-            this.DgvPresupuesto.TabIndex = 0;
+            this.DgvContrato.Location = new System.Drawing.Point(6, 23);
+            this.DgvContrato.MultiSelect = false;
+            this.DgvContrato.Name = "DgvContrato";
+            this.DgvContrato.RowHeadersWidth = 51;
+            this.DgvContrato.RowTemplate.Height = 24;
+            this.DgvContrato.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DgvContrato.Size = new System.Drawing.Size(940, 299);
+            this.DgvContrato.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 46);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(83, 17);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Buscar Por :";
+            // 
+            // RbNumeroPresupuesto
+            // 
+            this.RbNumeroPresupuesto.AutoSize = true;
+            this.RbNumeroPresupuesto.Location = new System.Drawing.Point(319, 44);
+            this.RbNumeroPresupuesto.Name = "RbNumeroPresupuesto";
+            this.RbNumeroPresupuesto.Size = new System.Drawing.Size(141, 21);
+            this.RbNumeroPresupuesto.TabIndex = 3;
+            this.RbNumeroPresupuesto.TabStop = true;
+            this.RbNumeroPresupuesto.Text = "Nº de Presupuesto";
+            this.RbNumeroPresupuesto.UseVisualStyleBackColor = true;
+            this.RbNumeroPresupuesto.CheckedChanged += new System.EventHandler(this.RbNumeroPresupuesto_CheckedChanged);
+            // 
+            // RbBusquedaDetallada
+            // 
+            this.RbBusquedaDetallada.AutoSize = true;
+            this.RbBusquedaDetallada.Location = new System.Drawing.Point(506, 44);
+            this.RbBusquedaDetallada.Name = "RbBusquedaDetallada";
+            this.RbBusquedaDetallada.Size = new System.Drawing.Size(131, 21);
+            this.RbBusquedaDetallada.TabIndex = 4;
+            this.RbBusquedaDetallada.TabStop = true;
+            this.RbBusquedaDetallada.Text = "Rango de Fechas";
+            this.RbBusquedaDetallada.UseVisualStyleBackColor = true;
+            this.RbBusquedaDetallada.CheckedChanged += new System.EventHandler(this.RbBusquedaDetallada_CheckedChanged);
+            // 
+            // BnBuscar
+            // 
+            this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnBuscar.Location = new System.Drawing.Point(863, 223);
+            this.BnBuscar.Name = "BnBuscar";
+            this.BnBuscar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnBuscar.Size = new System.Drawing.Size(98, 30);
+            this.BnBuscar.TabIndex = 6;
+            this.BnBuscar.Text = "Buscar";
+            this.BnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnBuscar.UseVisualStyleBackColor = true;
+            this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
+            // 
+            // BnAceptar
+            // 
+            this.BnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BnAceptar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnAceptar.Image = global::CapaPresentacion.Properties.Resources.Confirmar;
+            this.BnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnAceptar.Location = new System.Drawing.Point(760, 596);
+            this.BnAceptar.Name = "BnAceptar";
+            this.BnAceptar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnAceptar.Size = new System.Drawing.Size(98, 30);
+            this.BnAceptar.TabIndex = 8;
+            this.BnAceptar.Text = "Aceptar";
+            this.BnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnAceptar.UseVisualStyleBackColor = true;
+            this.BnAceptar.Click += new System.EventHandler(this.BnAceptar_Click);
+            // 
+            // BnSalir
+            // 
+            this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BnSalir.Location = new System.Drawing.Point(864, 596);
+            this.BnSalir.Name = "BnSalir";
+            this.BnSalir.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.BnSalir.Size = new System.Drawing.Size(98, 30);
+            this.BnSalir.TabIndex = 9;
+            this.BnSalir.Text = "Salir";
+            this.BnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.BnSalir.UseVisualStyleBackColor = true;
+            this.BnSalir.Click += new System.EventHandler(this.BnSalir_Click);
+            // 
+            // RbNumeroContrato
+            // 
+            this.RbNumeroContrato.AutoSize = true;
+            this.RbNumeroContrato.Location = new System.Drawing.Point(148, 44);
+            this.RbNumeroContrato.Name = "RbNumeroContrato";
+            this.RbNumeroContrato.Size = new System.Drawing.Size(120, 21);
+            this.RbNumeroContrato.TabIndex = 2;
+            this.RbNumeroContrato.TabStop = true;
+            this.RbNumeroContrato.Text = "Nº de Contrato";
+            this.RbNumeroContrato.UseVisualStyleBackColor = true;
+            this.RbNumeroContrato.CheckedChanged += new System.EventHandler(this.RbNumeroContrato_CheckedChanged);
+            // 
+            // TbNumeroContrato
+            // 
+            this.TbNumeroContrato.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TbNumeroContrato.Location = new System.Drawing.Point(139, 28);
+            this.TbNumeroContrato.Name = "TbNumeroContrato";
+            this.TbNumeroContrato.Size = new System.Drawing.Size(215, 24);
+            this.TbNumeroContrato.TabIndex = 18;
+            this.TbNumeroContrato.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TbNumeroContrato.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            // 
+            // LbContrato
+            // 
+            this.LbContrato.AutoSize = true;
+            this.LbContrato.Location = new System.Drawing.Point(42, 31);
+            this.LbContrato.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LbContrato.Name = "LbContrato";
+            this.LbContrato.Size = new System.Drawing.Size(92, 17);
+            this.LbContrato.TabIndex = 17;
+            this.LbContrato.Text = "N° Contrato :";
             // 
             // Column1
             // 
-            this.Column1.HeaderText = "N° Presup.";
+            this.Column1.HeaderText = "N° Contrato";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -353,7 +473,7 @@
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "Vigente Desde";
+            this.Column2.HeaderText = "Fecha Inicio";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -362,12 +482,18 @@
             // 
             // Column3
             // 
-            this.Column3.HeaderText = "Vigente Hasta";
+            this.Column3.HeaderText = "Fec. Est. Entrega";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
             this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column3.Width = 125;
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Nº Presup.";
+            this.Column14.Name = "Column14";
+            this.Column14.ReadOnly = true;
             // 
             // Column4
             // 
@@ -389,8 +515,8 @@
             // 
             // Column6
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle1;
             this.Column6.HeaderText = "Area Total";
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
@@ -400,8 +526,8 @@
             // 
             // Column7
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column7.HeaderText = "Area Techada";
             this.Column7.MinimumWidth = 6;
             this.Column7.Name = "Column7";
@@ -411,8 +537,8 @@
             // 
             // Column8
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column8.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column8.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column8.HeaderText = "N° Pisos";
             this.Column8.MinimumWidth = 6;
             this.Column8.Name = "Column8";
@@ -431,8 +557,8 @@
             // 
             // Column10
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Column10.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Column10.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column10.HeaderText = "Costo x M2";
             this.Column10.MinimumWidth = 6;
             this.Column10.Name = "Column10";
@@ -442,8 +568,8 @@
             // 
             // Column11
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column11.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column11.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column11.HeaderText = "Plazo (días)";
             this.Column11.MinimumWidth = 6;
             this.Column11.Name = "Column11";
@@ -453,8 +579,8 @@
             // 
             // Column12
             // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Column12.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Column12.DefaultCellStyle = dataGridViewCellStyle6;
             this.Column12.HeaderText = "Imp. Total S/";
             this.Column12.MinimumWidth = 6;
             this.Column12.Name = "Column12";
@@ -462,92 +588,12 @@
             this.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column12.Width = 90;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 46);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 17);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Buscar Por :";
-            // 
-            // RbNumeroPresupuesto
-            // 
-            this.RbNumeroPresupuesto.AutoSize = true;
-            this.RbNumeroPresupuesto.Location = new System.Drawing.Point(152, 44);
-            this.RbNumeroPresupuesto.Name = "RbNumeroPresupuesto";
-            this.RbNumeroPresupuesto.Size = new System.Drawing.Size(141, 21);
-            this.RbNumeroPresupuesto.TabIndex = 2;
-            this.RbNumeroPresupuesto.TabStop = true;
-            this.RbNumeroPresupuesto.Text = "Nº de Presupuesto";
-            this.RbNumeroPresupuesto.UseVisualStyleBackColor = true;
-            this.RbNumeroPresupuesto.CheckedChanged += new System.EventHandler(this.RbNumeroPresupuesto_CheckedChanged);
-            // 
-            // RbBusquedaDetallada
-            // 
-            this.RbBusquedaDetallada.AutoSize = true;
-            this.RbBusquedaDetallada.Location = new System.Drawing.Point(339, 44);
-            this.RbBusquedaDetallada.Name = "RbBusquedaDetallada";
-            this.RbBusquedaDetallada.Size = new System.Drawing.Size(131, 21);
-            this.RbBusquedaDetallada.TabIndex = 3;
-            this.RbBusquedaDetallada.TabStop = true;
-            this.RbBusquedaDetallada.Text = "Rango de Fechas";
-            this.RbBusquedaDetallada.UseVisualStyleBackColor = true;
-            this.RbBusquedaDetallada.CheckedChanged += new System.EventHandler(this.RbBusquedaDetallada_CheckedChanged);
-            // 
-            // BnBuscar
-            // 
-            this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
-            this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BnBuscar.Location = new System.Drawing.Point(863, 223);
-            this.BnBuscar.Name = "BnBuscar";
-            this.BnBuscar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.BnBuscar.Size = new System.Drawing.Size(98, 30);
-            this.BnBuscar.TabIndex = 5;
-            this.BnBuscar.Text = "Buscar";
-            this.BnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BnBuscar.UseVisualStyleBackColor = true;
-            this.BnBuscar.Click += new System.EventHandler(this.BnBuscar_Click);
-            // 
-            // BnAceptar
-            // 
-            this.BnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BnAceptar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnAceptar.Image = global::CapaPresentacion.Properties.Resources.Confirmar;
-            this.BnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BnAceptar.Location = new System.Drawing.Point(760, 596);
-            this.BnAceptar.Name = "BnAceptar";
-            this.BnAceptar.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.BnAceptar.Size = new System.Drawing.Size(98, 30);
-            this.BnAceptar.TabIndex = 7;
-            this.BnAceptar.Text = "Aceptar";
-            this.BnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BnAceptar.UseVisualStyleBackColor = true;
-            this.BnAceptar.Click += new System.EventHandler(this.BnAceptar_Click);
-            // 
-            // BnSalir
-            // 
-            this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
-            this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BnSalir.Location = new System.Drawing.Point(864, 596);
-            this.BnSalir.Name = "BnSalir";
-            this.BnSalir.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.BnSalir.Size = new System.Drawing.Size(98, 30);
-            this.BnSalir.TabIndex = 8;
-            this.BnSalir.Text = "Salir";
-            this.BnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BnSalir.UseVisualStyleBackColor = true;
-            this.BnSalir.Click += new System.EventHandler(this.BnSalir_Click);
-            // 
-            // FrmPresupuestoBuscar
+            // FrmContratoBuscar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 633);
+            this.Controls.Add(this.RbNumeroContrato);
             this.Controls.Add(this.RbBusquedaDetallada);
             this.Controls.Add(this.RbNumeroPresupuesto);
             this.Controls.Add(this.label5);
@@ -559,14 +605,14 @@
             this.Controls.Add(this.LbTitulo);
             this.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "FrmPresupuestoBuscar";
-            this.Text = "Búsqueda de Presupuesto";
+            this.Name = "FrmContratoBuscar";
+            this.Text = "Búsqueda de Contrato";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmPresupuesto_Load);
             this.GbDatosBusqueda.ResumeLayout(false);
             this.GbDatosBusqueda.PerformLayout();
             this.GbResultados.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DgvPresupuesto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvContrato)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -595,16 +641,20 @@
         private System.Windows.Forms.GroupBox GbResultados;
         private System.Windows.Forms.Button BnSalir;
         private System.Windows.Forms.Button BnAceptar;
-		private System.Windows.Forms.DataGridView DgvPresupuesto;
+		private System.Windows.Forms.DataGridView DgvContrato;
         private System.Windows.Forms.ComboBox CbEstado;
         private System.Windows.Forms.Button BnBuscar;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RadioButton RbNumeroPresupuesto;
         private System.Windows.Forms.RadioButton RbBusquedaDetallada;
+        private System.Windows.Forms.RadioButton RbNumeroContrato;
+        private Controls.CustomTextBox TbNumeroContrato;
+        private System.Windows.Forms.Label LbContrato;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;

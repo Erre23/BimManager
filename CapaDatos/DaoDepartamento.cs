@@ -31,7 +31,7 @@ namespace CapaDatos
             var Departamento = (Departamento)null;
             try
             {
-                cmd = new SqlCommand("spDepartamentoBuscarPorDepartamentoID", cnn);
+                cmd = new SqlCommand("spDepartamentoBuscarPorDepartamentoID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("DepartamentoID", departamentoID));
 
@@ -58,7 +58,7 @@ namespace CapaDatos
             var listaDepartamentos = new List<Departamento>();
             try
             {
-                cmd = new SqlCommand("spDepartamentoBuscarTodos", cnn);
+                cmd = new SqlCommand("spDepartamentoBuscarTodos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();

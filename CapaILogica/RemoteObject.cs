@@ -9,6 +9,7 @@ namespace CapaILogica
         public readonly string direccion = $"net.tcp://localhost:{Configuracion.Puerto}/";
         
         public ILogCliente LogCliente { get { return (new ChannelFactory<ILogCliente>(CreateBinding(), new EndpointAddress(direccion + "LogCliente"))).CreateChannel(); } }
+        public ILogContrato LogContrato { get { return (new ChannelFactory<ILogContrato>(CreateBinding(), new EndpointAddress(direccion + "LogContrato"))).CreateChannel(); } }
         public ILogDepartamento LogDepartamento { get { return (new ChannelFactory<ILogDepartamento>(CreateBinding(), new EndpointAddress(direccion + "LogDepartamento"))).CreateChannel(); } }
         public ILogPlan LogPlan { get { return (new ChannelFactory<ILogPlan>(CreateBinding(), new EndpointAddress(direccion + "LogPlan"))).CreateChannel(); } }
         public ILogPresupuesto LogPresupuesto { get { return (new ChannelFactory<ILogPresupuesto>(CreateBinding(), new EndpointAddress(direccion + "LogPresupuesto"))).CreateChannel(); } }

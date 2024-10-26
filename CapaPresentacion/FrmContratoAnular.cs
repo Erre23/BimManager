@@ -4,22 +4,22 @@ using System.Windows.Forms;
 
 namespace CapaPresentacion
 {
-    public partial class FrmPresupuestoAnular : FrmBase
+    public partial class FrmContratoAnular : FrmBase
     {
-        private Presupuesto _presupuesto;
-        public Presupuesto GetPresupuesto { get { return _presupuesto; } }
+        private Contrato _contrato;
+        public Contrato GetContrato { get { return _contrato; } }
 
-        public FrmPresupuestoAnular(Presupuesto presupuesto, Usuario usuario)
+        public FrmContratoAnular(Contrato contrato, Usuario usuario)
         {
             InitializeComponent();
-            this._presupuesto = presupuesto;
+            this._contrato = contrato;
             this._usuario = usuario;
 
-            TbNumeroPresupuesto.Text = this._presupuesto.PresupuestoID.ToString();
+            TbNumeroContrato.Text = this._contrato.PresupuestoID.ToString();
             TbAnuladoPor.Text = this._usuario.ApellidosNombres;
         }
 
-        private void FrmPresupuestoAnular_Load(object sender, EventArgs e)
+        private void FrmContratoAnular_Load(object sender, EventArgs e)
         {
             TbMotivo.Focus();
         }
@@ -34,17 +34,17 @@ namespace CapaPresentacion
                     return;
                 }
 
-                var mensaje = $"¿Está seguro de anular el presupuesto Nº: {this._presupuesto.PresupuestoID}? una vez anulado no se podrá revertir la operación";
+                var mensaje = $"¿Está seguro de anular el contrato Nº: {this._contrato.ContratoID}? una vez anulado no se podrá revertir la operación";
                 if (MessageBox.Show(this, mensaje, "Un momento por favor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     return;
                 }
 
-                this._presupuesto.UltActEstadoUsuarioID = this._usuario.UsuarioID;
-                this._presupuesto.UltActEstadoUsuario = this._usuario;                
-                this._presupuesto.UltActEstadoComentario = TbMotivo.Text.Trim();
-                this._presupuesto = await this.ObjRemoteObject.LogPresupuesto.PresupuestoAnular(this._presupuesto);
-                MessageBox.Show(this, "El presupuesto ha sido anulado correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this._contrato.UltActEstadoUsuarioID = this._usuario.UsuarioID;
+                this._contrato.UltActEstadoUsuario = this._usuario;                
+                this._contrato.UltActEstadoComentario = TbMotivo.Text.Trim();
+                this._contrato = await this.ObjRemoteObject.LogContrato.ContratoAnular(this._contrato);
+                MessageBox.Show(this, "El contrato ha sido anulado correctamente", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
             }
             catch (Exception ex)

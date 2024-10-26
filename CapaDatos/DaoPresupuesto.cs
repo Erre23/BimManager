@@ -46,6 +46,7 @@ namespace CapaDatos
                 cmd.Parameters.Add(CreateParams.TinyInt("NumeroPisos", presupuesto.NumeroPisos));
                 cmd.Parameters.Add(CreateParams.TinyInt("PlanID", presupuesto.PlanID));
                 cmd.Parameters.Add(CreateParams.Decimal("ImporteTotal", presupuesto.ImporteTotal, 10, 2));
+                cmd.Parameters.Add(CreateParams.TinyInt("PresupuestoEstadoId", presupuesto.PresupuestoEstadoId));
 
                 presupuesto.PresupuestoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
                 cmd.Dispose();
@@ -60,18 +61,19 @@ namespace CapaDatos
         }
 
 
-        public async Task Anular(Presupuesto presupuesto)
+        public async Task ActualizarEstado(Presupuesto presupuesto)
         {
             var cmd = (SqlCommand)null;
 
             try
             {
-                cmd = new SqlCommand("spPresupuestoAnular", cnn, tran);
+                cmd = new SqlCommand("spPresupuestoActualizarEstado", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(CreateParams.Int("AnulacionUsuarioID", presupuesto.CreacionUsuarioID));
-                cmd.Parameters.Add(CreateParams.DateTime("AnulacionFecha", presupuesto.CreacionFecha));
-                cmd.Parameters.Add(CreateParams.NVarchar("AnulacionMotivo", presupuesto.AnulacionMotivo, -1));
+                cmd.Parameters.Add(CreateParams.TinyInt("PresupuestoEstadoId", presupuesto.PresupuestoEstadoId));
+                cmd.Parameters.Add(CreateParams.Int("UltActEstadoUsuarioID", presupuesto.UltActEstadoUsuarioID));
+                cmd.Parameters.Add(CreateParams.DateTime("UltActEstadoFecha", presupuesto.UltActEstadoFecha));
+                cmd.Parameters.Add(CreateParams.NVarchar("UltActEstadoComentario", presupuesto.UltActEstadoComentario, -1));
                 cmd.Parameters.Add(CreateParams.Int("PresupuestoID", presupuesto.PresupuestoID));
 
                 presupuesto.PresupuestoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
@@ -90,7 +92,7 @@ namespace CapaDatos
             var Presupuesto = (Presupuesto)null;
             try
             {
-                cmd = new SqlCommand("spPresupuestoBuscarPorPresupuestoID", cnn);
+                cmd = new SqlCommand("spPresupuestoBuscarPorPresupuestoID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("PresupuestoID", PresupuestoID));
 
@@ -111,20 +113,20 @@ namespace CapaDatos
             return Presupuesto;
         }
 
-        public async Task<List<Presupuesto>> BusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, bool? activo)
+        public async Task<List<Presupuesto>> BusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte? presupuestoEstadoId)
         {
             var cmd = (SqlCommand)null;
             var listaPresupuestos = new List<Presupuesto>();
             try
             {
-                cmd = new SqlCommand("spPresupuestoBusquedaGeneral", cnn);
+                cmd = new SqlCommand("spPresupuestoBusquedaGeneral", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(CreateParams.Date("FechaDesde", fechaDesde));
                 cmd.Parameters.Add(CreateParams.Date("FechaHasta", fechaHasta.Date.AddDays(1)));
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
                 cmd.Parameters.Add(CreateParams.Int("ProyectoID", proyectoID));
-                cmd.Parameters.Add(CreateParams.Bit("Activo", activo));
+                cmd.Parameters.Add(CreateParams.TinyInt("PresupuestoEstadoId", presupuestoEstadoId));
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
                 while (await dr.ReadAsync())
@@ -155,7 +157,6 @@ namespace CapaDatos
                 obj.ClienteID = Convert.ToInt32(dr["ClienteID"]);
                 obj.ProyectoID = Convert.ToInt32(dr["ProyectoID"]);
                 obj.FechaExpiracion = Convert.ToDateTime(dr["FechaExpiracion"]);
-                obj.Activo = Convert.ToBoolean(dr["Activo"]);
                 obj.AreaTotal = Convert.ToDecimal(dr["AreaTotal"]);
                 obj.AreaTechada = Convert.ToDecimal(dr["AreaTechada"]);
                 obj.AreaLibre = Convert.ToDecimal(dr["AreaLibre"]);
@@ -163,10 +164,11 @@ namespace CapaDatos
                 obj.NumeroPisos = Convert.ToByte(dr["NumeroPisos"]);
                 obj.PlanID = Convert.ToByte(dr["PlanID"]);
                 obj.ImporteTotal = Convert.ToDecimal(dr["ImporteTotal"]);
+                obj.PresupuestoEstadoId = Convert.ToByte(dr["PresupuestoEstadoId"]);
 
-                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionUsuarioID")))) obj.AnulacionUsuarioID = Convert.ToInt32(dr["AnulacionUsuarioID"]);
-                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionFecha")))) obj.AnulacionFecha = Convert.ToDateTime(dr["AnulacionFecha"]);
-                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionMotivo")))) obj.AnulacionMotivo = Convert.ToString(dr["AnulacionMotivo"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoUsuarioID")))) obj.UltActEstadoUsuarioID = Convert.ToInt32(dr["UltActEstadoUsuarioID"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoFecha")))) obj.UltActEstadoFecha = Convert.ToDateTime(dr["UltActEstadoFecha"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoComentario")))) obj.UltActEstadoComentario = Convert.ToString(dr["UltActEstadoComentario"]);
                 
                 return obj;
             }

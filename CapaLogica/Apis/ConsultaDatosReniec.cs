@@ -1,6 +1,8 @@
 ﻿using CapaEntidad;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CapaLogica.Apis
@@ -54,37 +56,51 @@ namespace CapaLogica.Apis
 
 		public async Task<Cliente> GetCliente_PersonaNaturalAsync(string dni)
 		{
-			var url = GetApiURL("consultdni", dni);
-			var response = await GetResponseAsync<ConsultaDatosReniecPersonaNatural>(url);
-			if (response.Success && response.Data != null)
+			try
 			{
-				return new Cliente
+				var url = GetApiURL("consultdni", dni);
+				var response = await GetResponseAsync<ConsultaDatosReniecPersonaNatural>(url);
+				if (response.Success && response.Data != null)
 				{
-					TipoDocumentoIdentidadID = 1,
-					DocumentoIdentidadNumero = dni,
-					Nombres = response.Data.Nombres,
-					Apellido1 = response.Data.Apellido_Paterno,
-					Apellido2 = response.Data.Apellido_Materno,
-				};
+					return new Cliente
+					{
+						TipoDocumentoIdentidadID = 1,
+						DocumentoIdentidadNumero = dni,
+						Nombres = response.Data.Nombres,
+						Apellido1 = response.Data.Apellido_Paterno,
+						Apellido2 = response.Data.Apellido_Materno,
+					};
+				}
 			}
-			return null;
-		}
+			catch (Exception ex)
+			{ 
+            }
+
+            return null;
+        }
 
 		public async Task<Cliente> GetCliente_PersonaJuridicaAsync(string ruc)
 		{
-            var url = GetApiURL("consultaruc", ruc);
-            var response = await GetResponseAsync<ConsultaDatosReniecPersonaJuridica>(url, true);
-			if (response.Success && response.Data != null)
-			{
-				return new Cliente
+			try
+			{ 
+				var url = GetApiURL("consultaruc", ruc);
+				var response = await GetResponseAsync<ConsultaDatosReniecPersonaJuridica>(url, true);
+				if (response.Success && response.Data != null)
 				{
-					TipoDocumentoIdentidadID = 2,
-					DocumentoIdentidadNumero = ruc,
-					RazonSocial = response.Data.Nombre,
-				};
-			}
-			return null;
-		}
+					return new Cliente
+					{
+						TipoDocumentoIdentidadID = 2,
+						DocumentoIdentidadNumero = ruc,
+						RazonSocial = response.Data.Nombre,
+					};
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return null;
+        }
 
 		private async Task<Response<T>> GetResponseAsync<T>(string url, bool personaJuridica = false)
 		{

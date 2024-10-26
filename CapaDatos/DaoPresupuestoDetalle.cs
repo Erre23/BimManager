@@ -58,7 +58,7 @@ namespace CapaDatos
             var presupuestoDetalles = new List<PresupuestoDetalle>();
             try
             {
-                cmd = new SqlCommand("spPresupuestoDetalleBuscarPorPresupuestoID", cnn);
+                cmd = new SqlCommand("spPresupuestoDetalleBuscarPorPresupuestoID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("PresupuestoID", presupuestoID));
 
@@ -86,7 +86,7 @@ namespace CapaDatos
             var listaPresupuestoDetalles = new List<PresupuestoDetalle>();
             try
             {
-                cmd = new SqlCommand("spPresupuestoDetalleBuscarTodos", cnn);
+                cmd = new SqlCommand("spPresupuestoDetalleBuscarTodos", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();

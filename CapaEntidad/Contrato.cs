@@ -26,37 +26,46 @@ namespace CapaEntidad
         public Presupuesto Presupuesto { get; set; }
 
         [DataMember]
+        public DateTime FechaInicio { get; set; }
+
+        [DataMember]
+        public DateTime FechaEstimadaEntrega { get; set; }
+
+        [DataMember]
         public byte ContratoEstadoId { get; set; }
 
         [DataMember]
         public ContratoEstado ContratoEstado { get; set; }
 
-        [DataMember]
-        public DateTime FechaInicio { get; set; }
-
-        [DataMember]
-        public DateTime FechaCulminacionEstimada { get; set; }
+        [DataMember(EmitDefaultValue = false)]
+        public int? UltActEstadoUsuarioID { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public int? CulminacionUsuarioID { get; set; }
+        public Usuario UltActEstadoUsuario { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public Usuario CulminacionUsuario { get; set; }
+        public DateTime UltActEstadoFecha { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public DateTime CulminacionFecha { get; set; }
+        public string UltActEstadoComentario { get; set; }
 
-        [DataMember(EmitDefaultValue = false)]
-        public int AnulacionUsuarioID { get; set; }
+        public string UltimoEstadoUsuario
+        {
+            get
+            {
+                if (ContratoEstadoId == 1) return this.CreacionUsuario?.ApellidosNombres;
+                else return this.UltActEstadoUsuario?.ApellidosNombres;
+            }
+        }
 
-        [DataMember(EmitDefaultValue = false)]
-        public Usuario AnulacionUsuario { get; set; }
-
-        [DataMember(EmitDefaultValue = false)]
-        public DateTime AnulacionFecha { get; set; }
-
-        [DataMember(EmitDefaultValue = false)]
-        public string AnlacionMotivo { get; set; }
+        public string UltimoEstadoComentario
+        {
+            get
+            {
+                if (ContratoEstadoId == 1) return "";
+                else return this.UltActEstadoComentario ?? "";
+            }
+        }
 
         [DataMember(EmitDefaultValue = false)]
         public List<ContratoComprobante> ContratoComprobantes { get; set; }

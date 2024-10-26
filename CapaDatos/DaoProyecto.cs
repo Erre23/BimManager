@@ -104,7 +104,7 @@ namespace CapaDatos
             var Proyecto = (Proyecto)null;
             try
             {
-                cmd = new SqlCommand("spProyectoBuscarPorProyectoID", cnn);
+                cmd = new SqlCommand("spProyectoBuscarPorProyectoID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("ProyectoID", proyectoID));
 
@@ -131,7 +131,7 @@ namespace CapaDatos
             var listaProyectos = new List<Proyecto>();
             try
             {
-                cmd = new SqlCommand("spProyectoBuscarPorClienteID", cnn);
+                cmd = new SqlCommand("spProyectoBuscarPorClienteID", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));
 
@@ -159,7 +159,7 @@ namespace CapaDatos
             var listaProyectos = new List<Proyecto>();
             try
             {
-                cmd = new SqlCommand("spProyectoBusquedaGeneral", cnn);
+                cmd = new SqlCommand("spProyectoBusquedaGeneral", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(CreateParams.Int("ClienteID", clienteID));

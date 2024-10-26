@@ -35,21 +35,6 @@ namespace CapaEntidad
         public DateTime FechaExpiracion { get; set; }
 
         [DataMember]
-        public int? AnulacionUsuarioID { get; set; }
-
-        [DataMember]
-        public Usuario AnulacionUsuario { get; set; }
-
-        [DataMember]
-        public DateTime? AnulacionFecha { get; set; }
-
-        [DataMember]
-        public string AnulacionMotivo { get; set; }
-
-        [DataMember]
-        public bool Activo { get; set; }
-
-        [DataMember]
         public decimal AreaTotal { get; set; }
 
         [DataMember]
@@ -74,6 +59,42 @@ namespace CapaEntidad
         public decimal ImporteTotal { get; set; }
 
         [DataMember]
+        public byte PresupuestoEstadoId { get; set; }
+
+        [DataMember]
+        public PresupuestoEstado PresupuestoEstado { get; set; }
+
+        [DataMember]
+        public int? UltActEstadoUsuarioID { get; set; }
+
+        [DataMember]
+        public Usuario UltActEstadoUsuario { get; set; }
+
+        [DataMember]
+        public DateTime UltActEstadoFecha { get; set; }
+
+        [DataMember]
+        public string UltActEstadoComentario { get; set; }
+
+        [DataMember]
         public List<PresupuestoDetalle> PresupuestoDetalles { get; set; }
+
+        public string UltimoEstadoUsuario
+        {
+            get
+            {
+                if (PresupuestoEstadoId == 1) return this.CreacionUsuario?.ApellidosNombres;
+                else return this.UltActEstadoUsuario?.ApellidosNombres;
+            }
+        }
+
+        public string UltimoEstadoComentario
+        {
+            get
+            {
+                if (PresupuestoEstadoId == 1) return "";
+                else return this.UltActEstadoComentario ?? "";
+            }
+        }
     }
 }
