@@ -71,7 +71,7 @@ namespace CapaEntidad
         public Usuario UltActEstadoUsuario { get; set; }
 
         [DataMember]
-        public DateTime UltActEstadoFecha { get; set; }
+        public DateTime? UltActEstadoFecha { get; set; }
 
         [DataMember]
         public string UltActEstadoComentario { get; set; }

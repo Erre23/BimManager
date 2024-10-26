@@ -74,7 +74,7 @@ namespace CapaDatos
             return param;
         }
 
-        public static SqlParameter DateTime(string paramName, DateTime value)
+        public static SqlParameter DateTime(string paramName, DateTime? value)
         {
             var param = new SqlParameter($"@{paramName}", SqlDbType.DateTime);
             param.Value = value;

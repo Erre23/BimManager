@@ -67,6 +67,14 @@ namespace CapaEntidad
             }
         }
 
+        [IgnoreDataMember]
+        public decimal MontoPagado { get; set; }
+
+        public decimal MontoFaltante
+        {
+            get { return Presupuesto != null ? Presupuesto.ImporteTotal - MontoPagado : 0; }
+        }
+
         [DataMember(EmitDefaultValue = false)]
         public List<ContratoComprobante> ContratoComprobantes { get; set; }
     }

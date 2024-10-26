@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateParams.cs" />
+    <Compile Include="DaoContratoPago.cs" />
     <Compile Include="DaoContratoEstado.cs" />
     <Compile Include="DaoContrato.cs" />
+    <Compile Include="DaoCuentaBancaria.cs" />
     <Compile Include="DaoPresupuestoEstado.cs" />
     <Compile Include="DaoPlan.cs" />
     <Compile Include="DaoPresupuestoDetalle.cs" />

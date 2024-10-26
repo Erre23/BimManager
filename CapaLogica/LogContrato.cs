@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CapaLogica
 {
@@ -18,7 +19,7 @@ namespace CapaLogica
 
         #region Contrato
 
-        public async Task<Contrato> ContratoInsertar(Contrato contrato)
+        public async Task<Contrato> ContratoInsertar(Contrato contrato, ContratoPago contratoPago = null)
         {
             SqlConnection cnn = this.Conectar();
             try
@@ -52,9 +53,21 @@ namespace CapaLogica
                         presupuestoFromBD.PresupuestoEstadoId = 4;
                         presupuestoFromBD.UltActEstadoUsuarioID = contrato.CreacionUsuarioID;
                         presupuestoFromBD.UltActEstadoComentario = $"Aprobado con contrato Nº {contrato.ContratoID}";
+                        await daoPresupuesto.ActualizarEstado(presupuestoFromBD);
+
+                        if (contratoPago != null)
+                        {
+                            contratoPago.ContratoID = contrato.ContratoID;
+                            contratoPago.CreacionFecha = DateTime.Now;
+                            contratoPago.Anulado = false;
+                            contratoPago.ContratoPagoID = await new DaoContratoPago(tran).Insertar(contratoPago);
+
+                            contrato.MontoPagado = contratoPago.Importe;
+                        }
 
                         tran.Commit();
                         Close(cnn);
+
                         return contrato;
                     }
                     catch (Exception e)
@@ -71,7 +84,7 @@ namespace CapaLogica
             }
         }
 
-        public async Task<Contrato> ContratoAnular(Contrato Contrato)
+        public async Task<Contrato> ContratoAnular(Contrato contrato)
         {
             SqlConnection cnn = this.Conectar();
             try
@@ -82,29 +95,39 @@ namespace CapaLogica
                     try
                     {
                         var daoContrato = new DaoContrato(tran);
-                        var ContratoFromBD = await daoContrato.BuscarPorContratoID(Contrato.ContratoID);
-                        if (ContratoFromBD == null)
+                        var contratoFromBD = await daoContrato.BuscarPorContratoID(contrato.ContratoID);
+                        if (contratoFromBD == null)
                         {
                             throw new Exception("El número de Contrato no existe");
                         }
 
-                        if (ContratoFromBD.ContratoEstadoId == 2)
+                        if (contratoFromBD.ContratoEstadoId == 2)
                         {
                             throw new Exception("No se puede anular el Contrato, porque ya ha sido anulado en otro momento");
                         }
 
-                        if (ContratoFromBD.ContratoEstadoId == 4)
+                        if (contratoFromBD.ContratoEstadoId == 4)
                         {
                             throw new Exception("No se puede anular el Contrato, porque se encuentra con estado \"Culminado\"");
                         }
 
-                        Contrato.UltActEstadoFecha = DateTime.Now;
-                        Contrato.ContratoEstadoId = 2;
-                        Contrato.ContratoEstado = await new DaoContratoEstado(tran).BuscarPorContratoEstadoID(2);
-                        await daoContrato.ActualizarEstado(Contrato);
+                        contrato.UltActEstadoFecha = DateTime.Now;
+                        contrato.ContratoEstadoId = 2;
+                        contrato.ContratoEstado = await new DaoContratoEstado(tran).BuscarPorContratoEstadoID(2);
+                        await daoContrato.ActualizarEstado(contrato);
+
+                        var daoPresupuesto = new DaoPresupuesto(tran);
+                        var presupuestoFrmBD = await daoPresupuesto.BuscarPorPresupuestoID(contrato.PresupuestoID);
+
+                        presupuestoFrmBD.PresupuestoEstadoId = 1;
+                        presupuestoFrmBD.UltActEstadoUsuarioID = null;
+                        presupuestoFrmBD.UltActEstadoFecha = null;
+                        presupuestoFrmBD.UltActEstadoComentario = null;
+                        await daoPresupuesto.ActualizarEstado(presupuestoFrmBD);
+
                         tran.Commit();
                         Close(cnn);
-                        return Contrato;
+                        return contrato;
                     }
                     catch (Exception e)
                     {
@@ -220,6 +243,12 @@ namespace CapaLogica
 
         #endregion Contrato
 
+        #region ContratoPago
+
+        
+
+        #endregion ContratoPago
+
         #region ContratoEstado
         public async Task<ContratoEstado> ContratoEstadoBuscarPorContratoEstadoID(byte presupuestoEstadoID)
         {
@@ -255,5 +284,43 @@ namespace CapaLogica
             }
         }
         #endregion ContratoEstado
+
+        #region CuentaBancaria
+
+        public async Task<CuentaBancaria> CuentaBancariaBuscarPorCuentaBancariaID(short cuentaBancariaID)
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var cuentaBancaria = await new DaoCuentaBancaria(cnn).BuscarPorCuentaBancariaID(cuentaBancariaID);
+                Close(cnn);
+                return cuentaBancaria;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
+        }
+
+        public async Task<List<CuentaBancaria>> CuentaBancariaListarActivos()
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var cuentaBancarias = await new DaoCuentaBancaria(cnn).ListarActivos();
+                Close(cnn);
+                return cuentaBancarias;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
+        }
+
+        #endregion CuentaBancaria
     }
 }

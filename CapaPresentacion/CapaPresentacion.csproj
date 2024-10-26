@@ -56,6 +56,12 @@
     <Compile Include="FrmBase.Designer.cs">
       <DependentUpon>FrmBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmContratoPagoRegistrar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmContratoPagoRegistrar.Designer.cs">
+      <DependentUpon>FrmContratoPagoRegistrar.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmContrato.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +166,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmContratoPagoRegistrar.resx">
+      <DependentUpon>FrmContratoPagoRegistrar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmContrato.resx">
       <DependentUpon>FrmContrato.cs</DependentUpon>
     </EmbeddedResource>

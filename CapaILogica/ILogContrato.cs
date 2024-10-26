@@ -22,12 +22,18 @@ namespace CapaILogica
         Task<List<Contrato>> ContratoBusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte? ContratoEstadoId);
 
         [OperationContract]
-        Task<Contrato> ContratoInsertar(Contrato Contrato);
+        Task<Contrato> ContratoInsertar(Contrato Contrato, ContratoPago contratoPago = null);
 
         [OperationContract]
         Task<ContratoEstado> ContratoEstadoBuscarPorContratoEstadoID(byte ContratoEstadoID);
 
         [OperationContract]
         Task<List<ContratoEstado>> ContratoEstadoListar();
+
+        [OperationContract]
+        Task<CuentaBancaria> CuentaBancariaBuscarPorCuentaBancariaID(short cuentaBancariaID);
+
+        [OperationContract]
+        Task<List<CuentaBancaria>> CuentaBancariaListarActivos();
     }
 }

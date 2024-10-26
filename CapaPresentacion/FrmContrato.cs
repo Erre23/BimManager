@@ -103,6 +103,7 @@ namespace CapaPresentacion
             DtpFechaInicio.Value = contrato.FechaInicio.Date;
             DtpFechaEstimadaEntrega.Value = contrato.FechaEstimadaEntrega.Date;
             SetDatosEstado(contrato);
+            SetDatosMonto(contrato);
         }
 
         private void Presupuesto_Mostrar(Presupuesto presupuesto)
@@ -123,6 +124,8 @@ namespace CapaPresentacion
 
             PresupuestoCategoria_Cargar_For_Visualizer(presupuesto.PresupuestoDetalles);
             TbMontoTotal.Text = presupuesto.ImporteTotal.ToString("#,#0.00");
+            TbMontoPagado.Text = "0.00";
+            TbMontoFaltante.Text = presupuesto.ImporteTotal.ToString("#,#0.00");
         }
 
         public void PresupuestoCategoria_Cargar_For_Visualizer(List<PresupuestoDetalle> presupuestoDetalles)
@@ -208,6 +211,13 @@ namespace CapaPresentacion
             TbContratoEstado.BackColor = contrato.ContratoEstado.Color;
             TbContratoUsuario.Text = contrato.UltimoEstadoUsuario;
             TbContratoComentario.Text = contrato.UltimoEstadoComentario;
+        }
+
+        private void SetDatosMonto(Contrato contrato)
+        {
+            TbMontoTotal.Text = contrato.Presupuesto.ImporteTotal.ToString("#,#0.00");
+            TbMontoPagado.Text = contrato.MontoPagado.ToString("#,#0.00");
+            TbMontoFaltante.Text = contrato.MontoFaltante.ToString("#,#0.00"); ;
         }
 
         private async void FrmContrato_Load(object sender, EventArgs e)
@@ -339,30 +349,43 @@ namespace CapaPresentacion
                 this._currentContrato.FechaEstimadaEntrega = DtpFechaEstimadaEntrega.Value.Date;
                 this._currentContrato.PresupuestoID = presupuesto.PresupuestoID;
                 this._currentContrato.Presupuesto = presupuesto;
-                
 
-                if (MessageBox.Show(this, "¿Está seguro guardar los datos?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                var form = new FrmContratoPagoRegistrar(this._currentContrato, this._usuario);
+                form.StartPosition = FormStartPosition.CenterScreen;
+                form.WindowState = FormWindowState.Normal;
+                if (form.ShowDialog() == DialogResult.OK)
                 {
+                    this._currentContrato = form.GetContrato;
+                    form.Dispose();
+                }
+                else
+                {
+                    form.Dispose();
                     return;
                 }
 
+                //if (MessageBox.Show(this, "¿Está seguro guardar los datos?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                //{
+                //    return;
+                //}
 
-                BnGuardar.Enabled = false;
-                BnCancelar.Enabled = false;
-                BnSalir.Enabled = false;
-                this.Cursor = Cursors.WaitCursor;
 
-                if (this._accion == FormAccion.nuevo)
-                {
-                    this._currentContrato = await this.ObjRemoteObject.LogContrato.ContratoInsertar(this._currentContrato);
+                //BnGuardar.Enabled = false;
+                //BnCancelar.Enabled = false;
+                //BnSalir.Enabled = false;
+                //this.Cursor = Cursors.WaitCursor;
+
+                //if (this._accion == FormAccion.nuevo)
+                //{
+                //    this._currentContrato = await this.ObjRemoteObject.LogContrato.ContratoInsertar(this._currentContrato);
                     
-                }
+                //}
 
-                this.Cursor = Cursors.Default;
-                MessageBox.Show(this, "Los datos fueron guardados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                BnGuardar.Enabled = true;
-                BnCancelar.Enabled = true;
-                BnSalir.Enabled = true;
+                //this.Cursor = Cursors.Default;
+                //MessageBox.Show(this, "Los datos fueron guardados", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //BnGuardar.Enabled = true;
+                //BnCancelar.Enabled = true;
+                //BnSalir.Enabled = true;
 
                 SetAccion(FormAccion.visualizar);
                 TbContratoNumero.Text = this._currentContrato.ContratoID.ToString();
