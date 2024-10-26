@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF", "WCF\WCF.csproj", "{1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.WinApp", "WCF.WinApp\WCF.WinApp.csproj", "{43D1732D-0B8F-4555-9CFF-8060DF0867A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaLogica.EmailService", "CapaLogica.EmailService\CapaLogica.EmailService.csproj", "{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{43D1732D-0B8F-4555-9CFF-8060DF0867A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43D1732D-0B8F-4555-9CFF-8060DF0867A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43D1732D-0B8F-4555-9CFF-8060DF0867A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{8D0CDF59-B1D8-4E4A-8E0D-DCA20797D5E5} = {3EF0C76D-D955-4600-8B16-046B84807849}
 		{1B7885E4-2EAD-4FB9-B320-00675CA138E1} = {F1129B3E-21F8-459C-87D0-24839D8DE1D1}
 		{43D1732D-0B8F-4555-9CFF-8060DF0867A3} = {F1129B3E-21F8-459C-87D0-24839D8DE1D1}
+		{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA} = {6B725DD1-CA32-4BCF-9801-987B6B2445A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5067A7B6-7BF2-4074-8C27-759F19A42E91}
