@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmPresupuesto
     {
@@ -43,7 +43,7 @@
             this.TbNumeroPresupuesto = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.TbNumeroDocumento = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbNumeroDocumento = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.BnBuscarCliente = new System.Windows.Forms.Button();
             this.CbTipoDocumentoIdentidad = new System.Windows.Forms.ComboBox();
             this.TbCliente = new System.Windows.Forms.TextBox();
@@ -51,11 +51,11 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.TbProyectoPisos = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbProyectoPisos = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.TbProyectoAreaTechada = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbProyectoAreaTechada = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.TbProyectoAreaTotal = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbProyectoAreaTotal = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.CbProyectoNombre = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.BnAgregarProyecto = new System.Windows.Forms.Button();
@@ -72,13 +72,13 @@
             this.BnSalir = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.TbPlanPlazo = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbPlanPlazo = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.CbPlan = new System.Windows.Forms.ComboBox();
             this.TbPlanPrecio = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.TbMontoTotal = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbMontoTotal = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.BnCancelar = new System.Windows.Forms.Button();
             this.BnGuardar = new System.Windows.Forms.Button();
             this.BnAnular = new System.Windows.Forms.Button();
@@ -260,13 +260,13 @@
             this.TbNumeroDocumento.Name = "TbNumeroDocumento";
             this.TbNumeroDocumento.Size = new System.Drawing.Size(199, 24);
             this.TbNumeroDocumento.TabIndex = 3;
-            this.TbNumeroDocumento.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbNumeroDocumento.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             this.TbNumeroDocumento.TextChanged += new System.EventHandler(this.TbNumeroDocumento_TextChanged);
             // 
             // BnBuscarCliente
             // 
             this.BnBuscarCliente.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscarCliente.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscarCliente.Image = global::BimManager.Client.WipApp.Properties.Resources.Buscar;
             this.BnBuscarCliente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscarCliente.Location = new System.Drawing.Point(291, 51);
             this.BnBuscarCliente.Name = "BnBuscarCliente";
@@ -360,7 +360,7 @@
             this.TbProyectoPisos.Size = new System.Drawing.Size(100, 24);
             this.TbProyectoPisos.TabIndex = 10;
             this.TbProyectoPisos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbProyectoPisos.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbProyectoPisos.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             this.TbProyectoPisos.TextChanged += new System.EventHandler(this.TbProyectoPisos_TextChanged);
             // 
             // label13
@@ -382,7 +382,7 @@
             this.TbProyectoAreaTechada.Size = new System.Drawing.Size(100, 24);
             this.TbProyectoAreaTechada.TabIndex = 8;
             this.TbProyectoAreaTechada.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbProyectoAreaTechada.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbProyectoAreaTechada.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // label12
             // 
@@ -402,7 +402,7 @@
             this.TbProyectoAreaTotal.Size = new System.Drawing.Size(100, 24);
             this.TbProyectoAreaTotal.TabIndex = 6;
             this.TbProyectoAreaTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbProyectoAreaTotal.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbProyectoAreaTotal.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             this.TbProyectoAreaTotal.TextChanged += new System.EventHandler(this.TbProyectoAreaTotal_TextChanged);
             // 
             // CbProyectoNombre
@@ -428,7 +428,7 @@
             // BnAgregarProyecto
             // 
             this.BnAgregarProyecto.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnAgregarProyecto.Image = global::CapaPresentacion.Properties.Resources.Add;
+            this.BnAgregarProyecto.Image = global::BimManager.Client.WipApp.Properties.Resources.Add;
             this.BnAgregarProyecto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnAgregarProyecto.Location = new System.Drawing.Point(551, 21);
             this.BnAgregarProyecto.Name = "BnAgregarProyecto";
@@ -560,7 +560,7 @@
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.Image = global::BimManager.Client.WipApp.Properties.Resources.Cerrar;
             this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnSalir.Location = new System.Drawing.Point(946, 794);
             this.BnSalir.Name = "BnSalir";
@@ -613,7 +613,7 @@
             this.TbPlanPlazo.Size = new System.Drawing.Size(106, 24);
             this.TbPlanPlazo.TabIndex = 8;
             this.TbPlanPlazo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TbPlanPlazo.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbPlanPlazo.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // label16
             // 
@@ -678,13 +678,13 @@
             this.TbMontoTotal.Size = new System.Drawing.Size(155, 30);
             this.TbMontoTotal.TabIndex = 13;
             this.TbMontoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TbMontoTotal.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbMontoTotal.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // BnCancelar
             // 
             this.BnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.Image = global::BimManager.Client.WipApp.Properties.Resources.Cancelar;
             this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(433, 794);
             this.BnCancelar.Name = "BnCancelar";
@@ -700,7 +700,7 @@
             // 
             this.BnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.Image = global::BimManager.Client.WipApp.Properties.Resources.Guardar;
             this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(326, 794);
             this.BnGuardar.Name = "BnGuardar";
@@ -716,7 +716,7 @@
             // 
             this.BnAnular.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnAnular.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnAnular.Image = global::CapaPresentacion.Properties.Resources.Anular;
+            this.BnAnular.Image = global::BimManager.Client.WipApp.Properties.Resources.Anular;
             this.BnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnAnular.Location = new System.Drawing.Point(221, 794);
             this.BnAnular.Name = "BnAnular";
@@ -732,7 +732,7 @@
             // 
             this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.Image = global::BimManager.Client.WipApp.Properties.Resources.Buscar;
             this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscar.Location = new System.Drawing.Point(115, 794);
             this.BnBuscar.Name = "BnBuscar";
@@ -749,7 +749,7 @@
             this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevo.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevo.Image = global::BimManager.Client.WipApp.Properties.Resources.Nuevo;
             this.BnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnNuevo.Location = new System.Drawing.Point(9, 794);
             this.BnNuevo.Name = "BnNuevo";

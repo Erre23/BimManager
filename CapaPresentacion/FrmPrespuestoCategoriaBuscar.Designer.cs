@@ -1,6 +1,6 @@
-﻿using CapaPresentacion.Controls;
+﻿using BimManager.Client.WipApp.Controls;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     partial class FrmPrespuestoCategoriaBuscar
     {
@@ -84,7 +84,7 @@ namespace CapaPresentacion
             // BnBuscar
             // 
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Filtrar;
+            this.BnBuscar.Image = global::BimManager.Client.WipApp.Properties.Resources.Filtrar;
             this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscar.Location = new System.Drawing.Point(438, 97);
             this.BnBuscar.Name = "BnBuscar";
@@ -99,7 +99,7 @@ namespace CapaPresentacion
             // BnCerrar
             // 
             this.BnCerrar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCerrar.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnCerrar.Image = global::BimManager.Client.WipApp.Properties.Resources.Cerrar;
             this.BnCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCerrar.Location = new System.Drawing.Point(678, 97);
             this.BnCerrar.Name = "BnCerrar";
@@ -115,7 +115,7 @@ namespace CapaPresentacion
             // 
             this.BnSiguiente.Enabled = false;
             this.BnSiguiente.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSiguiente.Image = global::CapaPresentacion.Properties.Resources.foward;
+            this.BnSiguiente.Image = global::BimManager.Client.WipApp.Properties.Resources.foward;
             this.BnSiguiente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnSiguiente.Location = new System.Drawing.Point(554, 97);
             this.BnSiguiente.Name = "BnSiguiente";

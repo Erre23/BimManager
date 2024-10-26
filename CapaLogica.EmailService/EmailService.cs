@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using System.Threading;
 
-namespace CapaLogica.EmailService
+namespace BimManager.EmailService
 {
     public class EmailService
     {

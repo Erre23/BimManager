@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmProyectoModal
     {
@@ -48,8 +48,8 @@
             this.BnGuardar = new System.Windows.Forms.Button();
             this.BnCancelar = new System.Windows.Forms.Button();
             this.GbDatos_Cliente = new System.Windows.Forms.GroupBox();
-            this.TbDocumentoIdentidadTipo = new CapaPresentacion.Controls.CustomTextBox();
-            this.TbDocumentoIdentidadNumero = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbDocumentoIdentidadTipo = new BimManager.Client.WipApp.Controls.CustomTextBox();
+            this.TbDocumentoIdentidadNumero = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.TbCliente = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.GbDatos_Proyecto.SuspendLayout();
@@ -230,7 +230,7 @@
             // BnGuardar
             // 
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.Image = global::BimManager.Client.WipApp.Properties.Resources.Guardar;
             this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(731, 332);
             this.BnGuardar.Name = "BnGuardar";
@@ -245,7 +245,7 @@
             // BnCancelar
             // 
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.Image = global::BimManager.Client.WipApp.Properties.Resources.Cancelar;
             this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(850, 332);
             this.BnCancelar.Name = "BnCancelar";
@@ -279,7 +279,7 @@
             this.TbDocumentoIdentidadTipo.ReadOnly = true;
             this.TbDocumentoIdentidadTipo.Size = new System.Drawing.Size(228, 28);
             this.TbDocumentoIdentidadTipo.TabIndex = 1;
-            this.TbDocumentoIdentidadTipo.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbDocumentoIdentidadTipo.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // TbDocumentoIdentidadNumero
             // 
@@ -288,7 +288,7 @@
             this.TbDocumentoIdentidadNumero.ReadOnly = true;
             this.TbDocumentoIdentidadNumero.Size = new System.Drawing.Size(228, 28);
             this.TbDocumentoIdentidadNumero.TabIndex = 3;
-            this.TbDocumentoIdentidadNumero.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbDocumentoIdentidadNumero.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // TbCliente
             // 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-namespace CapaEntidad.Estructuras
+namespace BimManager.Entidad.Estructuras
 {
     public class CDR
     {

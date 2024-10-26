@@ -1,11 +1,11 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace CapaDatos
+namespace BimManager.Datos
 {
 	public class DaoUsuario
     {

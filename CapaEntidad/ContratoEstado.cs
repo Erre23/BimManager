@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.Serialization;
 
-namespace CapaEntidad
+namespace BimManager.Entidad
 {
     [DataContract]
     public class ContratoEstado

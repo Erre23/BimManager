@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmPresupuestoAnular
     {
@@ -59,7 +59,7 @@
             // 
             this.BnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnCancelar.Image = global::BimManager.Client.WipApp.Properties.Resources.Cerrar;
             this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(599, 274);
             this.BnCancelar.Name = "BnCancelar";
@@ -75,7 +75,7 @@
             // 
             this.BnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnAceptar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnAceptar.Image = global::CapaPresentacion.Properties.Resources.Confirmar;
+            this.BnAceptar.Image = global::BimManager.Client.WipApp.Properties.Resources.Confirmar;
             this.BnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnAceptar.Location = new System.Drawing.Point(492, 274);
             this.BnAceptar.Name = "BnAceptar";

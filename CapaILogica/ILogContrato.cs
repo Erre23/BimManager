@@ -1,10 +1,10 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
-namespace CapaILogica
+namespace BimManager.ILogica
 {
     [ServiceContract]
     public interface ILogContrato

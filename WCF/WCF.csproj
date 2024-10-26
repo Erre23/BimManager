@@ -47,13 +47,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CapaILogica\CapaILogica.csproj">
+    <ProjectReference Include="..\CapaILogica\BimManager.ILogica.csproj">
       <Project>{9aa83025-56f7-4961-ac2b-e33cc1c5d6d5}</Project>
-      <Name>CapaILogica</Name>
+      <Name>BimManager.ILogica</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CapaLogica\CapaLogica.csproj">
+    <ProjectReference Include="..\CapaLogica\BimManager.Logica.csproj">
       <Project>{692b37f3-0e91-433d-8ef2-44cd2e0c3aae}</Project>
-      <Name>CapaLogica</Name>
+      <Name>BimManager.Logica</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

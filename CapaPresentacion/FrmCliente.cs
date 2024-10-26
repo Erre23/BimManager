@@ -1,12 +1,12 @@
-﻿using CapaEntidad;
-using CapaPresentacion.Controls;
+﻿using BimManager.Entidad;
+using BimManager.Client.WipApp.Controls;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Net.Mail;
 using System.Windows.Forms;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     public partial class FrmCliente : FrmBase
     {

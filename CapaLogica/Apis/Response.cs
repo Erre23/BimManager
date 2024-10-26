@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaLogica.Apis
+namespace BimManager.Logica.Apis
 {
 	public class Response<T>
 	{

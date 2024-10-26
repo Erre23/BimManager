@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmContrato
     {
@@ -41,12 +41,12 @@
             this.BnPagos = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.TbPlanNombre = new System.Windows.Forms.TextBox();
-            this.TbPlanPlazo = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbPlanPlazo = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.TbPlanPrecio = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.TbMontoTotal = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbMontoTotal = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.GbCategorias = new System.Windows.Forms.GroupBox();
             this.DgvPresupuestoCategoria = new System.Windows.Forms.DataGridView();
@@ -57,11 +57,11 @@
             this.colImporte = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.TbProyectoNombre = new System.Windows.Forms.TextBox();
-            this.TbProyectoPisos = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbProyectoPisos = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.TbProyectoAreaTechada = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbProyectoAreaTechada = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.TbProyectoAreaTotal = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbProyectoAreaTotal = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.TbProyectoDireccion = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -72,9 +72,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TbPresupuestoNumero = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.TbMontoPagado = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbMontoPagado = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.TbMontoFaltante = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbMontoFaltante = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.TbContratoComentario = new System.Windows.Forms.TextBox();
@@ -260,7 +260,7 @@
             this.TbPlanPlazo.Size = new System.Drawing.Size(106, 24);
             this.TbPlanPlazo.TabIndex = 5;
             this.TbPlanPlazo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TbPlanPlazo.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbPlanPlazo.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // label16
             // 
@@ -314,7 +314,7 @@
             this.TbMontoTotal.TabIndex = 8;
             this.TbMontoTotal.Text = "0.00";
             this.TbMontoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TbMontoTotal.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbMontoTotal.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // label14
             // 
@@ -456,7 +456,7 @@
             this.TbProyectoPisos.Size = new System.Drawing.Size(100, 24);
             this.TbProyectoPisos.TabIndex = 9;
             this.TbProyectoPisos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbProyectoPisos.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbProyectoPisos.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // label13
             // 
@@ -477,7 +477,7 @@
             this.TbProyectoAreaTechada.Size = new System.Drawing.Size(100, 24);
             this.TbProyectoAreaTechada.TabIndex = 7;
             this.TbProyectoAreaTechada.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbProyectoAreaTechada.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbProyectoAreaTechada.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // label12
             // 
@@ -498,7 +498,7 @@
             this.TbProyectoAreaTotal.Size = new System.Drawing.Size(100, 24);
             this.TbProyectoAreaTotal.TabIndex = 5;
             this.TbProyectoAreaTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbProyectoAreaTotal.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbProyectoAreaTotal.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // label11
             // 
@@ -628,7 +628,7 @@
             this.TbMontoPagado.TabIndex = 10;
             this.TbMontoPagado.Text = "0.00";
             this.TbMontoPagado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TbMontoPagado.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbMontoPagado.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // label2
             // 
@@ -656,7 +656,7 @@
             this.TbMontoFaltante.TabIndex = 12;
             this.TbMontoFaltante.Text = "0.00";
             this.TbMontoFaltante.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TbMontoFaltante.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbMontoFaltante.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // label3
             // 

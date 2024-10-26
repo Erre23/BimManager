@@ -1,4 +1,4 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using System;
 using System.Windows.Forms;
 

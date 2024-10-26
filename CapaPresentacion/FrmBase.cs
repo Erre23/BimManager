@@ -1,8 +1,8 @@
-﻿using CapaEntidad;
-using CapaILogica;
+﻿using BimManager.Entidad;
+using BimManager.ILogica;
 using System.Windows.Forms;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     public partial class FrmBase : Form
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     internal static class Program
     {

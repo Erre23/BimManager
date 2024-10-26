@@ -1,10 +1,10 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     public partial class FrmPrespuestoCategoriaBuscar : FrmBase
     {

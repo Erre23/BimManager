@@ -1,8 +1,8 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using System;
 using System.ServiceModel;
 
-namespace CapaILogica
+namespace BimManager.ILogica
 {
     public class RemoteObject
     {

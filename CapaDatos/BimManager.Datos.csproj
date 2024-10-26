@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{902511BF-7C47-46A8-9492-0961B1A2A537}</ProjectGuid>
+    <ProjectGuid>{291B29B1-A050-4F43-B12A-EEE6F37CB8E1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CapaEntidad</RootNamespace>
-    <AssemblyName>CapaEntidad</AssemblyName>
+    <RootNamespace>BimManager.Datos</RootNamespace>
+    <AssemblyName>BimManager.Datos</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -38,7 +38,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,32 +49,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MonedaTipo.cs" />
-    <Compile Include="CuentaBancariaTipo.cs" />
-    <Compile Include="Banco.cs" />
-    <Compile Include="Cliente.cs" />
-    <Compile Include="ComprobantePagoDocumento.cs" />
-    <Compile Include="Configuracion.cs" />
-    <Compile Include="ComprobantePago.cs" />
-    <Compile Include="ContratoComprobante.cs" />
-    <Compile Include="ContratoEstado.cs" />
-    <Compile Include="ContratoPago.cs" />
-    <Compile Include="CuentaBancaria.cs" />
-    <Compile Include="Departamento.cs" />
-    <Compile Include="Estructuras\CDR.cs" />
-    <Compile Include="Plan.cs" />
-    <Compile Include="Distrito.cs" />
-    <Compile Include="Contrato.cs" />
-    <Compile Include="PresupuestoEstado.cs" />
-    <Compile Include="Presupuesto.cs" />
-    <Compile Include="PresupuestoCategoria.cs" />
-    <Compile Include="PresupuestoDetalle.cs" />
+    <Compile Include="CreateParams.cs" />
+    <Compile Include="DaoContratoPago.cs" />
+    <Compile Include="DaoContratoEstado.cs" />
+    <Compile Include="DaoContrato.cs" />
+    <Compile Include="DaoCuentaBancaria.cs" />
+    <Compile Include="DaoPresupuestoEstado.cs" />
+    <Compile Include="DaoPlan.cs" />
+    <Compile Include="DaoPresupuestoDetalle.cs" />
+    <Compile Include="DaoPresupuesto.cs" />
+    <Compile Include="DaoPresupuestoCategoria.cs" />
+    <Compile Include="DaoProyecto.cs" />
+    <Compile Include="DaoDepartamento.cs" />
+    <Compile Include="DaoProvincia.cs" />
+    <Compile Include="DaoDistrito.cs" />
+    <Compile Include="DaoCliente.cs" />
+    <Compile Include="DaoTipoDocumentoSunat.cs" />
+    <Compile Include="DaoTipoDocumentoIdentidad.cs" />
+    <Compile Include="DaoUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provincia.cs" />
-    <Compile Include="Proyecto.cs" />
-    <Compile Include="TipoDocumentoSunat.cs" />
-    <Compile Include="TipoDocumentoIdentidad.cs" />
-    <Compile Include="Usuario.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -84,6 +76,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,6 +87,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\BDBimManager_2024_10_05.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaEntidad\BimManager.Entidad.csproj">
+      <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
+      <Name>BimManager.Entidad</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

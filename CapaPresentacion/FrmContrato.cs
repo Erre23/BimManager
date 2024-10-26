@@ -1,12 +1,12 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static CapaEntidad.Estructuras.CDR;
+using static BimManager.Entidad.Estructuras.CDR;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     public partial class FrmContrato : FrmBase
     {

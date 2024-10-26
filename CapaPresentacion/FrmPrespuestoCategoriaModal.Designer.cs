@@ -1,6 +1,6 @@
-﻿using CapaPresentacion.Controls;
+﻿using BimManager.Client.WipApp.Controls;
 
-namespace CapaPresentacion
+namespace BimManager.Client.WipApp
 {
     partial class FrmPrespuestoCategoriaModal
     {
@@ -31,7 +31,7 @@ namespace CapaPresentacion
         private void InitializeComponent()
         {
             this.GbDatos = new System.Windows.Forms.GroupBox();
-            this.TbPorcentaje = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbPorcentaje = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.LbCelular = new System.Windows.Forms.Label();
             this.TbObservaciones = new System.Windows.Forms.TextBox();
             this.LbApellido1 = new System.Windows.Forms.Label();
@@ -69,7 +69,7 @@ namespace CapaPresentacion
             this.TbPorcentaje.Name = "TbPorcentaje";
             this.TbPorcentaje.Size = new System.Drawing.Size(135, 28);
             this.TbPorcentaje.TabIndex = 5;
-            this.TbPorcentaje.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbPorcentaje.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // LbCelular
             // 
@@ -130,7 +130,7 @@ namespace CapaPresentacion
             // BnGuardar
             // 
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.Image = global::BimManager.Client.WipApp.Properties.Resources.Guardar;
             this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(558, 230);
             this.BnGuardar.Name = "BnGuardar";
@@ -145,7 +145,7 @@ namespace CapaPresentacion
             // BnCancelar
             // 
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.Image = global::BimManager.Client.WipApp.Properties.Resources.Cancelar;
             this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(677, 230);
             this.BnCancelar.Name = "BnCancelar";

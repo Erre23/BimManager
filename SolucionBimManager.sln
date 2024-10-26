@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaPresentacion", "CapaPresentacion\CapaPresentacion.csproj", "{31D64C76-6873-4315-B101-B00900C1BB38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimManager.Client.WipApp", "CapaPresentacion\BimManager.Client.WipApp.csproj", "{31D64C76-6873-4315-B101-B00900C1BB38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaEntidad", "CapaEntidad\CapaEntidad.csproj", "{902511BF-7C47-46A8-9492-0961B1A2A537}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimManager.Entidad", "CapaEntidad\BimManager.Entidad.csproj", "{902511BF-7C47-46A8-9492-0961B1A2A537}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{291B29B1-A050-4F43-B12A-EEE6F37CB8E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimManager.Datos", "CapaDatos\BimManager.Datos.csproj", "{291B29B1-A050-4F43-B12A-EEE6F37CB8E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaLogica", "CapaLogica\CapaLogica.csproj", "{692B37F3-0E91-433D-8EF2-44CD2E0C3AAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimManager.Logica", "CapaLogica\BimManager.Logica.csproj", "{692B37F3-0E91-433D-8EF2-44CD2E0C3AAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Datos", "01 - Datos", "{8A43B334-82AB-45FF-AAE1-E31C1B1D9133}"
 EndProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Gestion", "02 - Gestio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Presentacion", "03 - Presentacion", "{3EF0C76D-D955-4600-8B16-046B84807849}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaILogica", "CapaILogica\CapaILogica.csproj", "{9AA83025-56F7-4961-AC2B-E33CC1C5D6D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimManager.ILogica", "CapaILogica\BimManager.ILogica.csproj", "{9AA83025-56F7-4961-AC2B-E33CC1C5D6D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Server", "01 - Server", "{F1129B3E-21F8-459C-87D0-24839D8DE1D1}"
 EndProject
@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF", "WCF\WCF.csproj", "{1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCF.WinApp", "WCF.WinApp\WCF.WinApp.csproj", "{43D1732D-0B8F-4555-9CFF-8060DF0867A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaLogica.EmailService", "CapaLogica.EmailService\CapaLogica.EmailService.csproj", "{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimManager.EmailService", "CapaLogica.EmailService\BimManager.EmailService.csproj", "{AC82CB4E-9D9E-4C24-A88D-F0B59DDE12CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

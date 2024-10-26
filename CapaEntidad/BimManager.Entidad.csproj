@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{692B37F3-0E91-433D-8EF2-44CD2E0C3AAE}</ProjectGuid>
+    <ProjectGuid>{902511BF-7C47-46A8-9492-0961B1A2A537}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CapaLogica</RootNamespace>
-    <AssemblyName>CapaLogica</AssemblyName>
+    <RootNamespace>BimManager.Entidad</RootNamespace>
+    <AssemblyName>BimManager.Entidad</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,11 +36,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,21 +50,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Apis\ConsultaDatosReniec.cs" />
-    <Compile Include="Apis\ApisPeru.cs" />
-    <Compile Include="Apis\Response.cs" />
-    <Compile Include="Conexion.cs" />
-    <Compile Include="LogPlan.cs" />
-    <Compile Include="LogContrato.cs" />
-    <Compile Include="LogPresupuestoCategoria.cs" />
-    <Compile Include="LogPresupuesto.cs" />
-    <Compile Include="LogProyecto.cs" />
-    <Compile Include="LogDepartamento.cs" />
-    <Compile Include="LogTipoDocumentoSunat.cs" />
-    <Compile Include="LogTipoDocumentoIdentidad.cs" />
-    <Compile Include="LogCliente.cs" />
-    <Compile Include="LogUsuario.cs" />
+    <Compile Include="MonedaTipo.cs" />
+    <Compile Include="CuentaBancariaTipo.cs" />
+    <Compile Include="Banco.cs" />
+    <Compile Include="Cliente.cs" />
+    <Compile Include="ComprobantePagoDocumento.cs" />
+    <Compile Include="Configuracion.cs" />
+    <Compile Include="ComprobantePago.cs" />
+    <Compile Include="ContratoComprobante.cs" />
+    <Compile Include="ContratoEstado.cs" />
+    <Compile Include="ContratoPago.cs" />
+    <Compile Include="CuentaBancaria.cs" />
+    <Compile Include="Departamento.cs" />
+    <Compile Include="Estructuras\CDR.cs" />
+    <Compile Include="Plan.cs" />
+    <Compile Include="Distrito.cs" />
+    <Compile Include="Contrato.cs" />
+    <Compile Include="PresupuestoEstado.cs" />
+    <Compile Include="Presupuesto.cs" />
+    <Compile Include="PresupuestoCategoria.cs" />
+    <Compile Include="PresupuestoDetalle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provincia.cs" />
+    <Compile Include="Proyecto.cs" />
+    <Compile Include="TipoDocumentoSunat.cs" />
+    <Compile Include="TipoDocumentoIdentidad.cs" />
+    <Compile Include="Usuario.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,9 +84,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -87,20 +95,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
-      <Project>{291b29b1-a050-4f43-b12a-eee6f37cb8e1}</Project>
-      <Name>CapaDatos</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
-      <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
-      <Name>CapaEntidad</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CapaILogica\CapaILogica.csproj">
-      <Project>{9aa83025-56f7-4961-ac2b-e33cc1c5d6d5}</Project>
-      <Name>CapaILogica</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

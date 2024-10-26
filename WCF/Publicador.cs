@@ -1,5 +1,5 @@
-﻿using CapaILogica;
-using CapaLogica;
+﻿using BimManager.ILogica;
+using BimManager.Logica;
 using System;
 using System.ServiceModel;
 using System.Xml;

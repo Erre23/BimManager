@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace CapaDatos
+namespace BimManager.Logica
 {
     [Serializable]
     public abstract class Conexion : MarshalByRefObject

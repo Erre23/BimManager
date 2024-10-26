@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace CapaEntidad
+namespace BimManager.Entidad
 {
     [DataContract]
     public class PresupuestoCategoria

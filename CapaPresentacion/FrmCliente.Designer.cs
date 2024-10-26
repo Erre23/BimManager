@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmCliente
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.GbDatos = new System.Windows.Forms.GroupBox();
-            this.TbDocumentoIdentidadNumero = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbDocumentoIdentidadNumero = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.TbEmail = new System.Windows.Forms.TextBox();
             this.TbCelular = new System.Windows.Forms.TextBox();
             this.LbEmail = new System.Windows.Forms.Label();
@@ -101,7 +101,7 @@
             this.TbDocumentoIdentidadNumero.Name = "TbDocumentoIdentidadNumero";
             this.TbDocumentoIdentidadNumero.Size = new System.Drawing.Size(228, 28);
             this.TbDocumentoIdentidadNumero.TabIndex = 3;
-            this.TbDocumentoIdentidadNumero.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbDocumentoIdentidadNumero.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             // 
             // TbEmail
             // 
@@ -347,7 +347,7 @@
             // BnFiltrar
             // 
             this.BnFiltrar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnFiltrar.Image = global::CapaPresentacion.Properties.Resources.Filtrar;
+            this.BnFiltrar.Image = global::BimManager.Client.WipApp.Properties.Resources.Filtrar;
             this.BnFiltrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnFiltrar.Location = new System.Drawing.Point(677, 230);
             this.BnFiltrar.Name = "BnFiltrar";
@@ -363,7 +363,7 @@
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.Image = global::BimManager.Client.WipApp.Properties.Resources.Cerrar;
             this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnSalir.Location = new System.Drawing.Point(860, 656);
             this.BnSalir.Name = "BnSalir";
@@ -379,7 +379,7 @@
             // 
             this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.Image = global::BimManager.Client.WipApp.Properties.Resources.Buscar;
             this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscar.Location = new System.Drawing.Point(399, 656);
             this.BnBuscar.Name = "BnBuscar";
@@ -395,7 +395,7 @@
             // 
             this.BnDeshabilitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnDeshabilitar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnDeshabilitar.Image = global::CapaPresentacion.Properties.Resources.Anular;
+            this.BnDeshabilitar.Image = global::BimManager.Client.WipApp.Properties.Resources.Anular;
             this.BnDeshabilitar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnDeshabilitar.Location = new System.Drawing.Point(244, 656);
             this.BnDeshabilitar.Name = "BnDeshabilitar";
@@ -411,7 +411,7 @@
             // 
             this.BnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnEditar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnEditar.Image = global::CapaPresentacion.Properties.Resources.Editar;
+            this.BnEditar.Image = global::BimManager.Client.WipApp.Properties.Resources.Editar;
             this.BnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnEditar.Location = new System.Drawing.Point(128, 656);
             this.BnEditar.Name = "BnEditar";
@@ -427,7 +427,7 @@
             // 
             this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevo.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevo.Image = global::BimManager.Client.WipApp.Properties.Resources.Nuevo;
             this.BnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnNuevo.Location = new System.Drawing.Point(12, 656);
             this.BnNuevo.Name = "BnNuevo";
@@ -442,7 +442,7 @@
             // BnCancelar
             // 
             this.BnCancelar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnCancelar.Image = global::CapaPresentacion.Properties.Resources.Cancelar;
+            this.BnCancelar.Image = global::BimManager.Client.WipApp.Properties.Resources.Cancelar;
             this.BnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnCancelar.Location = new System.Drawing.Point(677, 230);
             this.BnCancelar.Name = "BnCancelar";
@@ -457,7 +457,7 @@
             // BnGuardar
             // 
             this.BnGuardar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnGuardar.Image = global::CapaPresentacion.Properties.Resources.Guardar;
+            this.BnGuardar.Image = global::BimManager.Client.WipApp.Properties.Resources.Guardar;
             this.BnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnGuardar.Location = new System.Drawing.Point(558, 230);
             this.BnGuardar.Name = "BnGuardar";
@@ -472,7 +472,7 @@
             // BnConsultaAPI
             // 
             this.BnConsultaAPI.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnConsultaAPI.Image = global::CapaPresentacion.Properties.Resources.Sincronizar;
+            this.BnConsultaAPI.Image = global::BimManager.Client.WipApp.Properties.Resources.Sincronizar;
             this.BnConsultaAPI.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnConsultaAPI.Location = new System.Drawing.Point(781, 30);
             this.BnConsultaAPI.Name = "BnConsultaAPI";

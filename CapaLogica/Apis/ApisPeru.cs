@@ -1,4 +1,4 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace CapaLogica.Apis
+namespace BimManager.Logica.Apis
 {
     public class ApisPeru
 	{

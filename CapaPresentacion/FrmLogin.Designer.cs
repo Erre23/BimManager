@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmLogin
     {
@@ -34,7 +34,7 @@
 			this.BnIngresar = new System.Windows.Forms.Button();
 			this.BnSalir = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
-			this.TbUsername = new CapaPresentacion.Controls.CustomTextBox();
+			this.TbUsername = new BimManager.Client.WipApp.Controls.CustomTextBox();
 			this.SuspendLayout();
 			// 
 			// label2
@@ -109,7 +109,7 @@
 			this.TbUsername.Name = "TbUsername";
 			this.TbUsername.Size = new System.Drawing.Size(348, 30);
 			this.TbUsername.TabIndex = 3;
-			this.TbUsername.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+			this.TbUsername.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
 			// 
 			// FrmLogin
 			// 

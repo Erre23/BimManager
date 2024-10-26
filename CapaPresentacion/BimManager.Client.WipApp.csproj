@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{31D64C76-6873-4315-B101-B00900C1BB38}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CapaPresentacion</RootNamespace>
-    <AssemblyName>CapaPresentacion</AssemblyName>
+    <RootNamespace>BimManager.Client.WipApp</RootNamespace>
+    <AssemblyName>BimManager.Client.WipApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -244,13 +244,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
+    <ProjectReference Include="..\CapaEntidad\BimManager.Entidad.csproj">
       <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
-      <Name>CapaEntidad</Name>
+      <Name>BimManager.Entidad</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CapaILogica\CapaILogica.csproj">
+    <ProjectReference Include="..\CapaILogica\BimManager.ILogica.csproj">
       <Project>{9aa83025-56f7-4961-ac2b-e33cc1c5d6d5}</Project>
-      <Name>CapaILogica</Name>
+      <Name>BimManager.ILogica</Name>
     </ProjectReference>
     <ProjectReference Include="..\WCF.WinApp\WCF.WinApp.csproj">
       <Project>{43d1732d-0b8f-4555-9cff-8060df0867a3}</Project>

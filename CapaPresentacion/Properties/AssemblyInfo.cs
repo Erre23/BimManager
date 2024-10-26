@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SolucionDIESA.CapaPresentacion")]
+[assembly: AssemblyTitle("SolucionDIESA.BimManager.Client.WipApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HP")]
-[assembly: AssemblyProduct("SolucionDIESA.CapaPresentacion")]
+[assembly: AssemblyProduct("SolucionDIESA.BimManager.Client.WipApp")]
 [assembly: AssemblyCopyright("Copyright © HP 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

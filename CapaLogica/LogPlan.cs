@@ -1,12 +1,12 @@
-﻿using CapaDatos;
-using CapaEntidad;
-using CapaILogica;
+﻿using BimManager.Datos;
+using BimManager.Entidad;
+using BimManager.ILogica;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace CapaLogica
+namespace BimManager.Logica
 {
     [Serializable]
     public class LogPlan : Conexion, ILogPlan

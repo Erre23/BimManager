@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{291B29B1-A050-4F43-B12A-EEE6F37CB8E1}</ProjectGuid>
+    <ProjectGuid>{692B37F3-0E91-433D-8EF2-44CD2E0C3AAE}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CapaDatos</RootNamespace>
-    <AssemblyName>CapaDatos</AssemblyName>
+    <RootNamespace>BimManager.Logica</RootNamespace>
+    <AssemblyName>BimManager.Logica</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,6 +36,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,24 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateParams.cs" />
-    <Compile Include="DaoContratoPago.cs" />
-    <Compile Include="DaoContratoEstado.cs" />
-    <Compile Include="DaoContrato.cs" />
-    <Compile Include="DaoCuentaBancaria.cs" />
-    <Compile Include="DaoPresupuestoEstado.cs" />
-    <Compile Include="DaoPlan.cs" />
-    <Compile Include="DaoPresupuestoDetalle.cs" />
-    <Compile Include="DaoPresupuesto.cs" />
-    <Compile Include="DaoPresupuestoCategoria.cs" />
-    <Compile Include="DaoProyecto.cs" />
-    <Compile Include="DaoDepartamento.cs" />
-    <Compile Include="DaoProvincia.cs" />
-    <Compile Include="DaoDistrito.cs" />
-    <Compile Include="DaoCliente.cs" />
-    <Compile Include="DaoTipoDocumentoSunat.cs" />
-    <Compile Include="DaoTipoDocumentoIdentidad.cs" />
-    <Compile Include="DaoUsuario.cs" />
+    <Compile Include="Apis\ConsultaDatosReniec.cs" />
+    <Compile Include="Apis\ApisPeru.cs" />
+    <Compile Include="Apis\Response.cs" />
+    <Compile Include="Conexion.cs" />
+    <Compile Include="LogPlan.cs" />
+    <Compile Include="LogContrato.cs" />
+    <Compile Include="LogPresupuestoCategoria.cs" />
+    <Compile Include="LogPresupuesto.cs" />
+    <Compile Include="LogProyecto.cs" />
+    <Compile Include="LogDepartamento.cs" />
+    <Compile Include="LogTipoDocumentoSunat.cs" />
+    <Compile Include="LogTipoDocumentoIdentidad.cs" />
+    <Compile Include="LogCliente.cs" />
+    <Compile Include="LogUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,7 +75,10 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -88,13 +90,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
-      <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
-      <Name>CapaEntidad</Name>
+    <ProjectReference Include="..\CapaDatos\BimManager.Datos.csproj">
+      <Project>{291b29b1-a050-4f43-b12a-eee6f37cb8e1}</Project>
+      <Name>BimManager.Datos</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\BDBimManager_2024_10_05.sql" />
+    <ProjectReference Include="..\CapaEntidad\BimManager.Entidad.csproj">
+      <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
+      <Name>BimManager.Entidad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapaILogica\BimManager.ILogica.csproj">
+      <Project>{9aa83025-56f7-4961-ac2b-e33cc1c5d6d5}</Project>
+      <Name>BimManager.ILogica</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

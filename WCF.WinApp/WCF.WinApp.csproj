@@ -80,9 +80,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
+    <ProjectReference Include="..\CapaEntidad\BimManager.Entidad.csproj">
       <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
-      <Name>CapaEntidad</Name>
+      <Name>BimManager.Entidad</Name>
     </ProjectReference>
     <ProjectReference Include="..\WCF\WCF.csproj">
       <Project>{1b7885e4-2ead-4fb9-b320-00675ca138e1}</Project>

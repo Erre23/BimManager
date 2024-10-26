@@ -1,11 +1,11 @@
-﻿using CapaEntidad;
+﻿using BimManager.Entidad;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CapaLogica.Apis
+namespace BimManager.Logica.Apis
 {
     public class ConsultaDatosReniec
     {

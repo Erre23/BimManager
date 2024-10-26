@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CapaPresentacion.Controls
+namespace BimManager.Client.WipApp.Controls
 {
     public class CustomTextBox : TextBox
     {

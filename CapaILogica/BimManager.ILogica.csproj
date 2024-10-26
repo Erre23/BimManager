@@ -7,8 +7,8 @@
     <ProjectGuid>{9AA83025-56F7-4961-AC2B-E33CC1C5D6D5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CapaILogica</RootNamespace>
-    <AssemblyName>CapaILogica</AssemblyName>
+    <RootNamespace>BimManager.ILogica</RootNamespace>
+    <AssemblyName>BimManager.ILogica</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -57,9 +57,9 @@
     <Compile Include="RemoteObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj">
+    <ProjectReference Include="..\CapaEntidad\BimManager.Entidad.csproj">
       <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
-      <Name>CapaEntidad</Name>
+      <Name>BimManager.Entidad</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

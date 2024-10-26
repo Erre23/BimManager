@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmPrespuestoCategoria
 	{
@@ -57,7 +57,7 @@
             // 
             this.BnNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevo.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevo.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevo.Image = global::BimManager.Client.WipApp.Properties.Resources.Nuevo;
             this.BnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnNuevo.Location = new System.Drawing.Point(12, 658);
             this.BnNuevo.Name = "BnNuevo";
@@ -73,7 +73,7 @@
             // 
             this.BnEditar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnEditar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnEditar.Image = global::CapaPresentacion.Properties.Resources.Editar;
+            this.BnEditar.Image = global::BimManager.Client.WipApp.Properties.Resources.Editar;
             this.BnEditar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnEditar.Location = new System.Drawing.Point(364, 658);
             this.BnEditar.Name = "BnEditar";
@@ -89,7 +89,7 @@
             // 
             this.BnDeshabilitar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnDeshabilitar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnDeshabilitar.Image = global::CapaPresentacion.Properties.Resources.Anular;
+            this.BnDeshabilitar.Image = global::BimManager.Client.WipApp.Properties.Resources.Anular;
             this.BnDeshabilitar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnDeshabilitar.Location = new System.Drawing.Point(480, 658);
             this.BnDeshabilitar.Name = "BnDeshabilitar";
@@ -105,7 +105,7 @@
             // 
             this.BnBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.Image = global::BimManager.Client.WipApp.Properties.Resources.Buscar;
             this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscar.Location = new System.Drawing.Point(623, 658);
             this.BnBuscar.Name = "BnBuscar";
@@ -121,7 +121,7 @@
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.Image = global::BimManager.Client.WipApp.Properties.Resources.Cerrar;
             this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnSalir.Location = new System.Drawing.Point(860, 658);
             this.BnSalir.Name = "BnSalir";
@@ -149,7 +149,7 @@
             // 
             this.BnNuevoSubcategoria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnNuevoSubcategoria.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnNuevoSubcategoria.Image = global::CapaPresentacion.Properties.Resources.Nuevo;
+            this.BnNuevoSubcategoria.Image = global::BimManager.Client.WipApp.Properties.Resources.Nuevo;
             this.BnNuevoSubcategoria.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnNuevoSubcategoria.Location = new System.Drawing.Point(178, 658);
             this.BnNuevoSubcategoria.Name = "BnNuevoSubcategoria";

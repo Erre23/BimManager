@@ -1,4 +1,4 @@
-﻿namespace CapaPresentacion
+﻿namespace BimManager.Client.WipApp
 {
     partial class FrmContratoBuscar
     {
@@ -38,7 +38,7 @@
             this.GbDatosBusqueda = new System.Windows.Forms.GroupBox();
             this.CbProyectoNombre = new System.Windows.Forms.ComboBox();
             this.LbProyecto = new System.Windows.Forms.Label();
-            this.TbNumeroDocumento = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbNumeroDocumento = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.CbEstado = new System.Windows.Forms.ComboBox();
             this.BnBuscarCliente = new System.Windows.Forms.Button();
             this.LbAl = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             this.LbDesde = new System.Windows.Forms.Label();
             this.LbTipoDocumentoIdentidad = new System.Windows.Forms.Label();
             this.LbEstado = new System.Windows.Forms.Label();
-            this.TbNumeroPresupuesto = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbNumeroPresupuesto = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.LbPresupuesto = new System.Windows.Forms.Label();
             this.GbResultados = new System.Windows.Forms.GroupBox();
             this.DgvContrato = new System.Windows.Forms.DataGridView();
@@ -62,7 +62,7 @@
             this.BnAceptar = new System.Windows.Forms.Button();
             this.BnSalir = new System.Windows.Forms.Button();
             this.RbNumeroContrato = new System.Windows.Forms.RadioButton();
-            this.TbNumeroContrato = new CapaPresentacion.Controls.CustomTextBox();
+            this.TbNumeroContrato = new BimManager.Client.WipApp.Controls.CustomTextBox();
             this.LbContrato = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -154,7 +154,7 @@
             this.TbNumeroDocumento.Name = "TbNumeroDocumento";
             this.TbNumeroDocumento.Size = new System.Drawing.Size(215, 24);
             this.TbNumeroDocumento.TabIndex = 11;
-            this.TbNumeroDocumento.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.Todo;
+            this.TbNumeroDocumento.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
             this.TbNumeroDocumento.TextChanged += new System.EventHandler(this.TbNumeroDocumento_TextChanged);
             // 
             // CbEstado
@@ -169,7 +169,7 @@
             // BnBuscarCliente
             // 
             this.BnBuscarCliente.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscarCliente.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscarCliente.Image = global::BimManager.Client.WipApp.Properties.Resources.Buscar;
             this.BnBuscarCliente.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscarCliente.Location = new System.Drawing.Point(701, 83);
             this.BnBuscarCliente.Name = "BnBuscarCliente";
@@ -286,7 +286,7 @@
             this.TbNumeroPresupuesto.Size = new System.Drawing.Size(215, 24);
             this.TbNumeroPresupuesto.TabIndex = 1;
             this.TbNumeroPresupuesto.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbNumeroPresupuesto.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbNumeroPresupuesto.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // LbPresupuesto
             // 
@@ -380,7 +380,7 @@
             // BnBuscar
             // 
             this.BnBuscar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnBuscar.Image = global::CapaPresentacion.Properties.Resources.Buscar;
+            this.BnBuscar.Image = global::BimManager.Client.WipApp.Properties.Resources.Buscar;
             this.BnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnBuscar.Location = new System.Drawing.Point(863, 223);
             this.BnBuscar.Name = "BnBuscar";
@@ -396,7 +396,7 @@
             // 
             this.BnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnAceptar.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnAceptar.Image = global::CapaPresentacion.Properties.Resources.Confirmar;
+            this.BnAceptar.Image = global::BimManager.Client.WipApp.Properties.Resources.Confirmar;
             this.BnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnAceptar.Location = new System.Drawing.Point(760, 596);
             this.BnAceptar.Name = "BnAceptar";
@@ -412,7 +412,7 @@
             // 
             this.BnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BnSalir.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnSalir.Image = global::CapaPresentacion.Properties.Resources.Cerrar;
+            this.BnSalir.Image = global::BimManager.Client.WipApp.Properties.Resources.Cerrar;
             this.BnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnSalir.Location = new System.Drawing.Point(864, 596);
             this.BnSalir.Name = "BnSalir";
@@ -444,7 +444,7 @@
             this.TbNumeroContrato.Size = new System.Drawing.Size(215, 24);
             this.TbNumeroContrato.TabIndex = 18;
             this.TbNumeroContrato.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbNumeroContrato.TipoCaracteres = CapaPresentacion.Controls.CustomTextBox.TipoInput.SoloNumeros;
+            this.TbNumeroContrato.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
             // LbContrato
             // 
@@ -624,7 +624,7 @@
         private System.Windows.Forms.GroupBox GbDatosBusqueda;
         private System.Windows.Forms.Label LbPresupuesto;
         private System.Windows.Forms.Label LbEstado;
-        private CapaPresentacion.Controls.CustomTextBox TbNumeroPresupuesto;
+        private BimManager.Client.WipApp.Controls.CustomTextBox TbNumeroPresupuesto;
         private System.Windows.Forms.DateTimePicker DtpFechaHasta;
         private System.Windows.Forms.DateTimePicker DtpFechaDesde;
         private System.Windows.Forms.Label LbDesde;

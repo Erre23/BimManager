@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CapaDatos
+namespace BimManager.Datos
 {
     public static class CreateParams
     {
