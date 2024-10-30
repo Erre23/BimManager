@@ -341,7 +341,7 @@ namespace BimManager.Sunat.Tools
                     .AdditionalInformation.AdditionalProperties.Add(new AdditionalProperty
                     {
                         ID = adicional.Codigo,
-                        Value = adicional.Contenido
+                        Value = adicional.Valor
                     });
             }
 
@@ -355,7 +355,7 @@ namespace BimManager.Sunat.Tools
                         .DatosAdicionales_Internos.DatoAdicional.Add(new Entidad.Estructuras.DatoAdicional
                         {
                             Codigo = adicional.Codigo,
-                            Valor = adicional.Contenido
+                            Valor = adicional.Valor
                         });
                 }
             }
@@ -762,7 +762,7 @@ namespace BimManager.Sunat.Tools
                     .AdditionalInformation.AdditionalProperties.Add(new AdditionalProperty
                     {
                         ID = adicional.Codigo,
-                        Value = adicional.Contenido
+                        Value = adicional.Valor
                     });
             }
 
@@ -776,7 +776,7 @@ namespace BimManager.Sunat.Tools
                         .DatosAdicionales_Internos.DatoAdicional.Add(new Entidad.Estructuras.DatoAdicional
                         {
                             Codigo = adicional.Codigo,
-                            Valor = adicional.Contenido
+                            Valor = adicional.Valor
                         });
                 }
             }
@@ -1093,7 +1093,7 @@ namespace BimManager.Sunat.Tools
                     .AdditionalInformation.AdditionalProperties.Add(new AdditionalProperty
                     {
                         ID = adicional.Codigo,
-                        Value = adicional.Contenido
+                        Value = adicional.Valor
                     });
             }
 
@@ -1103,7 +1103,7 @@ namespace BimManager.Sunat.Tools
                 debitNote.UBLExtensions.Extension3.ExtensionContent.DatosAdicionales_Internos.DatoAdicional.Add(new Entidad.Estructuras.DatoAdicional
                 {
                     Codigo = DatoAdicional.Codigo,
-                    Valor = DatoAdicional.Contenido,
+                    Valor = DatoAdicional.Valor,
                 });
             }
 

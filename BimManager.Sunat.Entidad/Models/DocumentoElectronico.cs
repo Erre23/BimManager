@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BimManager.Sunat.Entidad.Estructuras;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

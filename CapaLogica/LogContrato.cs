@@ -1,6 +1,10 @@
 ﻿using BimManager.Datos;
 using BimManager.Entidad;
 using BimManager.ILogica;
+using BimManager.Sunat.Entidad;
+using BimManager.Sunat.Entidad.Constantes;
+using BimManager.Sunat.Entidad.Estructuras;
+using BimManager.Sunat.Entidad.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -210,6 +214,15 @@ namespace BimManager.Logica
             SqlConnection cnn = this.Conectar();
             try
             {
+                var documentoElectronico = FacturacionElectronica_LLenar_En_Modelo_DocumentoElectronico();
+                var facturacionELectronicaService = new Sunat.FacturacionElectronica();
+                documentoElectronico = facturacionELectronicaService.Generar_BoletaFactura(documentoElectronico);
+                var cdr = facturacionELectronicaService.Enviar_Factura_NotaCreditoDeFactura(documentoElectronico.ComprobanteXml_Base64String, EmpresaDatos.RUC + "-01-F001-00000001");
+
+                
+
+
+
                 await cnn.OpenAsync();
                 var listaContratos = await new DaoContrato(cnn).BusquedaGeneral(fechaDesde, fechaHasta, clienteID, proyectoID, ContratoEstadoId);
                 if (listaContratos.Count > 0)
@@ -322,5 +335,116 @@ namespace BimManager.Logica
         }
 
         #endregion CuentaBancaria
+
+
+        private DocumentoElectronico FacturacionElectronica_LLenar_En_Modelo_DocumentoElectronico()
+        {
+            try
+            {
+
+                var objDocumentoElectronicoSunat = new DocumentoElectronico();
+
+                //Separamos la Serie y corraltivo
+                string Serie = "F001";
+                int Correlativo = 1;
+
+                //Datos de cabecera del comprobante
+                objDocumentoElectronicoSunat.FechaEmision = DateTime.Now.Date.ToString("yyyy-MM-dd");
+                objDocumentoElectronicoSunat.TipoDocumento = Catalogo_01_TipoDocumento.Factura;
+                objDocumentoElectronicoSunat.Serie = Serie;
+                objDocumentoElectronicoSunat.Correlativo = Correlativo;
+                objDocumentoElectronicoSunat.CalculoIgv = 0.18m;
+                objDocumentoElectronicoSunat.Gravadas = 84.75m;
+                objDocumentoElectronicoSunat.Inafectas = 0;
+                objDocumentoElectronicoSunat.Exoneradas = 0;
+                objDocumentoElectronicoSunat.Gratuitas = 0;
+                objDocumentoElectronicoSunat.DescuentoGlobal = 0;
+                objDocumentoElectronicoSunat.TotalIgv = 15.25m;
+                objDocumentoElectronicoSunat.TotalVenta = 100.00m;
+                objDocumentoElectronicoSunat.MontoEnLetras = new NumberToLetters().ToCustomCardinal(100.00m).ToUpper();
+
+                //Datos del contribuyente receptor
+                if (objDocumentoElectronicoSunat.TipoDocumento == Catalogo_01_TipoDocumento.Factura)
+                {
+                    objDocumentoElectronicoSunat.Receptor =
+                        new Contribuyente
+                        {
+                            TipoDocumento = Catalogo_06_TipoDocumentoIdentidad.Ruc,
+                            NroDocumento = "10457024067",
+                            NombreLegal = "EDUARDO RAFAEL RODRIGUEZ ESCOBAR",
+                            NombreComercial = "",
+                            Direccion = "TRUJILLO",
+                            Urbanizacion = "-",
+                            Distrito = "-",
+                            Provincia = "-",
+                            Departamento = "-"
+                        };
+                }
+                else if (objDocumentoElectronicoSunat.TipoDocumento == Catalogo_01_TipoDocumento.Boleta)
+                {
+                    objDocumentoElectronicoSunat.Receptor = new Contribuyente
+                    {
+                        TipoDocumento = Catalogo_06_TipoDocumentoIdentidad.Dni,
+                        NroDocumento = "45702406",
+                        NombreLegal = "EDUARDO RODRIGUEZ ESCOBAR"
+                    };
+                }
+
+
+                #region[Datos Adicionales]
+
+                //Nombre del documento Ruc-TipoDocumento-Serie-Correlativo
+                objDocumentoElectronicoSunat.DatoAdicionales_Internos.Add
+                (
+                    new DatoAdicional
+                    {
+                        Codigo = "NOMBRE",
+                        Valor = EmpresaDatos.RUC + "-F001-0000001"
+                    }
+                );
+
+
+
+                //Hora de Emisión
+                objDocumentoElectronicoSunat.DatoAdicionales_Internos.Add
+                (
+                    new DatoAdicional
+                    {
+                        Codigo = "HORA EMISION",
+                        Valor = DateTime.Now.ToString("hh:mm tt").ToUpper().Replace(".", "")
+                    }
+                );
+
+                #endregion [Fin Datos Adicionales]
+
+
+                short ItemNumero = 1;
+
+                objDocumentoElectronicoSunat.Items.Add
+                (
+                    new DocumentoElectronicoDetalle
+                    {
+                        Id = ItemNumero,
+                        Cantidad = 1,
+                        UnidadMedida = Catalogo_03_TipoUnidadDeMedida.Unidad,
+                        Descripcion = "Prueba de registro de comprobante",
+                        TipoAfectacionIgv = Catalogo_07_TipoAfectacionIgv.Gravada_OperacionOnerosa,
+                        TipoPrecio = Catalogo_16_TipoPrecioVentaUnitario.PrecioUnitario_IncluyeIGV,
+                        PrecioUnitario = 100.00m,
+                        PrecioReferencial = 74.85m,
+                        Impuesto = 15.25m,
+                        TotalVenta = 100.00m,
+                    }
+                );
+
+                ItemNumero++;
+
+                return objDocumentoElectronicoSunat;
+            }
+            catch (Exception Ex)
+            {
+                throw new Exception(Ex.Message, Ex.InnerException);
+            }
+        }
     }
 }

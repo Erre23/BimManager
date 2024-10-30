@@ -115,7 +115,6 @@
     <Compile Include="Models\ComunicacionBaja.cs" />
     <Compile Include="Models\ConsultaTicketRequest.cs" />
     <Compile Include="Models\Contribuyente.cs" />
-    <Compile Include="Models\DatoAdicional.cs" />
     <Compile Include="Models\DatosGuia.cs" />
     <Compile Include="Models\DetalleDocumento.cs" />
     <Compile Include="Models\Discrepancia.cs" />
@@ -135,6 +134,7 @@
     <Compile Include="Models\GrupoResumen2018.cs" />
     <Compile Include="Models\RespuestaComun.cs" />
     <Compile Include="Models\ResumenDiario.cs" />
+    <Compile Include="NumberToLetters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
