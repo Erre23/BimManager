@@ -72,7 +72,7 @@ namespace BimManager.Logica.Apis
 					};
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{ 
             }
 
@@ -95,7 +95,7 @@ namespace BimManager.Logica.Apis
 					};
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
 

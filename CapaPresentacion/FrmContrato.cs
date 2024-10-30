@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static BimManager.Entidad.Estructuras.CDR;
+using static BimManager.Sunat.Entidad.CDR;
 
 namespace BimManager.Client.WipApp
 {
@@ -311,7 +311,7 @@ namespace BimManager.Client.WipApp
 
         }
 
-        private async void BnGuardar_Click(object sender, EventArgs e)
+        private void BnGuardar_Click(object sender, EventArgs e)
         {
             try
             {

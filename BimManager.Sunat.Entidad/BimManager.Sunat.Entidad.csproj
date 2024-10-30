@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{41E3C50B-309E-49EA-9ABB-F8E084ED0B1D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BimManager.Sunat.Entidad</RootNamespace>
+    <AssemblyName>BimManager.Sunat.Entidad</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CDR.cs" />
+    <Compile Include="Constantes\Catalogo_01_TipoDocumento.cs" />
+    <Compile Include="Constantes\Catalogo_02_TipoMoneda.cs" />
+    <Compile Include="Constantes\Catalogo_03_TipoUnidadDeMedida.cs" />
+    <Compile Include="Constantes\Catalogo_04_Pais.cs" />
+    <Compile Include="Constantes\Catalogo_05_TipoTributo.cs" />
+    <Compile Include="Constantes\Catalogo_06_TipoDocumentoIdentidad.cs" />
+    <Compile Include="Constantes\Catalogo_07_TipoAfectacionIgv.cs" />
+    <Compile Include="Constantes\Catalogo_09_TipoNotaCredito.cs" />
+    <Compile Include="Constantes\Catalogo_10_TIpoNotaDebito.cs" />
+    <Compile Include="Constantes\Catalogo_11_TipoValorVenta.cs" />
+    <Compile Include="Constantes\Catalogo_15_DatoAdicional.cs" />
+    <Compile Include="Constantes\Catalogo_16_TipoPrecioVentaUnitario.cs" />
+    <Compile Include="Constantes\Catalogo_17_TipoOperacion.cs" />
+    <Compile Include="Constantes\Catalogo_19_EstadoItem.cs" />
+    <Compile Include="Constantes\EmpresaDatos.cs" />
+    <Compile Include="Constantes\Respuestas.cs" />
+    <Compile Include="Estructuras\AccountingSupplierParty.cs" />
+    <Compile Include="Estructuras\AdditionalInformation.cs" />
+    <Compile Include="Estructuras\AdditionalMonetaryTotal.cs" />
+    <Compile Include="Estructuras\AdditionalProperty.cs" />
+    <Compile Include="Estructuras\AgentParty.cs" />
+    <Compile Include="Estructuras\AllowanceCharge.cs" />
+    <Compile Include="Estructuras\AlternativeConditionPrice.cs" />
+    <Compile Include="Estructuras\BillingPayment.cs" />
+    <Compile Include="Estructuras\BillingReference.cs" />
+    <Compile Include="Estructuras\Country.cs" />
+    <Compile Include="Estructuras\CreditNote.cs" />
+    <Compile Include="Estructuras\DatoAdicional.cs" />
+    <Compile Include="Estructuras\DatosAdicionales.cs" />
+    <Compile Include="Estructuras\DebitNote.cs" />
+    <Compile Include="Estructuras\DigitalSignatureAttachment.cs" />
+    <Compile Include="Estructuras\DiscrepancyResponse.cs" />
+    <Compile Include="Estructuras\EspacioNombres.cs" />
+    <Compile Include="Estructuras\ExchangeRate.cs" />
+    <Compile Include="Estructuras\ExtensionContent.cs" />
+    <Compile Include="Estructuras\ExternalReference.cs" />
+    <Compile Include="Estructuras\Invoice.cs" />
+    <Compile Include="Estructuras\InvoiceDocumentReference.cs" />
+    <Compile Include="Estructuras\InvoicedQuantity.cs" />
+    <Compile Include="Estructuras\InvoiceLine.cs" />
+    <Compile Include="Estructuras\Item.cs" />
+    <Compile Include="Estructuras\LegalMonetaryTotal.cs" />
+    <Compile Include="Estructuras\Party.cs" />
+    <Compile Include="Estructuras\PartyIdentification.cs" />
+    <Compile Include="Estructuras\PartyIdentificationID.cs" />
+    <Compile Include="Estructuras\PartyLegalEntity.cs" />
+    <Compile Include="Estructuras\PartyName.cs" />
+    <Compile Include="Estructuras\PayableAmount.cs" />
+    <Compile Include="Estructuras\Payment.cs" />
+    <Compile Include="Estructuras\PostalAddress.cs" />
+    <Compile Include="Estructuras\Price.cs" />
+    <Compile Include="Estructuras\PricingReference.cs" />
+    <Compile Include="Estructuras\ReceiverParty.cs" />
+    <Compile Include="Estructuras\Retention.cs" />
+    <Compile Include="Estructuras\SignatoryParty.cs" />
+    <Compile Include="Estructuras\SignatureCac.cs" />
+    <Compile Include="Estructuras\SummaryDocuments.cs" />
+    <Compile Include="Estructuras\SunatEmbededDespatchAdvice.cs" />
+    <Compile Include="Estructuras\SUNATRetentionDocumentReference.cs" />
+    <Compile Include="Estructuras\SUNATRetentionInformation.cs" />
+    <Compile Include="Estructuras\SunatRoadTransport.cs" />
+    <Compile Include="Estructuras\SunatTransaction.cs" />
+    <Compile Include="Estructuras\TaxCategory.cs" />
+    <Compile Include="Estructuras\TaxScheme.cs" />
+    <Compile Include="Estructuras\TaxSubtotal.cs" />
+    <Compile Include="Estructuras\TaxTotal.cs" />
+    <Compile Include="Estructuras\UBLExtension.cs" />
+    <Compile Include="Estructuras\UBLExtensions.cs" />
+    <Compile Include="Estructuras\VoidedDocuments.cs" />
+    <Compile Include="Estructuras\VoidedDocumentsLine.cs" />
+    <Compile Include="Models\ComunicacionBaja.cs" />
+    <Compile Include="Models\ConsultaTicketRequest.cs" />
+    <Compile Include="Models\Contribuyente.cs" />
+    <Compile Include="Models\DatoAdicional.cs" />
+    <Compile Include="Models\DatosGuia.cs" />
+    <Compile Include="Models\DetalleDocumento.cs" />
+    <Compile Include="Models\Discrepancia.cs" />
+    <Compile Include="Models\DocumentoBaja.cs" />
+    <Compile Include="Models\DocumentoElectronico.cs" />
+    <Compile Include="Models\DocumentoRelacionado.cs" />
+    <Compile Include="Models\DocumentoResponse.cs" />
+    <Compile Include="Models\DocumentoResumen.cs" />
+    <Compile Include="Models\DocumentoResumenDetalle.cs" />
+    <Compile Include="Models\EnviarDocumentoRequest.cs" />
+    <Compile Include="Models\EnviarDocumentoResponse.cs" />
+    <Compile Include="Models\EnviarResumenResponse.cs" />
+    <Compile Include="Models\EnvioDocumentoComun.cs" />
+    <Compile Include="Models\FirmadoRequest.cs" />
+    <Compile Include="Models\FirmadoResponse.cs" />
+    <Compile Include="Models\GrupoResumen.cs" />
+    <Compile Include="Models\GrupoResumen2018.cs" />
+    <Compile Include="Models\RespuestaComun.cs" />
+    <Compile Include="Models\ResumenDiario.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

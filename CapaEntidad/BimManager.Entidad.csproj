@@ -62,7 +62,6 @@
     <Compile Include="ContratoPago.cs" />
     <Compile Include="CuentaBancaria.cs" />
     <Compile Include="Departamento.cs" />
-    <Compile Include="Estructuras\CDR.cs" />
     <Compile Include="Plan.cs" />
     <Compile Include="Distrito.cs" />
     <Compile Include="Contrato.cs" />

@@ -244,6 +244,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BimManager.Sunat.Entidad\BimManager.Sunat.Entidad.csproj">
+      <Project>{41e3c50b-309e-49ea-9abb-f8e084ed0b1d}</Project>
+      <Name>BimManager.Sunat.Entidad</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CapaEntidad\BimManager.Entidad.csproj">
       <Project>{902511bf-7c47-46a8-9492-0961b1a2a537}</Project>
       <Name>BimManager.Entidad</Name>
