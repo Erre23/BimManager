@@ -33,14 +33,14 @@ namespace BimManager.Client.WipApp
                     Botones_Enabled(true, true, false, false, false, false);
                     Controles_Input_Enabled(false);
                     Controles_Clear();
-                    DtpFechaInicio.MinDate = DateTime.Now.Date;
-                    DtpFechaInicio.Value = DateTime.Now.Date;
                     break;
                 case FormAccion.nuevo:
                     this._currentContrato = null;
                     Botones_Enabled(false, false, false, false, true, true);
                     Controles_Input_Enabled(true);
                     Controles_Clear();
+                    DtpFechaInicio.MinDate = DateTime.Now.Date;
+                    DtpFechaInicio.Value = DateTime.Now.Date;
                     break;
                 case FormAccion.visualizar:
                     Botones_Enabled(true, true, true, true, false, false);
@@ -100,6 +100,7 @@ namespace BimManager.Client.WipApp
             this._currentContrato = contrato;
             Presupuesto_Mostrar(contrato.Presupuesto);
             TbContratoNumero.Text = contrato.ContratoID.ToString();
+            DtpFechaInicio.MinDate = contrato.FechaInicio.Date;
             DtpFechaInicio.Value = contrato.FechaInicio.Date;
             DtpFechaEstimadaEntrega.Value = contrato.FechaEstimadaEntrega.Date;
             SetDatosEstado(contrato);

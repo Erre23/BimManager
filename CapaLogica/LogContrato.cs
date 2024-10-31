@@ -5,9 +5,12 @@ using BimManager.Sunat.Entidad;
 using BimManager.Sunat.Entidad.Constantes;
 using BimManager.Sunat.Entidad.Estructuras;
 using BimManager.Sunat.Entidad.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data.SqlClient;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -67,7 +70,41 @@ namespace BimManager.Logica
                             contratoPago.ContratoPagoID = await new DaoContratoPago(tran).Insertar(contratoPago);
 
                             contrato.MontoPagado = contratoPago.Importe;
+
+                            contratoPago.ComprobantePago.Correlativo = await new DaoSerie(tran).GenerarCorrelativoPorTipoDocumentoSunatID(contratoPago.ComprobantePago.TipoDocumentoSunatID);
+                            contratoPago.ComprobantePago.Fecha = contratoPago.CreacionFecha;
+                            contratoPago.ComprobantePago.Activo = true;
+
+                            var daoComprobantePago = new DaoComprobantePago(tran);
+                            contratoPago.ComprobantePago.ComprobantePagoID = await daoComprobantePago.Insertar(contratoPago.ComprobantePago);
+                            contratoPago.ComprobantePagoId = contratoPago.ComprobantePago.ComprobantePagoID;
+
+                                                       
+                            var documentoElectronico = LLenar_DocumentoElectronico(contratoPago.ComprobantePago);
+                            var facturacionELectronicaService = new Sunat.FacturacionElectronica();
+                            documentoElectronico = facturacionELectronicaService.Generar_BoletaFactura(documentoElectronico);
+
+                            contratoPago.ComprobantePago.ComprobantePagoDocumento = new ComprobantePagoDocumento
+                            {
+                                ComprobantePagoID = contratoPago.ComprobantePagoId,
+                                DigestValue = documentoElectronico.DigestValue,
+                                DocumentoXML = documentoElectronico.ComprobanteXml_Base64String
+                            };
+
+                            var daoComprobantePagoDocumento = new DaoComprobantePagoDocumento(tran);
+                            await daoComprobantePagoDocumento.Insertar(contratoPago.ComprobantePago.ComprobantePagoDocumento);
+
+                            var cdr = facturacionELectronicaService.Enviar_Factura_NotaCreditoDeFactura(documentoElectronico.ComprobanteXml_Base64String,
+                                $"{EmpresaDatos.RUC}-{documentoElectronico.TipoDocumento}-{documentoElectronico.Serie}-{documentoElectronico.Correlativo.ToString().PadLeft(8, '0')}");
+
+                            await daoComprobantePagoDocumento.ActualizarCDRPorComprobantePagoId(contratoPago.ComprobantePagoId, cdr.CDR_Base64String);
+
+                            contratoPago.ComprobantePago.CDRCodigo = cdr.Respuesta_Codigo;
+                            contratoPago.ComprobantePago.Enviado = true;
+
+                            await daoComprobantePago.ActualizarDatosEnvio(contratoPago.ComprobantePagoId, true, cdr.Respuesta_Codigo);
                         }
+
 
                         tran.Commit();
                         Close(cnn);
@@ -214,15 +251,6 @@ namespace BimManager.Logica
             SqlConnection cnn = this.Conectar();
             try
             {
-                var documentoElectronico = FacturacionElectronica_LLenar_En_Modelo_DocumentoElectronico();
-                var facturacionELectronicaService = new Sunat.FacturacionElectronica();
-                documentoElectronico = facturacionELectronicaService.Generar_BoletaFactura(documentoElectronico);
-                var cdr = facturacionELectronicaService.Enviar_Factura_NotaCreditoDeFactura(documentoElectronico.ComprobanteXml_Base64String, EmpresaDatos.RUC + "-01-F001-00000001");
-
-                
-
-
-
                 await cnn.OpenAsync();
                 var listaContratos = await new DaoContrato(cnn).BusquedaGeneral(fechaDesde, fechaHasta, clienteID, proyectoID, ContratoEstadoId);
                 if (listaContratos.Count > 0)
@@ -337,31 +365,27 @@ namespace BimManager.Logica
         #endregion CuentaBancaria
 
 
-        private DocumentoElectronico FacturacionElectronica_LLenar_En_Modelo_DocumentoElectronico()
+        private DocumentoElectronico LLenar_DocumentoElectronico(ComprobantePago comprobantePago)
         {
             try
             {
 
                 var objDocumentoElectronicoSunat = new DocumentoElectronico();
 
-                //Separamos la Serie y corraltivo
-                string Serie = "F001";
-                int Correlativo = 1;
-
                 //Datos de cabecera del comprobante
-                objDocumentoElectronicoSunat.FechaEmision = DateTime.Now.Date.ToString("yyyy-MM-dd");
-                objDocumentoElectronicoSunat.TipoDocumento = Catalogo_01_TipoDocumento.Factura;
-                objDocumentoElectronicoSunat.Serie = Serie;
-                objDocumentoElectronicoSunat.Correlativo = Correlativo;
-                objDocumentoElectronicoSunat.CalculoIgv = 0.18m;
-                objDocumentoElectronicoSunat.Gravadas = 84.75m;
+                objDocumentoElectronicoSunat.FechaEmision = comprobantePago.Fecha.ToString("yyyy-MM-dd");
+                objDocumentoElectronicoSunat.TipoDocumento = comprobantePago.TipoDocumentoSunat.CodigoSunat;
+                objDocumentoElectronicoSunat.Serie = comprobantePago.Serie;
+                objDocumentoElectronicoSunat.Correlativo = comprobantePago.Correlativo;
+                objDocumentoElectronicoSunat.CalculoIgv = Math.Round(comprobantePago.IGVPorcentaje / 100m, 2);
+                objDocumentoElectronicoSunat.Gravadas = comprobantePago.SubTotal;
                 objDocumentoElectronicoSunat.Inafectas = 0;
                 objDocumentoElectronicoSunat.Exoneradas = 0;
                 objDocumentoElectronicoSunat.Gratuitas = 0;
                 objDocumentoElectronicoSunat.DescuentoGlobal = 0;
-                objDocumentoElectronicoSunat.TotalIgv = 15.25m;
-                objDocumentoElectronicoSunat.TotalVenta = 100.00m;
-                objDocumentoElectronicoSunat.MontoEnLetras = new NumberToLetters().ToCustomCardinal(100.00m).ToUpper();
+                objDocumentoElectronicoSunat.TotalIgv = comprobantePago.IGV;
+                objDocumentoElectronicoSunat.TotalVenta = comprobantePago.Total;
+                objDocumentoElectronicoSunat.MontoEnLetras = new NumberToLetters().ToCustomCardinal(comprobantePago.Total).ToUpper();
 
                 //Datos del contribuyente receptor
                 if (objDocumentoElectronicoSunat.TipoDocumento == Catalogo_01_TipoDocumento.Factura)
@@ -370,10 +394,10 @@ namespace BimManager.Logica
                         new Contribuyente
                         {
                             TipoDocumento = Catalogo_06_TipoDocumentoIdentidad.Ruc,
-                            NroDocumento = "10457024067",
-                            NombreLegal = "EDUARDO RAFAEL RODRIGUEZ ESCOBAR",
+                            NroDocumento = comprobantePago.Cliente.DocumentoIdentidadNumero,
+                            NombreLegal = comprobantePago.Cliente.RazonSocial,
                             NombreComercial = "",
-                            Direccion = "TRUJILLO",
+                            Direccion = comprobantePago.Cliente.Direccion,
                             Urbanizacion = "-",
                             Distrito = "-",
                             Provincia = "-",
@@ -384,9 +408,9 @@ namespace BimManager.Logica
                 {
                     objDocumentoElectronicoSunat.Receptor = new Contribuyente
                     {
-                        TipoDocumento = Catalogo_06_TipoDocumentoIdentidad.Dni,
-                        NroDocumento = "45702406",
-                        NombreLegal = "EDUARDO RODRIGUEZ ESCOBAR"
+                        TipoDocumento = comprobantePago.Cliente.TipoDocumentoIdentidad.CodigoSunat,
+                        NroDocumento = comprobantePago.Cliente.DocumentoIdentidadNumero,
+                        NombreLegal = comprobantePago.Cliente.RazonSocialOrApellidosYNombres
                     };
                 }
 
@@ -399,7 +423,7 @@ namespace BimManager.Logica
                     new DatoAdicional
                     {
                         Codigo = "NOMBRE",
-                        Valor = EmpresaDatos.RUC + "-F001-0000001"
+                        Valor = $"{EmpresaDatos.RUC}-{comprobantePago.TipoDocumentoSunat.CodigoSunat}-{comprobantePago.Serie}-{comprobantePago.Correlativo.ToString().PadLeft(8, '0')}"
                     }
                 );
 
@@ -411,7 +435,7 @@ namespace BimManager.Logica
                     new DatoAdicional
                     {
                         Codigo = "HORA EMISION",
-                        Valor = DateTime.Now.ToString("hh:mm tt").ToUpper().Replace(".", "")
+                        Valor = comprobantePago.Fecha.ToString("hh:mm tt").ToUpper().Replace(".", "")
                     }
                 );
 
@@ -426,14 +450,14 @@ namespace BimManager.Logica
                     {
                         Id = ItemNumero,
                         Cantidad = 1,
-                        UnidadMedida = Catalogo_03_TipoUnidadDeMedida.Unidad,
-                        Descripcion = "Prueba de registro de comprobante",
+                        UnidadMedida = Catalogo_03_TipoUnidadDeMedida.UnidadServicios,
+                        Descripcion = comprobantePago.Descripcion,
                         TipoAfectacionIgv = Catalogo_07_TipoAfectacionIgv.Gravada_OperacionOnerosa,
                         TipoPrecio = Catalogo_16_TipoPrecioVentaUnitario.PrecioUnitario_IncluyeIGV,
-                        PrecioUnitario = 100.00m,
-                        PrecioReferencial = 74.85m,
-                        Impuesto = 15.25m,
-                        TotalVenta = 100.00m,
+                        PrecioUnitario = comprobantePago.Total,
+                        PrecioReferencial = comprobantePago.SubTotal,
+                        Impuesto = comprobantePago.IGV,
+                        TotalVenta = comprobantePago.Total,
                     }
                 );
 

@@ -42,7 +42,7 @@
             this.BnCancelar = new System.Windows.Forms.Button();
             this.LbOpcion = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TbCliente = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.TbSerie = new System.Windows.Forms.TextBox();
             this.CbTipoComprobantePago = new System.Windows.Forms.ComboBox();
@@ -75,7 +75,7 @@
             this.DtpPagoFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.DtpPagoFecha.Location = new System.Drawing.Point(406, 52);
             this.DtpPagoFecha.Name = "DtpPagoFecha";
-            this.DtpPagoFecha.Size = new System.Drawing.Size(178, 24);
+            this.DtpPagoFecha.Size = new System.Drawing.Size(178, 28);
             this.DtpPagoFecha.TabIndex = 16;
             // 
             // TbImporte
@@ -84,7 +84,7 @@
             this.TbImporte.Location = new System.Drawing.Point(683, 52);
             this.TbImporte.MaxLength = 50;
             this.TbImporte.Name = "TbImporte";
-            this.TbImporte.Size = new System.Drawing.Size(100, 24);
+            this.TbImporte.Size = new System.Drawing.Size(100, 28);
             this.TbImporte.TabIndex = 13;
             this.TbImporte.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
             // 
@@ -93,7 +93,7 @@
             this.LbCelular.AutoSize = true;
             this.LbCelular.Location = new System.Drawing.Point(613, 55);
             this.LbCelular.Name = "LbCelular";
-            this.LbCelular.Size = new System.Drawing.Size(66, 17);
+            this.LbCelular.Size = new System.Drawing.Size(80, 21);
             this.LbCelular.TabIndex = 12;
             this.LbCelular.Text = "Importe :";
             // 
@@ -103,7 +103,7 @@
             this.TbNumeroOperacion.Location = new System.Drawing.Point(126, 52);
             this.TbNumeroOperacion.MaxLength = 20;
             this.TbNumeroOperacion.Name = "TbNumeroOperacion";
-            this.TbNumeroOperacion.Size = new System.Drawing.Size(178, 24);
+            this.TbNumeroOperacion.Size = new System.Drawing.Size(178, 28);
             this.TbNumeroOperacion.TabIndex = 9;
             // 
             // CbCuentaBancaria
@@ -114,7 +114,7 @@
             this.CbCuentaBancaria.FormattingEnabled = true;
             this.CbCuentaBancaria.Location = new System.Drawing.Point(126, 20);
             this.CbCuentaBancaria.Name = "CbCuentaBancaria";
-            this.CbCuentaBancaria.Size = new System.Drawing.Size(658, 25);
+            this.CbCuentaBancaria.Size = new System.Drawing.Size(658, 29);
             this.CbCuentaBancaria.TabIndex = 1;
             // 
             // LbApellido2
@@ -122,7 +122,7 @@
             this.LbApellido2.AutoSize = true;
             this.LbApellido2.Location = new System.Drawing.Point(314, 55);
             this.LbApellido2.Name = "LbApellido2";
-            this.LbApellido2.Size = new System.Drawing.Size(88, 17);
+            this.LbApellido2.Size = new System.Drawing.Size(106, 21);
             this.LbApellido2.TabIndex = 10;
             this.LbApellido2.Text = "Fecha Pago :";
             // 
@@ -131,7 +131,7 @@
             this.LbApellido1.AutoSize = true;
             this.LbApellido1.Location = new System.Drawing.Point(23, 55);
             this.LbApellido1.Name = "LbApellido1";
-            this.LbApellido1.Size = new System.Drawing.Size(99, 17);
+            this.LbApellido1.Size = new System.Drawing.Size(120, 21);
             this.LbApellido1.TabIndex = 8;
             this.LbApellido1.Text = "Nº Operación :";
             // 
@@ -140,7 +140,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 24);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(116, 17);
+            this.label2.Size = new System.Drawing.Size(142, 21);
             this.label2.TabIndex = 0;
             this.label2.Text = "Cuenta Bancaria :";
             // 
@@ -204,7 +204,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.TbCliente);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.TbSerie);
             this.groupBox1.Controls.Add(this.CbTipoComprobantePago);
@@ -217,21 +217,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Comprobante de Pago :";
             // 
-            // textBox1
+            // TbCliente
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(126, 51);
-            this.textBox1.MaxLength = 50;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(658, 24);
-            this.textBox1.TabIndex = 13;
+            this.TbCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TbCliente.Location = new System.Drawing.Point(126, 51);
+            this.TbCliente.MaxLength = 50;
+            this.TbCliente.Name = "TbCliente";
+            this.TbCliente.ReadOnly = true;
+            this.TbCliente.Size = new System.Drawing.Size(658, 28);
+            this.TbCliente.TabIndex = 13;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(65, 54);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 17);
+            this.label3.Size = new System.Drawing.Size(72, 21);
             this.label3.TabIndex = 12;
             this.label3.Text = "Cliente :";
             // 
@@ -241,7 +242,8 @@
             this.TbSerie.Location = new System.Drawing.Point(365, 20);
             this.TbSerie.MaxLength = 20;
             this.TbSerie.Name = "TbSerie";
-            this.TbSerie.Size = new System.Drawing.Size(81, 24);
+            this.TbSerie.ReadOnly = true;
+            this.TbSerie.Size = new System.Drawing.Size(81, 28);
             this.TbSerie.TabIndex = 9;
             // 
             // CbTipoComprobantePago
@@ -252,15 +254,16 @@
             this.CbTipoComprobantePago.FormattingEnabled = true;
             this.CbTipoComprobantePago.Location = new System.Drawing.Point(126, 20);
             this.CbTipoComprobantePago.Name = "CbTipoComprobantePago";
-            this.CbTipoComprobantePago.Size = new System.Drawing.Size(178, 25);
+            this.CbTipoComprobantePago.Size = new System.Drawing.Size(178, 29);
             this.CbTipoComprobantePago.TabIndex = 1;
+            this.CbTipoComprobantePago.SelectedIndexChanged += new System.EventHandler(this.CbTipoComprobantePago_SelectedIndexChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(315, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 17);
+            this.label5.Size = new System.Drawing.Size(58, 21);
             this.label5.TabIndex = 8;
             this.label5.Text = "Serie :";
             // 
@@ -269,13 +272,13 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(13, 24);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(109, 17);
+            this.label6.Size = new System.Drawing.Size(129, 21);
             this.label6.TabIndex = 0;
             this.label6.Text = "Tipo Comprob. :";
             // 
             // FrmContratoPagoRegistrar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 258);
             this.Controls.Add(this.groupBox1);
@@ -319,7 +322,7 @@
         private System.Windows.Forms.Label LbOpcion;
         private System.Windows.Forms.DateTimePicker DtpPagoFecha;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TbCliente;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox TbSerie;
         private System.Windows.Forms.ComboBox CbTipoComprobantePago;

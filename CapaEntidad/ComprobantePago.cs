@@ -16,7 +16,7 @@ namespace BimManager.Entidad
         public Cliente Cliente { get; set; }
 
         [DataMember]
-        public short TipoDocumentoSunatID { get; set; }
+        public byte TipoDocumentoSunatID { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public TipoDocumentoSunat TipoDocumentoSunat { get; set; }
@@ -31,6 +31,9 @@ namespace BimManager.Entidad
         public DateTime Fecha { get; set; }
 
         [DataMember]
+        public string Descripcion { get; set; }
+
+        [DataMember]
         public decimal SubTotal { get; set; }
 
         [DataMember]
@@ -41,6 +44,15 @@ namespace BimManager.Entidad
 
         [DataMember]
         public decimal Total { get; set; }
+
+        [DataMember]
+        public bool Activo { get; set; }
+
+        [DataMember]
+        public bool Enviado { get; set; }
+
+        [DataMember]
+        public string CDRCodigo { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public int AfectaComprobantePagoID { get; set; }

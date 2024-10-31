@@ -28,6 +28,9 @@ namespace BimManager.Entidad
 
         [DataMember]
         public bool ConsultaApi { get; set; } = false;
+        
+        [DataMember]
+        public string CodigoSunat { get; set; }
 
         [DataMember]
         public bool Activo { get; set; } = true;

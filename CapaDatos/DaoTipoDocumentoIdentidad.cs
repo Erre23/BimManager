@@ -196,7 +196,8 @@ namespace BimManager.Datos
                 obj.Alfanumerico = Convert.ToBoolean(dr["Alfanumerico"]);
                 obj.PersonaJuridica = Convert.ToBoolean(dr["PersonaJuridica"]);
 				obj.ConsultaApi = Convert.ToBoolean(dr["ConsultaApi"]);
-				obj.Activo = Convert.ToBoolean(dr["Activo"]);
+                obj.CodigoSunat = Convert.ToString(dr["CodigoSunat"]);
+                obj.Activo = Convert.ToBoolean(dr["Activo"]);
 
                 return obj;
 

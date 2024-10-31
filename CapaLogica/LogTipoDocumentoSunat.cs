@@ -17,7 +17,7 @@ namespace BimManager.Logica
         #endregion singleton
 
         #region metodos
-        public async Task<short> TipoDocumentoSunatInsertar(TipoDocumentoSunat tipoDocumentoSunat)
+        public async Task<byte> TipoDocumentoSunatInsertar(TipoDocumentoSunat tipoDocumentoSunat)
         {
             SqlConnection cnn = this.Conectar();
             try
@@ -74,7 +74,7 @@ namespace BimManager.Logica
             }
         }
 
-        public async Task TipoDocumentoSunatDeshabilitar(short idTipoDocumentoSunat)
+        public async Task TipoDocumentoSunatDeshabilitar(byte idTipoDocumentoSunat)
         {
             SqlConnection cnn = this.Conectar();
             try
@@ -103,13 +103,21 @@ namespace BimManager.Logica
         }
 
         ///listado
-        public async Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarActivos()
+        public async Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarActivos(bool incluirSeries = false)
         {
             SqlConnection cnn = this.Conectar();
             try
             {
                 await cnn.OpenAsync();
                 var lista = await new DaoTipoDocumentoSunat(cnn).ListarActivos();
+                if (lista.Count > 0)
+                {
+                    var daoSerie = new DaoSerie(cnn);
+                    foreach (var item in lista)
+                    {
+                        item.Series = await daoSerie.ListarActivosPorTipoDocumentoSunatID(item.TipoDocumentoSunatID);
+                    }
+                }
                 Close(cnn);
                 return lista;
             }

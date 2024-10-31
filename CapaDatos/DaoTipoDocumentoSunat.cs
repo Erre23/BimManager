@@ -25,7 +25,7 @@ namespace BimManager.Datos
 
 
         #region metodos    
-        public async Task<short> Insertar(TipoDocumentoSunat tipoDocumentoSunat)
+        public async Task<byte> Insertar(TipoDocumentoSunat tipoDocumentoSunat)
         {
             var cmd = (SqlCommand)null;
             try
@@ -35,7 +35,7 @@ namespace BimManager.Datos
                 cmd.Parameters.Add(CreateParams.NVarchar("Nombre", tipoDocumentoSunat.Nombre, 50));
                 cmd.Parameters.Add(CreateParams.NVarchar("CodigoSunat", tipoDocumentoSunat.CodigoSunat, 3));
 
-                tipoDocumentoSunat.TipoDocumentoSunatID = Convert.ToInt16(await cmd.ExecuteScalarAsync());
+                tipoDocumentoSunat.TipoDocumentoSunatID = Convert.ToByte(await cmd.ExecuteScalarAsync());
                 cmd.Dispose();
             }
             catch (Exception e)
@@ -70,14 +70,14 @@ namespace BimManager.Datos
         }
 
 
-        public async Task Deshabilitar(int idTipoDocumentoSunat)
+        public async Task Deshabilitar(byte idTipoDocumentoSunat)
         {
             var cmd = (SqlCommand)null;
             try
             {
                 cmd = new SqlCommand("spTipoDocumentoSunatDeshabilitar", cnn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(CreateParams.Int("TipoDocumentoSunatID", idTipoDocumentoSunat));
+                cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoSunatID", idTipoDocumentoSunat));
 
                 await cmd.ExecuteNonQueryAsync();
                 cmd.Dispose();
@@ -148,7 +148,7 @@ namespace BimManager.Datos
             try
             {
                 var obj = new TipoDocumentoSunat();
-                obj.TipoDocumentoSunatID = Convert.ToInt16(dr["TipoDocumentoSunatID"]);
+                obj.TipoDocumentoSunatID = Convert.ToByte(dr["TipoDocumentoSunatID"]);
                 obj.Nombre = dr["Nombre"].ToString();
                 obj.CodigoSunat = dr["CodigoSunat"].ToString();
 

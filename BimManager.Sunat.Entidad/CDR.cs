@@ -7,10 +7,13 @@ namespace BimManager.Sunat.Entidad
 {
     public class CDR
     {
+        private string _CDR_Base64String;
+        public string CDR_Base64String { get { return _CDR_Base64String; } }
         public CDR(string Cdr_Base64_String)
         {
             try
             {
+                _CDR_Base64String = Cdr_Base64_String;
                 Observaciones_ = new List<string>();
                 Leer(Convert.FromBase64String(Cdr_Base64_String));
             }
@@ -24,6 +27,7 @@ namespace BimManager.Sunat.Entidad
         {
             try
             {
+                _CDR_Base64String = Convert.ToBase64String(Cdr_ArrayByte);
                 Observaciones_ = new List<string>();
                 Leer(Cdr_ArrayByte);
             }

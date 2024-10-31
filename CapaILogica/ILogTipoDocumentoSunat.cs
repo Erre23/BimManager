@@ -12,13 +12,13 @@ namespace BimManager.ILogica
         Task TipoDocumentoSunatActualizar(TipoDocumentoSunat tipoDocumentoSunat);
 
         [OperationContract]
-        Task TipoDocumentoSunatDeshabilitar(short idTipoDocumentoSunat);
+        Task TipoDocumentoSunatDeshabilitar(byte idTipoDocumentoSunat);
 
         [OperationContract]
-        Task<short> TipoDocumentoSunatInsertar(TipoDocumentoSunat tipoDocumentoSunat);
+        Task<byte> TipoDocumentoSunatInsertar(TipoDocumentoSunat tipoDocumentoSunat);
 
         [OperationContract]
-        Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarActivos();
+        Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarActivos(bool incluirSeries = false);
 
         [OperationContract]
         Task<List<TipoDocumentoSunat>> TipoDocumentoSunatListarTodos();

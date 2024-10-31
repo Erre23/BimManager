@@ -22,6 +22,7 @@ namespace BimManager.Sunat.Entidad.Constantes
             switch (Codigo)
             {
                 case "NIU": //Para Unidad
+                case "ZZ": //Para Servicios
                     Abreviatura_ = "und";
                     break;
 
@@ -77,6 +78,11 @@ namespace BimManager.Sunat.Entidad.Constantes
         /// Retorna NIU para la Unidad de medida internacional y que usaremos como medida fija como venta de servicios
         /// </summary>
         public static string Unidad { get{ return "NIU"; } }
+
+        /// <summary>
+        /// Retorna NIU para la Unidad de medida internacional y que usaremos como medida fija como venta de servicios
+        /// </summary>
+        public static string UnidadServicios { get { return "ZZ"; } }
 
         /// <summary>
         /// Retorna KGM para Kilogramo 

@@ -36,10 +36,25 @@ namespace BimManager.Client.WipApp
                     CbCuentaBancaria.Items.Add(item);
                 }
 
+                CbTipoComprobantePago.Items.Clear();
+                CbTipoComprobantePago.DisplayMember = "Nombre";
+                var tipoDocumentoSunat = await this.ObjRemoteObject.LogTipoDocumentoSunat.TipoDocumentoSunatListarActivos(true);
+                foreach (var item in tipoDocumentoSunat)
+                {
+                    if ((_currentContrato.Presupuesto.Cliente.TipoDocumentoIdentidad.PersonaJuridica && item.CodigoSunat == "01") ||
+                        (!_currentContrato.Presupuesto.Cliente.TipoDocumentoIdentidad.PersonaJuridica && item.CodigoSunat == "03"))
+                    {
+                        CbTipoComprobantePago.Items.Add(item);
+                        break;
+                    }
+                }
+
                 SetAccion(FormAccion.nuevo);
 
                 if (CbCuentaBancaria.Items.Count > 0) CbCuentaBancaria.SelectedIndex = 0;
-                
+                if (CbTipoComprobantePago.Items.Count > 0) CbTipoComprobantePago.SelectedIndex = 0;
+                TbCliente.Text = _currentContrato.Presupuesto.Cliente.RazonSocialOrApellidosYNombres;
+
             }
             catch (Exception ex)
             {
@@ -91,6 +106,19 @@ namespace BimManager.Client.WipApp
 
         #endregion Métodos
 
+        private void CbTipoComprobantePago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tipoDocumentoSunat = CbTipoComprobantePago.SelectedItem as TipoDocumentoSunat;
+            if (tipoDocumentoSunat != null && tipoDocumentoSunat.Series.Count > 0)
+            {
+                TbSerie.Text = tipoDocumentoSunat.Series[0].SerieNumero;
+            }
+            else
+            {
+                TbSerie.Clear();
+            }
+        }
+
         private async void BnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -124,6 +152,24 @@ namespace BimManager.Client.WipApp
                 this._currentContratoPago.NumeroOperacion = TbNumeroOperacion.Text.Trim();
                 this._currentContratoPago.PagoFecha = DtpPagoFecha.Value.Date;
                 this._currentContratoPago.Importe = importe;
+
+                decimal subtotal = Math.Round(importe / 1.18m, 2);
+                decimal igv = importe - subtotal;
+
+                var tipoDocumentoSunat = CbTipoComprobantePago.SelectedItem as TipoDocumentoSunat;
+                this._currentContratoPago.ComprobantePago = new ComprobantePago
+                {
+                    ClienteID = this._currentContrato.Presupuesto.ClienteID,
+                    Cliente = this._currentContrato.Presupuesto.Cliente,
+                    TipoDocumentoSunatID = tipoDocumentoSunat.TipoDocumentoSunatID,
+                    TipoDocumentoSunat = tipoDocumentoSunat,
+                    Serie = TbSerie.Text,
+                    Descripcion = $"Pago {(_currentContrato.Presupuesto.ImporteTotal == importe ? "total" : "parcial")} según presupuesto nº {_currentContrato.PresupuestoID}",
+                    SubTotal = subtotal,
+                    IGV = igv,
+                    IGVPorcentaje = 18,
+                    Total = importe
+                };
 
                 if (MessageBox.Show(this, "¿Está seguro guardar los datos?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {

@@ -31,6 +31,9 @@ namespace BimManager.Entidad
         public string Apellido2 { get; set; }
 
         [DataMember]
+        public string Direccion { get; set; }
+
+        [DataMember]
         public string Celular { get; set; }
 
         [DataMember]
