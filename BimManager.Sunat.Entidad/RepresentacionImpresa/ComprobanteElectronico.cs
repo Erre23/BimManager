@@ -3264,6 +3264,8 @@ namespace BimManager.Sunat.Entidad.RepresentacionImpresa
             try
             {
                 float tamañoBase = 420; //20 por linea
+                tamañoBase += 97; //97 por el logo
+
 
                 foreach(ComprobanteElectronico_Detalle detalle in Detalles)
                 {
