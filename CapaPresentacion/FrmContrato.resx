@@ -245,35 +245,6 @@
         oUWN/iSKQClPmghwxvxJoKDVgQgQat2KMCAAOw==
 </value>
   </data>
-  <data name="BnPagos.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
-        cQAAEnEB89x6jgAAAdFJREFUOE+Fkj9IW1EUxjN06dJ2MggWRChUHBREKBRcdBCHQocKjk6WDBqCKMXB
-        Km1BbSlScAiCcYqTmgZRsagg/mslxOHVSImYRGKlycNU5L5LfPfznaMJxLzogQ8u797vd7573nVs/opA
-        O4gXKbQXBe0Fl7ZZKV3AYVd00K6EkCza/xM9wep6CMm/6WLIfYA9LZ5fb+xoOErohZC7AEZWYW5+Hcsr
-        O9jYCnMK7+R3Xt/YSwPITKKu8z9+MojMPv8iet4N3w+gykWnAUaOMzxUOt/dM2gPUNo2iyqXIKEdQu93
-        ITo1yfMgeXo/FAPUkQY18R5qzA217IcuTPz7vQ/x9jXUs4cQTXWI7GqcxB4gDTaqvjdQrhaIj12QHa1s
-        lo01SM4GcBhLsWwBuchGwAez/QVUYyVU9RPIVy9xshtGLG2wOXl6YQ3xUzGAIl+YCiI4fW22OivnA8j6
-        5wyIn5v8BkoCaNrSN5bvnG1rxmWVE9ZJZMvK+AqUojRgYQaqoZw7G0O9nChjmcxHjxkiK57yH0nq0h5w
-        nj6D0dcJ8W2UzTmll9YgauuQGvfefYXblR+qpYy6Fj2os/+XhQB61yNfxvH5q7dA9K2U3J6BG4DDcQWq
-        YN6TCTX/DwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <metadata name="colSeleccionar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colDescripcion.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colObservaciones.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colAntecedentes.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colImporte.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="colSeleccionar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

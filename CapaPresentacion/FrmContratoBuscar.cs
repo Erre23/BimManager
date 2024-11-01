@@ -111,6 +111,7 @@ namespace BimManager.Client.WipApp
                 if (DgvContrato.CurrentRow == null)
                 {
                     MessageBox.Show(this, "Olvidó seleccionar un presupuesto", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
 
                 this._contratoSeleccionado = DgvContrato.CurrentRow.Tag as Contrato;

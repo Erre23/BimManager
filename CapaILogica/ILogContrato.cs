@@ -10,6 +10,9 @@ namespace BimManager.ILogica
     public interface ILogContrato
     {
         [OperationContract]
+        Task<ComprobantePagoDocumento> ComprobantePagoDocumentoBuscarPorComprobantePagoID(int comprobantePagoID);
+
+        [OperationContract]
         Task<Contrato> ContratoAnular(Contrato Contrato);
 
         [OperationContract]
@@ -23,6 +26,9 @@ namespace BimManager.ILogica
 
         [OperationContract]
         Task<Contrato> ContratoInsertar(Contrato Contrato, ContratoPago contratoPago = null);
+
+        [OperationContract]
+        Task<List<ContratoPago>> ContratoPagoListarPorContratoID(int contratoID);
 
         [OperationContract]
         Task<ContratoEstado> ContratoEstadoBuscarPorContratoEstadoID(byte ContratoEstadoID);

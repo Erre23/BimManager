@@ -105,32 +105,32 @@ namespace BimManager.Datos
         //    }
         //}
 
-        //public async Task<ComprobantePago> BuscarPorComprobantePagoID(int ComprobantePagoID)
-        //{
-        //    var cmd = (SqlCommand)null;
-        //    var ComprobantePago = (ComprobantePago)null;
-        //    try
-        //    {
-        //        cmd = new SqlCommand("spComprobantePagoBuscarPorComprobantePagoID", cnn, tran);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        cmd.Parameters.Add(CreateParams.Int("ComprobantePagoID", ComprobantePagoID));
+        public async Task<ComprobantePago> BuscarPorComprobantePagoID(int comprobantePagoID)
+        {
+            var cmd = (SqlCommand)null;
+            var ComprobantePago = (ComprobantePago)null;
+            try
+            {
+                cmd = new SqlCommand("spComprobantePagoBuscarPorComprobantePagoID", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ComprobantePagoID", comprobantePagoID));
 
-        //        SqlDataReader dr = await cmd.ExecuteReaderAsync();
-        //        while (await dr.ReadAsync())
-        //        {
-        //            ComprobantePago = await ReadEntidad(dr);
-        //        }
-        //        dr.Close();
-        //        cmd.Dispose();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        cmd.Dispose();
-        //        throw e;
-        //    }
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                while (await dr.ReadAsync())
+                {
+                    ComprobantePago = await ReadEntidad(dr);
+                }
+                dr.Close();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
+            }
 
-        //    return ComprobantePago;
-        //}
+            return ComprobantePago;
+        }
 
         //public async Task<ComprobantePago> BuscarPorPresupuestoID(int presupuestoID)
         //{
@@ -192,31 +192,35 @@ namespace BimManager.Datos
         //    return listaComprobantePagos;
         //}
 
-        //private async Task<ComprobantePago> ReadEntidad(SqlDataReader dr)
-        //{
-        //    try
-        //    {
-        //        var obj = new ComprobantePago();
-        //        obj.ComprobantePagoID = Convert.ToInt32(dr["ComprobantePagoID"]);
-        //        obj.CreacionUsuarioID = Convert.ToInt32(dr["CreacionUsuarioID"]);
-        //        obj.CreacionFecha = Convert.ToDateTime(dr["CreacionFecha"]);
-        //        obj.PresupuestoID = Convert.ToInt32(dr["PresupuestoID"]);
-        //        obj.FechaInicio = Convert.ToDateTime(dr["FechaInicio"]);
-        //        obj.FechaEstimadaEntrega = Convert.ToDateTime(dr["FechaEstimadaEntrega"]);
-        //        obj.ComprobantePagoEstadoId = Convert.ToByte(dr["ComprobantePagoEstadoId"]);
+        private async Task<ComprobantePago> ReadEntidad(SqlDataReader dr)
+        {
+            try
+            {
+                var obj = new ComprobantePago();
+                obj.ComprobantePagoID = Convert.ToInt32(dr["ComprobantePagoID"]);
+                obj.ClienteID = Convert.ToInt32(dr["ClienteID"]);
+                obj.TipoDocumentoSunatID = Convert.ToByte(dr["TipoDocumentoSunatID"]);
+                obj.Serie = Convert.ToString(dr["Serie"]);
+                obj.Correlativo = Convert.ToInt32(dr["Correlativo"]);
+                obj.Fecha = Convert.ToDateTime(dr["Fecha"]);
+                obj.SubTotal = Convert.ToDecimal(dr["SubTotal"]);
+                obj.IGV = Convert.ToDecimal(dr["IGV"]);
+                obj.IGVPorcentaje = Convert.ToByte(dr["IGVPorcentaje"]);
+                obj.Total = Convert.ToDecimal(dr["Total"]);
+                obj.Activo = Convert.ToBoolean(dr["Activo"]);
 
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoUsuarioID")))) obj.UltActEstadoUsuarioID = Convert.ToInt32(dr["UltActEstadoUsuarioID"]);
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoFecha")))) obj.UltActEstadoFecha = Convert.ToDateTime(dr["UltActEstadoFecha"]);
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoComentario")))) obj.UltActEstadoComentario = Convert.ToString(dr["UltActEstadoComentario"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Enviado")))) obj.Enviado = Convert.ToBoolean(dr["Enviado"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("CDRCodigo")))) obj.CDRCodigo = Convert.ToString(dr["CDRCodigo"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AfectaComprobantePagoID")))) obj.AfectaComprobantePagoID = Convert.ToInt32(dr["AfectaComprobantePagoID"]);
 
-        //        return obj;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        dr.Close();
-        //        throw ex;
-        //    }
-        //}
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                dr.Close();
+                throw ex;
+            }
+        }
         #endregion métodos
     }
 }

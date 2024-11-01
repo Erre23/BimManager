@@ -154,7 +154,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(806, 30);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Pagos - Registro";
+            this.label1.Text = "Pago - Registro";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BnGuardar
@@ -294,7 +294,7 @@
             this.MinimizeBox = false;
             this.Name = "FrmContratoPagoRegistrar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Pagos - Registro";
+            this.Text = "Pago - Registro";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmCliente_FormClosing);
             this.Load += new System.EventHandler(this.FrmContratoPagoRegistrar_Load);

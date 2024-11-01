@@ -62,5 +62,9 @@ namespace BimManager.Entidad
 
         [DataMember(EmitDefaultValue = false)]
         public ComprobantePagoDocumento ComprobantePagoDocumento { get; set; }
+
+        public string NombreDocumento_Formato_Sunat { get { return $"{Sunat.Entidad.Constantes.EmpresaDatos.RUC}-{TipoDocumentoSunat.CodigoSunat}-{Serie}-{Correlativo.ToString().PadLeft(8, '0')}"; } }
+
+        public string SerieCorrelativo { get { return $"{Serie}-{Correlativo.ToString().PadLeft(8, '0')}"; } }
     }
 }

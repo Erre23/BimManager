@@ -1,5 +1,6 @@
 ﻿using BimManager.Entidad;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -106,32 +107,33 @@ namespace BimManager.Datos
         //    return ContratoPago;
         //}
 
-        //public async Task<ContratoPago> BuscarPorPresupuestoID(int presupuestoID)
-        //{
-        //    var cmd = (SqlCommand)null;
-        //    var ContratoPago = (ContratoPago)null;
-        //    try
-        //    {
-        //        cmd = new SqlCommand("spContratoPagoBuscarPorPresupuestoID", cnn, tran);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        cmd.Parameters.Add(CreateParams.Int("PresupuestoID", presupuestoID));
+        public async Task<List<ContratoPago>> BuscarPorContratoID(int contratoID)
+        {
+            var cmd = (SqlCommand)null;
+            var contratoPagos = new List<ContratoPago>();
+            try
+            {
+                cmd = new SqlCommand("spContratoPagoBuscarPorContratoID", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ContratoID", contratoID));
 
-        //        SqlDataReader dr = await cmd.ExecuteReaderAsync();
-        //        while (await dr.ReadAsync())
-        //        {
-        //            ContratoPago = await ReadEntidad(dr);
-        //        }
-        //        dr.Close();
-        //        cmd.Dispose();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        cmd.Dispose();
-        //        throw e;
-        //    }
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                while (await dr.ReadAsync())
+                {
+                    var contratoPago = await ReadEntidad(dr);
+                    contratoPagos.Add(contratoPago);
+                }
+                dr.Close();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
+            }
 
-        //    return ContratoPago;
-        //}
+            return contratoPagos;
+        }
 
         //public async Task<List<ContratoPago>> BusquedaGeneral(DateTime fechaDesde, DateTime fechaHasta, int? clienteID, int? proyectoID, byte? ContratoPagoEstadoId)
         //{
@@ -166,31 +168,33 @@ namespace BimManager.Datos
         //    return listaContratoPagos;
         //}
 
-        //private async Task<ContratoPago> ReadEntidad(SqlDataReader dr)
-        //{
-        //    try
-        //    {
-        //        var obj = new ContratoPago();
-        //        obj.ContratoPagoID = Convert.ToInt32(dr["ContratoPagoID"]);
-        //        obj.CreacionUsuarioID = Convert.ToInt32(dr["CreacionUsuarioID"]);
-        //        obj.CreacionFecha = Convert.ToDateTime(dr["CreacionFecha"]);
-        //        obj.PresupuestoID = Convert.ToInt32(dr["PresupuestoID"]);
-        //        obj.FechaInicio = Convert.ToDateTime(dr["FechaInicio"]);
-        //        obj.FechaEstimadaEntrega = Convert.ToDateTime(dr["FechaEstimadaEntrega"]);
-        //        obj.ContratoPagoEstadoId = Convert.ToByte(dr["ContratoPagoEstadoId"]);
+        private async Task<ContratoPago> ReadEntidad(SqlDataReader dr)
+        {
+            try
+            {
+                var obj = new ContratoPago();
+                obj.ContratoPagoID = Convert.ToInt32(dr["ContratoPagoID"]);
+                obj.CreacionUsuarioID = Convert.ToInt32(dr["CreacionUsuarioID"]);
+                obj.CreacionFecha = Convert.ToDateTime(dr["CreacionFecha"]);
+                obj.CuentaBancariaID = Convert.ToInt32(dr["CuentaBancariaID"]);
+                obj.NumeroOperacion = Convert.ToString(dr["NumeroOperacion"]);
+                obj.PagoFecha = Convert.ToDateTime(dr["PagoFecha"]);
+                obj.Importe = Convert.ToDecimal(dr["Importe"]);
+                obj.ComprobantePagoId = Convert.ToInt32(dr["ComprobantePagoId"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("Anulado")))) obj.Anulado = Convert.ToBoolean(dr["Anulado"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionUsuarioID")))) obj.AnulacionUsuarioID = Convert.ToInt32(dr["AnulacionUsuarioID"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionFecha")))) obj.AnulacionFecha = Convert.ToDateTime(dr["AnulacionFecha"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionMotivo")))) obj.AnulacionMotivo = Convert.ToString(dr["AnulacionMotivo"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("AnulacionComprobantePagoID")))) obj.AnulacionComprobantePagoID = Convert.ToInt32(dr["AnulacionComprobantePagoID"]);
 
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoUsuarioID")))) obj.UltActEstadoUsuarioID = Convert.ToInt32(dr["UltActEstadoUsuarioID"]);
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoFecha")))) obj.UltActEstadoFecha = Convert.ToDateTime(dr["UltActEstadoFecha"]);
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoComentario")))) obj.UltActEstadoComentario = Convert.ToString(dr["UltActEstadoComentario"]);
-                
-        //        return obj;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        dr.Close();
-        //        throw ex;
-        //    }
-        //}
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                dr.Close();
+                throw ex;
+            }
+        }
         #endregion métodos
     }
 }

@@ -97,5 +97,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BimManager.Sunat.Entidad\BimManager.Sunat.Entidad.csproj">
+      <Project>{41e3c50b-309e-49ea-9abb-f8e084ed0b1d}</Project>
+      <Name>BimManager.Sunat.Entidad</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

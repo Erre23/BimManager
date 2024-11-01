@@ -5,14 +5,11 @@ using BimManager.Sunat.Entidad;
 using BimManager.Sunat.Entidad.Constantes;
 using BimManager.Sunat.Entidad.Estructuras;
 using BimManager.Sunat.Entidad.Models;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Data.SqlClient;
-using System.IO;
+using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace BimManager.Logica
 {
@@ -23,6 +20,27 @@ namespace BimManager.Logica
         private static readonly LogContrato _instancia = new LogContrato();
         public static LogContrato Instancia { get { return _instancia; } }
         #endregion singleton
+
+        #region ComprobantePagoDocumento
+        public async Task<ComprobantePagoDocumento> ComprobantePagoDocumentoBuscarPorComprobantePagoID(int comprobantePagoID)
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var comprobantePago = await new DaoComprobantePagoDocumento(cnn).BuscarPorComprobantePagoID(comprobantePagoID);
+                Close(cnn);
+                return comprobantePago;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw new FaultException(ex.Message);
+            }
+        }
+
+
+        #endregion ContratoPago
 
         #region Contrato
 
@@ -67,7 +85,6 @@ namespace BimManager.Logica
                             contratoPago.ContratoID = contrato.ContratoID;
                             contratoPago.CreacionFecha = DateTime.Now;
                             contratoPago.Anulado = false;
-                            contratoPago.ContratoPagoID = await new DaoContratoPago(tran).Insertar(contratoPago);
 
                             contrato.MontoPagado = contratoPago.Importe;
 
@@ -78,8 +95,9 @@ namespace BimManager.Logica
                             var daoComprobantePago = new DaoComprobantePago(tran);
                             contratoPago.ComprobantePago.ComprobantePagoID = await daoComprobantePago.Insertar(contratoPago.ComprobantePago);
                             contratoPago.ComprobantePagoId = contratoPago.ComprobantePago.ComprobantePagoID;
+                            contratoPago.ContratoPagoID = await new DaoContratoPago(tran).Insertar(contratoPago);
 
-                                                       
+
                             var documentoElectronico = LLenar_DocumentoElectronico(contratoPago.ComprobantePago);
                             var facturacionELectronicaService = new Sunat.FacturacionElectronica();
                             documentoElectronico = facturacionELectronicaService.Generar_BoletaFactura(documentoElectronico);
@@ -285,7 +303,35 @@ namespace BimManager.Logica
         #endregion Contrato
 
         #region ContratoPago
-
+        public async Task<List<ContratoPago>> ContratoPagoListarPorContratoID(int contratoID)
+        {
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                var listaContratoPagos = await new DaoContratoPago(cnn).BuscarPorContratoID(contratoID);
+                if (listaContratoPagos.Count > 0)
+                {
+                    var cuentasBancarias = await new DaoCuentaBancaria(cnn).ListarActivos();
+                    var tiposDocumentoSunat = await new DaoTipoDocumentoSunat(cnn).ListarTodos();
+                    var daoComprobantePago = new DaoComprobantePago(cnn);
+                    foreach (var contratoPago in listaContratoPagos)
+                    {
+                        contratoPago.CreacionUsuario = await new DaoUsuario(cnn).BuscarPorUsuarioID(contratoPago.CreacionUsuarioID);
+                        contratoPago.CuentaBancaria = cuentasBancarias.Find(x => x.CuentaBancariaID == contratoPago.CuentaBancariaID);
+                        contratoPago.ComprobantePago = await daoComprobantePago.BuscarPorComprobantePagoID(contratoPago.ComprobantePagoId);
+                        contratoPago.ComprobantePago.TipoDocumentoSunat = tiposDocumentoSunat.Find(x => x.TipoDocumentoSunatID == contratoPago.ComprobantePago.TipoDocumentoSunatID);
+                    }
+                }
+                Close(cnn);
+                return listaContratoPagos;
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw ex;
+            }
+        }
         
 
         #endregion ContratoPago

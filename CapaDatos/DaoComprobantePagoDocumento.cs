@@ -98,32 +98,32 @@ namespace BimManager.Datos
         //    }
         //}
 
-        //public async Task<ComprobantePagoDocumento> BuscarPorComprobantePagoDocumentoID(int ComprobantePagoDocumentoID)
-        //{
-        //    var cmd = (SqlCommand)null;
-        //    var ComprobantePagoDocumento = (ComprobantePagoDocumento)null;
-        //    try
-        //    {
-        //        cmd = new SqlCommand("spComprobantePagoDocumentoBuscarPorComprobantePagoDocumentoID", cnn, tran);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        cmd.Parameters.Add(CreateParams.Int("ComprobantePagoDocumentoID", ComprobantePagoDocumentoID));
+        public async Task<ComprobantePagoDocumento> BuscarPorComprobantePagoID(int ComprobantePagoID)
+        {
+            var cmd = (SqlCommand)null;
+            var ComprobantePagoDocumento = (ComprobantePagoDocumento)null;
+            try
+            {
+                cmd = new SqlCommand("spComprobantePagoDocumentoBuscarPorComprobantePagoID", cnn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(CreateParams.Int("ComprobantePagoID", ComprobantePagoID));
 
-        //        SqlDataReader dr = await cmd.ExecuteReaderAsync();
-        //        while (await dr.ReadAsync())
-        //        {
-        //            ComprobantePagoDocumento = await ReadEntidad(dr);
-        //        }
-        //        dr.Close();
-        //        cmd.Dispose();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        cmd.Dispose();
-        //        throw e;
-        //    }
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                while (await dr.ReadAsync())
+                {
+                    ComprobantePagoDocumento = await ReadEntidad(dr);
+                }
+                dr.Close();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
+            }
 
-        //    return ComprobantePagoDocumento;
-        //}
+            return ComprobantePagoDocumento;
+        }
 
         //public async Task<ComprobantePagoDocumento> BuscarPorPresupuestoID(int presupuestoID)
         //{
@@ -185,31 +185,23 @@ namespace BimManager.Datos
         //    return listaComprobantePagoDocumentos;
         //}
 
-        //private async Task<ComprobantePagoDocumento> ReadEntidad(SqlDataReader dr)
-        //{
-        //    try
-        //    {
-        //        var obj = new ComprobantePagoDocumento();
-        //        obj.ComprobantePagoDocumentoID = Convert.ToInt32(dr["ComprobantePagoDocumentoID"]);
-        //        obj.CreacionUsuarioID = Convert.ToInt32(dr["CreacionUsuarioID"]);
-        //        obj.CreacionFecha = Convert.ToDateTime(dr["CreacionFecha"]);
-        //        obj.PresupuestoID = Convert.ToInt32(dr["PresupuestoID"]);
-        //        obj.FechaInicio = Convert.ToDateTime(dr["FechaInicio"]);
-        //        obj.FechaEstimadaEntrega = Convert.ToDateTime(dr["FechaEstimadaEntrega"]);
-        //        obj.ComprobantePagoDocumentoEstadoId = Convert.ToByte(dr["ComprobantePagoDocumentoEstadoId"]);
+        private async Task<ComprobantePagoDocumento> ReadEntidad(SqlDataReader dr)
+        {
+            try
+            {
+                var obj = new ComprobantePagoDocumento();
+                obj.ComprobantePagoID = Convert.ToInt32(dr["ComprobantePagoID"]);
+                obj.DocumentoXML = Convert.ToString(dr["DocumentoXML"]);
+                if (!(await dr.IsDBNullAsync(dr.GetOrdinal("CDRXML")))) obj.CDRXML = Convert.ToString(dr["CDRXML"]);
 
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoUsuarioID")))) obj.UltActEstadoUsuarioID = Convert.ToInt32(dr["UltActEstadoUsuarioID"]);
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoFecha")))) obj.UltActEstadoFecha = Convert.ToDateTime(dr["UltActEstadoFecha"]);
-        //        if (!(await dr.IsDBNullAsync(dr.GetOrdinal("UltActEstadoComentario")))) obj.UltActEstadoComentario = Convert.ToString(dr["UltActEstadoComentario"]);
-
-        //        return obj;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        dr.Close();
-        //        throw ex;
-        //    }
-        //}
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                dr.Close();
+                throw ex;
+            }
+        }
         #endregion métodos
     }
 }

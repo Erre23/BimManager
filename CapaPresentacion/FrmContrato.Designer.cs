@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmContrato));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LbTitulo = new System.Windows.Forms.Label();
             this.BnCancelar = new System.Windows.Forms.Button();
             this.BnGuardar = new System.Windows.Forms.Button();
@@ -212,7 +212,7 @@
             // 
             this.BnPagos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BnPagos.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BnPagos.Image = ((System.Drawing.Image)(resources.GetObject("BnPagos.Image")));
+            this.BnPagos.Image = global::BimManager.Client.WipApp.Properties.Resources.Pagos;
             this.BnPagos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BnPagos.Location = new System.Drawing.Point(320, 762);
             this.BnPagos.Name = "BnPagos";
@@ -248,7 +248,7 @@
             this.TbPlanNombre.Location = new System.Drawing.Point(107, 24);
             this.TbPlanNombre.Name = "TbPlanNombre";
             this.TbPlanNombre.ReadOnly = true;
-            this.TbPlanNombre.Size = new System.Drawing.Size(202, 24);
+            this.TbPlanNombre.Size = new System.Drawing.Size(202, 28);
             this.TbPlanNombre.TabIndex = 1;
             // 
             // TbPlanPlazo
@@ -257,7 +257,7 @@
             this.TbPlanPlazo.Location = new System.Drawing.Point(107, 83);
             this.TbPlanPlazo.Name = "TbPlanPlazo";
             this.TbPlanPlazo.ReadOnly = true;
-            this.TbPlanPlazo.Size = new System.Drawing.Size(106, 24);
+            this.TbPlanPlazo.Size = new System.Drawing.Size(106, 28);
             this.TbPlanPlazo.TabIndex = 5;
             this.TbPlanPlazo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TbPlanPlazo.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
@@ -268,7 +268,7 @@
             this.label16.Location = new System.Drawing.Point(19, 86);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(85, 17);
+            this.label16.Size = new System.Drawing.Size(109, 21);
             this.label16.TabIndex = 4;
             this.label16.Text = "Plazo (días) :";
             // 
@@ -278,7 +278,7 @@
             this.TbPlanPrecio.Location = new System.Drawing.Point(107, 53);
             this.TbPlanPrecio.Name = "TbPlanPrecio";
             this.TbPlanPrecio.ReadOnly = true;
-            this.TbPlanPrecio.Size = new System.Drawing.Size(106, 24);
+            this.TbPlanPrecio.Size = new System.Drawing.Size(106, 28);
             this.TbPlanPrecio.TabIndex = 3;
             this.TbPlanPrecio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -288,7 +288,7 @@
             this.label18.Location = new System.Drawing.Point(9, 56);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(95, 17);
+            this.label18.Size = new System.Drawing.Size(115, 21);
             this.label18.TabIndex = 2;
             this.label18.Text = "Precio m2 S/ :";
             // 
@@ -298,7 +298,7 @@
             this.label19.Location = new System.Drawing.Point(62, 26);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(42, 17);
+            this.label19.Size = new System.Drawing.Size(52, 21);
             this.label19.TabIndex = 0;
             this.label19.Text = "Plan :";
             // 
@@ -310,7 +310,7 @@
             this.TbMontoTotal.Location = new System.Drawing.Point(162, 723);
             this.TbMontoTotal.Name = "TbMontoTotal";
             this.TbMontoTotal.ReadOnly = true;
-            this.TbMontoTotal.Size = new System.Drawing.Size(155, 30);
+            this.TbMontoTotal.Size = new System.Drawing.Size(155, 35);
             this.TbMontoTotal.TabIndex = 8;
             this.TbMontoTotal.Text = "0.00";
             this.TbMontoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -324,7 +324,7 @@
             this.label14.Location = new System.Drawing.Point(7, 727);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(146, 23);
+            this.label14.Size = new System.Drawing.Size(176, 28);
             this.label14.TabIndex = 7;
             this.label14.Text = "Monto Total S/ :";
             // 
@@ -394,8 +394,8 @@
             // 
             // colAntecedentes
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colAntecedentes.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colAntecedentes.DefaultCellStyle = dataGridViewCellStyle1;
             this.colAntecedentes.HeaderText = "Antecedentes";
             this.colAntecedentes.MinimumWidth = 6;
             this.colAntecedentes.Name = "colAntecedentes";
@@ -405,8 +405,8 @@
             // 
             // colImporte
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colImporte.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colImporte.DefaultCellStyle = dataGridViewCellStyle2;
             this.colImporte.HeaderText = "Importe S/";
             this.colImporte.MinimumWidth = 6;
             this.colImporte.Name = "colImporte";
@@ -444,7 +444,7 @@
             this.TbProyectoNombre.Location = new System.Drawing.Point(128, 24);
             this.TbProyectoNombre.Name = "TbProyectoNombre";
             this.TbProyectoNombre.ReadOnly = true;
-            this.TbProyectoNombre.Size = new System.Drawing.Size(548, 24);
+            this.TbProyectoNombre.Size = new System.Drawing.Size(548, 28);
             this.TbProyectoNombre.TabIndex = 1;
             // 
             // TbProyectoPisos
@@ -453,7 +453,7 @@
             this.TbProyectoPisos.Location = new System.Drawing.Point(576, 82);
             this.TbProyectoPisos.Name = "TbProyectoPisos";
             this.TbProyectoPisos.ReadOnly = true;
-            this.TbProyectoPisos.Size = new System.Drawing.Size(100, 24);
+            this.TbProyectoPisos.Size = new System.Drawing.Size(100, 28);
             this.TbProyectoPisos.TabIndex = 9;
             this.TbProyectoPisos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TbProyectoPisos.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
@@ -464,7 +464,7 @@
             this.label13.Location = new System.Drawing.Point(501, 85);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(67, 17);
+            this.label13.Size = new System.Drawing.Size(83, 21);
             this.label13.TabIndex = 8;
             this.label13.Text = "Nº Pisos :";
             // 
@@ -474,7 +474,7 @@
             this.TbProyectoAreaTechada.Location = new System.Drawing.Point(376, 82);
             this.TbProyectoAreaTechada.Name = "TbProyectoAreaTechada";
             this.TbProyectoAreaTechada.ReadOnly = true;
-            this.TbProyectoAreaTechada.Size = new System.Drawing.Size(100, 24);
+            this.TbProyectoAreaTechada.Size = new System.Drawing.Size(100, 28);
             this.TbProyectoAreaTechada.TabIndex = 7;
             this.TbProyectoAreaTechada.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TbProyectoAreaTechada.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.Todo;
@@ -485,7 +485,7 @@
             this.label12.Location = new System.Drawing.Point(237, 85);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(134, 17);
+            this.label12.Size = new System.Drawing.Size(166, 21);
             this.label12.TabIndex = 6;
             this.label12.Text = "Área Techada (m2) :";
             // 
@@ -495,7 +495,7 @@
             this.TbProyectoAreaTotal.Location = new System.Drawing.Point(128, 82);
             this.TbProyectoAreaTotal.Name = "TbProyectoAreaTotal";
             this.TbProyectoAreaTotal.ReadOnly = true;
-            this.TbProyectoAreaTotal.Size = new System.Drawing.Size(100, 24);
+            this.TbProyectoAreaTotal.Size = new System.Drawing.Size(100, 28);
             this.TbProyectoAreaTotal.TabIndex = 5;
             this.TbProyectoAreaTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TbProyectoAreaTotal.TipoCaracteres = BimManager.Client.WipApp.Controls.CustomTextBox.TipoInput.SoloNumeros;
@@ -506,7 +506,7 @@
             this.label11.Location = new System.Drawing.Point(13, 85);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(112, 17);
+            this.label11.Size = new System.Drawing.Size(141, 21);
             this.label11.TabIndex = 4;
             this.label11.Text = "Área Total (m2) :";
             // 
@@ -518,7 +518,7 @@
             this.TbProyectoDireccion.Location = new System.Drawing.Point(128, 53);
             this.TbProyectoDireccion.Name = "TbProyectoDireccion";
             this.TbProyectoDireccion.ReadOnly = true;
-            this.TbProyectoDireccion.Size = new System.Drawing.Size(548, 24);
+            this.TbProyectoDireccion.Size = new System.Drawing.Size(548, 28);
             this.TbProyectoDireccion.TabIndex = 3;
             // 
             // label7
@@ -527,7 +527,7 @@
             this.label7.Location = new System.Drawing.Point(52, 56);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(73, 17);
+            this.label7.Size = new System.Drawing.Size(90, 21);
             this.label7.TabIndex = 2;
             this.label7.Text = "Dirección :";
             // 
@@ -537,7 +537,7 @@
             this.label8.Location = new System.Drawing.Point(59, 26);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 17);
+            this.label8.Size = new System.Drawing.Size(79, 21);
             this.label8.TabIndex = 0;
             this.label8.Text = "Nombre :";
             // 
@@ -549,7 +549,7 @@
             this.TbCliente.Location = new System.Drawing.Point(128, 50);
             this.TbCliente.Name = "TbCliente";
             this.TbCliente.ReadOnly = true;
-            this.TbCliente.Size = new System.Drawing.Size(873, 24);
+            this.TbCliente.Size = new System.Drawing.Size(873, 28);
             this.TbCliente.TabIndex = 5;
             // 
             // label6
@@ -558,7 +558,7 @@
             this.label6.Location = new System.Drawing.Point(68, 54);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 17);
+            this.label6.Size = new System.Drawing.Size(72, 21);
             this.label6.TabIndex = 4;
             this.label6.Text = "Cliente :";
             // 
@@ -600,7 +600,7 @@
             this.TbPresupuestoNumero.Location = new System.Drawing.Point(128, 21);
             this.TbPresupuestoNumero.Name = "TbPresupuestoNumero";
             this.TbPresupuestoNumero.ReadOnly = true;
-            this.TbPresupuestoNumero.Size = new System.Drawing.Size(172, 24);
+            this.TbPresupuestoNumero.Size = new System.Drawing.Size(172, 28);
             this.TbPresupuestoNumero.TabIndex = 1;
             this.TbPresupuestoNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -610,7 +610,7 @@
             this.label1.Location = new System.Drawing.Point(12, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 17);
+            this.label1.Size = new System.Drawing.Size(136, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "N° Presupuesto :";
             // 
@@ -624,7 +624,7 @@
             this.TbMontoPagado.Location = new System.Drawing.Point(503, 723);
             this.TbMontoPagado.Name = "TbMontoPagado";
             this.TbMontoPagado.ReadOnly = true;
-            this.TbMontoPagado.Size = new System.Drawing.Size(155, 30);
+            this.TbMontoPagado.Size = new System.Drawing.Size(155, 35);
             this.TbMontoPagado.TabIndex = 10;
             this.TbMontoPagado.Text = "0.00";
             this.TbMontoPagado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -638,7 +638,7 @@
             this.label2.Location = new System.Drawing.Point(333, 727);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(167, 23);
+            this.label2.Size = new System.Drawing.Size(201, 28);
             this.label2.TabIndex = 9;
             this.label2.Text = "Monto Pagado S/ :";
             // 
@@ -652,7 +652,7 @@
             this.TbMontoFaltante.Location = new System.Drawing.Point(859, 723);
             this.TbMontoFaltante.Name = "TbMontoFaltante";
             this.TbMontoFaltante.ReadOnly = true;
-            this.TbMontoFaltante.Size = new System.Drawing.Size(155, 30);
+            this.TbMontoFaltante.Size = new System.Drawing.Size(155, 35);
             this.TbMontoFaltante.TabIndex = 12;
             this.TbMontoFaltante.Text = "0.00";
             this.TbMontoFaltante.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -666,7 +666,7 @@
             this.label3.Location = new System.Drawing.Point(684, 727);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(172, 23);
+            this.label3.Size = new System.Drawing.Size(208, 28);
             this.label3.TabIndex = 11;
             this.label3.Text = "Monto Faltante S/ :";
             // 
@@ -700,7 +700,7 @@
             this.TbContratoComentario.Location = new System.Drawing.Point(401, 83);
             this.TbContratoComentario.Name = "TbContratoComentario";
             this.TbContratoComentario.ReadOnly = true;
-            this.TbContratoComentario.Size = new System.Drawing.Size(600, 24);
+            this.TbContratoComentario.Size = new System.Drawing.Size(600, 28);
             this.TbContratoComentario.TabIndex = 11;
             this.TbContratoComentario.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -710,7 +710,7 @@
             this.label9.Location = new System.Drawing.Point(310, 86);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(88, 17);
+            this.label9.Size = new System.Drawing.Size(106, 21);
             this.label9.TabIndex = 10;
             this.label9.Text = "Comentario :";
             // 
@@ -720,7 +720,7 @@
             this.TbContratoUsuario.Location = new System.Drawing.Point(401, 52);
             this.TbContratoUsuario.Name = "TbContratoUsuario";
             this.TbContratoUsuario.ReadOnly = true;
-            this.TbContratoUsuario.Size = new System.Drawing.Size(600, 24);
+            this.TbContratoUsuario.Size = new System.Drawing.Size(600, 28);
             this.TbContratoUsuario.TabIndex = 9;
             this.TbContratoUsuario.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -730,7 +730,7 @@
             this.label20.Location = new System.Drawing.Point(336, 55);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(62, 17);
+            this.label20.Size = new System.Drawing.Size(77, 21);
             this.label20.TabIndex = 8;
             this.label20.Text = "Usuario :";
             // 
@@ -740,7 +740,7 @@
             this.label15.Location = new System.Drawing.Point(3, 85);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(121, 17);
+            this.label15.Size = new System.Drawing.Size(149, 21);
             this.label15.TabIndex = 6;
             this.label15.Text = "Fec. Est. Entrega :";
             // 
@@ -751,7 +751,7 @@
             this.DtpFechaEstimadaEntrega.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.DtpFechaEstimadaEntrega.Location = new System.Drawing.Point(127, 82);
             this.DtpFechaEstimadaEntrega.Name = "DtpFechaEstimadaEntrega";
-            this.DtpFechaEstimadaEntrega.Size = new System.Drawing.Size(177, 24);
+            this.DtpFechaEstimadaEntrega.Size = new System.Drawing.Size(177, 28);
             this.DtpFechaEstimadaEntrega.TabIndex = 7;
             // 
             // DtpFechaInicio
@@ -761,7 +761,7 @@
             this.DtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.DtpFechaInicio.Location = new System.Drawing.Point(127, 52);
             this.DtpFechaInicio.Name = "DtpFechaInicio";
-            this.DtpFechaInicio.Size = new System.Drawing.Size(177, 24);
+            this.DtpFechaInicio.Size = new System.Drawing.Size(177, 28);
             this.DtpFechaInicio.TabIndex = 5;
             this.DtpFechaInicio.Value = new System.DateTime(2024, 10, 27, 0, 0, 0, 0);
             this.DtpFechaInicio.ValueChanged += new System.EventHandler(this.DtpFechaInicio_ValueChanged);
@@ -772,7 +772,7 @@
             this.label17.Location = new System.Drawing.Point(17, 55);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(107, 17);
+            this.label17.Size = new System.Drawing.Size(133, 21);
             this.label17.TabIndex = 4;
             this.label17.Text = "Fecha de Inicio :";
             // 
@@ -782,7 +782,7 @@
             this.TbContratoEstado.Location = new System.Drawing.Point(401, 22);
             this.TbContratoEstado.Name = "TbContratoEstado";
             this.TbContratoEstado.ReadOnly = true;
-            this.TbContratoEstado.Size = new System.Drawing.Size(177, 24);
+            this.TbContratoEstado.Size = new System.Drawing.Size(177, 28);
             this.TbContratoEstado.TabIndex = 3;
             this.TbContratoEstado.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -792,7 +792,7 @@
             this.label5.Location = new System.Drawing.Point(339, 25);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 17);
+            this.label5.Size = new System.Drawing.Size(72, 21);
             this.label5.TabIndex = 2;
             this.label5.Text = "Estado :";
             // 
@@ -802,7 +802,7 @@
             this.TbContratoNumero.Location = new System.Drawing.Point(127, 22);
             this.TbContratoNumero.Name = "TbContratoNumero";
             this.TbContratoNumero.ReadOnly = true;
-            this.TbContratoNumero.Size = new System.Drawing.Size(177, 24);
+            this.TbContratoNumero.Size = new System.Drawing.Size(177, 28);
             this.TbContratoNumero.TabIndex = 1;
             this.TbContratoNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -812,13 +812,13 @@
             this.label4.Location = new System.Drawing.Point(32, 25);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(92, 17);
+            this.label4.Size = new System.Drawing.Size(109, 21);
             this.label4.TabIndex = 0;
             this.label4.Text = "N° Contrato :";
             // 
             // FrmContrato
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 800);
             this.Controls.Add(this.groupBox5);

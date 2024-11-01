@@ -309,7 +309,27 @@ namespace BimManager.Client.WipApp
 
         private void BnPagos_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (this._currentContrato == null)
+                {
+                    MessageBox.Show(this, "Olvidó seleccionar un contrato", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
 
+                var form = new FrmContratoPagoLista(this._currentContrato, this._usuario);
+                form.WindowState = FormWindowState.Normal;
+                form.StartPosition = FormStartPosition.CenterScreen;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    //this._currentContrato = form.GetContrato;
+                }
+                form.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BnGuardar_Click(object sender, EventArgs e)
