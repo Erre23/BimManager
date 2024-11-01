@@ -3288,7 +3288,7 @@ namespace BimManager.Sunat.Entidad.RepresentacionImpresa
                 document.Open();
 
                 //Logo
-                //document.Add(itextSharp_Image(BimManager.Sunat.Entidad.Properties.Resources.logoOriginal));
+                document.Add(itextSharp_Image(BimManager.Sunat.Entidad.Properties.Resources.Alinur));
 
                 //Razon Social
                 document.Add

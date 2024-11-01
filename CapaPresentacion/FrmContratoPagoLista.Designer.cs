@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LbTitulo = new System.Windows.Forms.Label();
             this.DgvContratoPago = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,6 +44,7 @@
             this.CmsOpciones = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.enviarASUNATMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConsultaCdrASunatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VerDatosCDRMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparadorObservacion = new System.Windows.Forms.ToolStripSeparator();
             this.DocumentoXmlMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DocumentoPdfMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,9 +118,9 @@
             // 
             // Column3
             // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Format = "dd/MM/yyyy";
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle1;
             this.Column3.HeaderText = "Fecha";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -129,10 +130,10 @@
             // 
             // Column4
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = null;
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column4.HeaderText = "Importe S/";
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
@@ -182,6 +183,7 @@
             this.CmsOpciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.enviarASUNATMenuItem,
             this.ConsultaCdrASunatMenuItem,
+            this.VerDatosCDRMenuItem,
             this.SeparadorObservacion,
             this.DocumentoXmlMenuItem,
             this.DocumentoPdfMenuItem,
@@ -189,7 +191,7 @@
             this.SeparadorEmail,
             this.enviarEmailMenuItem});
             this.CmsOpciones.Name = "CmsOpciones";
-            this.CmsOpciones.Size = new System.Drawing.Size(393, 200);
+            this.CmsOpciones.Size = new System.Drawing.Size(393, 198);
             // 
             // enviarASUNATMenuItem
             // 
@@ -198,7 +200,6 @@
             this.enviarASUNATMenuItem.Name = "enviarASUNATMenuItem";
             this.enviarASUNATMenuItem.Size = new System.Drawing.Size(392, 26);
             this.enviarASUNATMenuItem.Text = "Enviar a SUNAT";
-            this.enviarASUNATMenuItem.Visible = false;
             this.enviarASUNATMenuItem.Click += new System.EventHandler(this.enviarASUNATMenuItem_Click);
             // 
             // ConsultaCdrASunatMenuItem
@@ -209,14 +210,22 @@
             this.ConsultaCdrASunatMenuItem.Name = "ConsultaCdrASunatMenuItem";
             this.ConsultaCdrASunatMenuItem.Size = new System.Drawing.Size(392, 26);
             this.ConsultaCdrASunatMenuItem.Text = "Consultar CDR a SUNAT";
-            this.ConsultaCdrASunatMenuItem.Visible = false;
             this.ConsultaCdrASunatMenuItem.Click += new System.EventHandler(this.ConsultaCdrASunatMenuItem_Click);
+            // 
+            // VerDatosCDRMenuItem
+            // 
+            this.VerDatosCDRMenuItem.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VerDatosCDRMenuItem.Image = global::BimManager.Client.WipApp.Properties.Resources.Filtrar;
+            this.VerDatosCDRMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.VerDatosCDRMenuItem.Name = "VerDatosCDRMenuItem";
+            this.VerDatosCDRMenuItem.Size = new System.Drawing.Size(392, 26);
+            this.VerDatosCDRMenuItem.Text = "Ver datos de la CDR";
+            this.VerDatosCDRMenuItem.Click += new System.EventHandler(this.VerDatosCDRMenuItem_Click);
             // 
             // SeparadorObservacion
             // 
             this.SeparadorObservacion.Name = "SeparadorObservacion";
             this.SeparadorObservacion.Size = new System.Drawing.Size(389, 6);
-            this.SeparadorObservacion.Visible = false;
             // 
             // DocumentoXmlMenuItem
             // 
@@ -252,7 +261,6 @@
             // 
             this.SeparadorEmail.Name = "SeparadorEmail";
             this.SeparadorEmail.Size = new System.Drawing.Size(389, 6);
-            this.SeparadorEmail.Visible = false;
             // 
             // enviarEmailMenuItem
             // 
@@ -261,7 +269,6 @@
             this.enviarEmailMenuItem.Name = "enviarEmailMenuItem";
             this.enviarEmailMenuItem.Size = new System.Drawing.Size(392, 26);
             this.enviarEmailMenuItem.Text = "Enviar Correo con datos del comprobante";
-            this.enviarEmailMenuItem.Visible = false;
             this.enviarEmailMenuItem.Click += new System.EventHandler(this.enviarEmailMenuItem_Click);
             // 
             // BnAnular
@@ -356,5 +363,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.ToolStripMenuItem VerDatosCDRMenuItem;
     }
 }

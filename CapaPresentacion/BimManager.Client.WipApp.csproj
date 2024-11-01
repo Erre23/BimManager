@@ -57,6 +57,12 @@
     <Compile Include="FrmBase.Designer.cs">
       <DependentUpon>FrmBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmEmailEnviar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmailEnviar.Designer.cs">
+      <DependentUpon>FrmEmailEnviar.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmContratoPagoLista.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +179,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmEmailEnviar.resx">
+      <DependentUpon>FrmEmailEnviar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmContratoPagoLista.resx">
       <DependentUpon>FrmContratoPagoLista.cs</DependentUpon>
     </EmbeddedResource>

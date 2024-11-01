@@ -6,24 +6,24 @@ namespace BimManager.Sunat.Entidad.Constantes
     public static class EmpresaDatos
     {
         /// <summary>
-        /// Ruc : 20133605291
+        /// Ruc : 20606064668
         /// </summary>
-        public static string RUC { get { return "20133605291"; } }
+        public static string RUC { get { return "20606064668"; } }
 
         /// <summary>
-        /// Razon Social: EMPRESA DE TRANSPORTES AVE FENIX S.A.C.
+        /// Razon Social: ALINUR E.I.R.L.
         /// </summary>
-        public static string RazonSocial { get { return "EMPRESA DE TRANSPORTES AVE FENIX S.A.C."; } }
+        public static string RazonSocial { get { return "ALINUR E.I.R.L."; } }
 
         /// <summary>
-        /// Nombre Comercial: EMTRAFESA
+        /// Nombre Comercial: ALINUR
         /// </summary>
-        public static string NombreComercial { get { return "EMTRAFESA"; } }
+        public static string NombreComercial { get { return "-"; } }
 
         /// <summary>
-        /// Direccion: AV. TUPAC AMARU NRO. 185
+        /// Direccion: AV. MIGUEL GRAU NRO. 220
         /// </summary>
-        public static string Direccion { get { return "AV. TUPAC AMARU NRO. 185"; } }
+        public static string Direccion { get { return "AV. MIGUEL GRAU NRO. 220"; } }
 
         /// <summary>
         /// Urbanizacion: URB. HUERTA GRANDE
@@ -31,23 +31,23 @@ namespace BimManager.Sunat.Entidad.Constantes
         public static string Urbanizacion { get { return "URB. HUERTA GRANDE"; } }
 
         /// <summary>
-        /// Distrito: TRUJILLO
+        /// Distrito: MOYOBAMBA
         /// </summary>
-        public static string Distrito { get { return "TRUJILLO"; } }
+        public static string Distrito { get { return "MOYOBAMBA"; } }
 
         /// <summary>
-        /// Provincia: "TRUJILLO"
+        /// Provincia: "MOYOBAMBA"
         /// </summary>
-        public static string Provincia { get { return "TRUJILLO"; } }
+        public static string Provincia { get { return "MOYOBAMBA"; } }
 
         /// <summary>
-        /// Departamento: "LA LIBERTAD"
+        /// Departamento: "SAN MARTIN"
         /// </summary>
-        public static string Departamento { get { return "LA LIBERTAD"; } }
+        public static string Departamento { get { return "SAN MARTIN"; } }
 
         /// <summary>
-        /// Ubigeo: 130101
+        /// Ubigeo: 220101
         /// </summary>
-        public static string Ubigeo { get { return "130101"; } }
+        public static string Ubigeo { get { return "220101"; } }
     }
 }

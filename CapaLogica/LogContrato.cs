@@ -21,6 +21,47 @@ namespace BimManager.Logica
         public static LogContrato Instancia { get { return _instancia; } }
         #endregion singleton
 
+        #region ComprobantePago
+
+        public async Task<bool> ComprobantePagoEnviarCorreo(int comprobantePagoID, List<string> destinatarios)
+        {
+            var comprobantePago = (ComprobantePago)null;
+            SqlConnection cnn = this.Conectar();
+            try
+            {
+                await cnn.OpenAsync();
+                comprobantePago = await new DaoComprobantePago(cnn).BuscarPorComprobantePagoID(comprobantePagoID);
+                if (comprobantePago == null) throw new Exception("No se encontró el comprobante de pago");
+                
+                comprobantePago.TipoDocumentoSunat = await new DaoTipoDocumentoSunat(cnn).BuscarPorTipoDocumentoSunatID(comprobantePago.TipoDocumentoSunatID);
+                comprobantePago.ComprobantePagoDocumento = await new DaoComprobantePagoDocumento(cnn).BuscarPorComprobantePagoID(comprobantePago.ComprobantePagoID);
+                if (comprobantePago.ComprobantePagoDocumento == null || string.IsNullOrEmpty(comprobantePago.ComprobantePagoDocumento.DocumentoXML)) throw new Exception("No se encontró el XML del comprobante de pago");
+
+                Close(cnn);
+            }
+            catch (Exception ex)
+            {
+                Close(cnn);
+                throw new FaultException(ex.Message);
+            }
+
+            foreach (var destinatario in destinatarios)
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return true;
+        }
+
+        #endregion ComprobantePago
+
         #region ComprobantePagoDocumento
         public async Task<ComprobantePagoDocumento> ComprobantePagoDocumentoBuscarPorComprobantePagoID(int comprobantePagoID)
         {
@@ -39,8 +80,7 @@ namespace BimManager.Logica
             }
         }
 
-
-        #endregion ContratoPago
+        #endregion ComprobantePagoDocumento
 
         #region Contrato
 
@@ -139,7 +179,7 @@ namespace BimManager.Logica
             catch(Exception ex)
             {
                 Close(cnn);
-                throw ex;
+                throw new FaultException(ex.Message);
             }
         }
 

@@ -89,6 +89,33 @@ namespace BimManager.Datos
             }
         }
 
+        public async Task<TipoDocumentoSunat> BuscarPorTipoDocumentoSunatID(byte tipoDocumentoSunatID)
+        {
+            var cmd = (SqlCommand)null;
+            var obj = (TipoDocumentoSunat)null;
+            try
+            {
+                cmd = new SqlCommand("spTipoDocumentoSunatBuscarPorTipoDocumentoSunatID", cnn, tran);
+                cmd.Parameters.Add(CreateParams.TinyInt("TipoDocumentoSunatID", tipoDocumentoSunatID));
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
+                while (await dr.ReadAsync())
+                {
+                    obj = ReadEntidad(dr);
+                }
+                dr.Close();
+                cmd.Dispose();
+            }
+            catch (Exception e)
+            {
+                cmd.Dispose();
+                throw e;
+            }
+
+            return obj;
+        }
+
         public async Task<List<TipoDocumentoSunat>> ListarActivos()
         {
             var cmd = (SqlCommand)null;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using BimManager.Sunat.Entidad;
 
 namespace BimManager.Client.WipApp
 {
@@ -89,6 +90,38 @@ namespace BimManager.Client.WipApp
         private void ConsultaCdrASunatMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private async void VerDatosCDRMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (DgvContratoPago.CurrentRow == null)
+                {
+                    MessageBox.Show(this, "Olvidó seleccionar un pago", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                var obj = DgvContratoPago.CurrentRow.Tag as ContratoPago;
+                if (obj.ComprobantePago.ComprobantePagoDocumento == null)
+                {
+                    obj.ComprobantePago.ComprobantePagoDocumento = await this.ObjRemoteObject.LogContrato.ComprobantePagoDocumentoBuscarPorComprobantePagoID(obj.ComprobantePagoId);
+                    DgvContratoPago.CurrentRow.Tag = obj;
+                }
+
+                if (string.IsNullOrEmpty(obj.ComprobantePago.ComprobantePagoDocumento.CDRXML))
+                {
+                    MessageBox.Show(this, "El comprobante no tiene una CDR", "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                var cdr = new CDR(obj.ComprobantePago.ComprobantePagoDocumento.CDRXML);
+                MessageBox.Show(this, cdr.Resumen(), "Información de la CDR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                this.Cursor = Cursors.Default;
+                MessageBox.Show(this, ex.Message, "Se produjo un error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private async void DocumentoXmlMenuItem_Click(object sender, EventArgs e)

@@ -41,6 +41,7 @@ namespace BimManager.Datos
                 cmd.Parameters.Add(CreateParams.Date("PagoFecha", contratoPago.PagoFecha));
                 cmd.Parameters.Add(CreateParams.NVarchar("NumeroOperacion", contratoPago.NumeroOperacion, 20));
                 cmd.Parameters.Add(CreateParams.Decimal("Importe", contratoPago.Importe, 10, 2));
+                cmd.Parameters.Add(CreateParams.Int("ComprobantePagoID", contratoPago.ComprobantePagoId));
 
                 contratoPago.ContratoPagoID = Convert.ToInt32(await cmd.ExecuteScalarAsync());
                 cmd.Dispose();

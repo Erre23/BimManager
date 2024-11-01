@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace BimManager.Sunat.Entidad
@@ -104,7 +106,16 @@ namespace BimManager.Sunat.Entidad
                 XmlNode nodeIssueTime = xml.GetElementsByTagName("cbc:IssueTime").Item(0);
                 try
                 {
-                    Recepcion_FechaHora_ = (nodeIssueDate != null && nodeIssueTime != null ? Convert.ToDateTime(nodeIssueDate.InnerText + " " + nodeIssueTime.InnerText) : new DateTime());
+                    if (nodeIssueDate != null && nodeIssueTime != null)
+                    {
+                        if (nodeIssueDate.InnerText.Contains("T")) Recepcion_FechaHora_ = Convert.ToDateTime(nodeIssueDate.InnerText.Substring(0, nodeIssueDate.InnerText.IndexOf("T")) + " " + nodeIssueTime.InnerText);
+                        else Recepcion_FechaHora_ = Convert.ToDateTime(nodeIssueDate.InnerText + " " + nodeIssueTime.InnerText);
+                    }
+                    else
+                    {
+                        Recepcion_FechaHora_ = new DateTime();
+                    }
+                    
                 }
                 catch { }
 
@@ -447,5 +458,36 @@ namespace BimManager.Sunat.Entidad
         /// Versión de la estructura del documento
         /// </summary>
         public string Version_Estructura { get { return Version_Estructura_; } }
+
+        public string Resumen()
+        {
+            string resumen = "***  DATOS DE LA CDR  ***\n";
+            try
+            {
+                resumen += "\n\r-ID: " + this.Id;
+                resumen += "\n\r-Fecha Recepción: " + this.Recepcion_FechaHora.ToShortDateString() + " " + this.Recepcion_FechaHora.ToShortTimeString().Replace(".", "").Replace(" ", "").ToUpper();
+                resumen += "\n\r-Documento Procesado: " + this.Identificador_Documento_Procesado;
+                resumen += "\n\r-Fecha Proceso: " + this.Generacion_FechaHora.ToShortDateString() + " " + this.Generacion_FechaHora.ToShortTimeString().Replace(".", "").Replace(" ", "").ToUpper();
+                resumen += "\n\r-Estado: " + this.Estado_Descripcion;
+                resumen += "\n\r-Código: " + this.Respuesta_Codigo;
+                resumen += "\n\r-Descripción: " + this.Respuesta_Descripcion;
+                if (this.Observaciones != null && this.Observaciones.Count > 0)
+                {
+                    resumen += "\n\r-Observaciones:";
+                    foreach (string Observacion in this.Observaciones)
+                    {
+                        resumen += "\n\r   >" + Observacion;
+                    }
+                }
+
+                return resumen;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al leer la CDR: " + ex.Message, "Un momento por favor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return resumen;
+        }
     }
 }
